@@ -224,24 +224,24 @@ if (!isset($_SESSION['admin_email'])) {
 
                                         <?php
 
-                                                                                                                    $get_manufacturer = "select * from hang";
-                                                                                                                    $run_manufacturer = mysqli_query($con, $get_manufacturer);
+                                        $get_manufacturer = "select * from hang";
+                                        $run_manufacturer = mysqli_query($con, $get_manufacturer);
 
-                                                                                                                    while ($row_manufacturer = mysqli_fetch_array($run_manufacturer)) {
+                                        while ($row_manufacturer = mysqli_fetch_array($run_manufacturer)) {
 
-                                                                                                                        $manufacturer_idAll = $row_manufacturer['id'];
-                                                                                                                        $manufacturer_titleAll = $row_manufacturer['name'];
+                                            $manufacturer_idAll = $row_manufacturer['id'];
+                                            $manufacturer_titleAll = $row_manufacturer['name'];
 
-                                                                                                                        if ($manufacturer_idAll == $manufacturer_id) {
-                                                                                                                            echo "
+                                            if ($manufacturer_idAll == $manufacturer_id) {
+                                                echo "
                                     <option value='$manufacturer_idAll' selected> $manufacturer_titleAll </option>
                                     ";
-                                                                                                                        } else {
-                                                                                                                            echo "
+                                            } else {
+                                                echo "
                                     <option value='$manufacturer_idAll'> $manufacturer_titleAll </option>
                                     ";
-                                                                                                                        }
-                                                                                                                    }
+                                            }
+                                        }
 
                                         ?>
 
@@ -268,27 +268,27 @@ if (!isset($_SESSION['admin_email'])) {
 
                                         <?php
 
-                                                                                                                    $get_p_cats = "select * from product_type";
-                                                                                                                    $run_p_cats = mysqli_query($con, $get_p_cats);
+                                        $get_p_cats = "select * from product_type";
+                                        $run_p_cats = mysqli_query($con, $get_p_cats);
 
-                                                                                                                    while ($row_p_cats = mysqli_fetch_array($run_p_cats)) {
+                                        while ($row_p_cats = mysqli_fetch_array($run_p_cats)) {
 
-                                                                                                                        $p_cat_id = $row_p_cats['id'];
-                                                                                                                        $p_cat_title = $row_p_cats['name'];
-                                                                                                                        if ($p_cat_id == $p_cat) {
-                                                                                                                            echo "
+                                            $p_cat_id = $row_p_cats['id'];
+                                            $p_cat_title = $row_p_cats['name'];
+                                            if ($p_cat_id == $p_cat) {
+                                                echo "
                                   
                                     <option value='$p_cat_id' selected> $p_cat_title </option>
                                     
                                     ";
-                                                                                                                        } else {
-                                                                                                                            echo "
+                                            } else {
+                                                echo "
                                   
                                     <option value='$p_cat_id'> $p_cat_title </option>
                                     
                                     ";
-                                                                                                                        }
-                                                                                                                    }
+                                            }
+                                        }
 
                                         ?>
 
@@ -326,18 +326,18 @@ if (!isset($_SESSION['admin_email'])) {
                                                 <?php
 
 
-                                                                                                                    $get_size = "select sd.id,sd.number,s.name from size_detail sd join size s on sd.id_size = s.id where id_product = $p_id";
+                                                $get_size = "select sd.id,sd.number,s.name from size_detail sd join size s on sd.id_size = s.id where id_product = $p_id";
 
-                                                                                                                    $run_size = mysqli_query($con, $get_size);
-                                                                                                                    while ($row_size = mysqli_fetch_array($run_size)) {
+                                                $run_size = mysqli_query($con, $get_size);
+                                                while ($row_size = mysqli_fetch_array($run_size)) {
 
-                                                                                                                        $size_id = $row_size['id'];
+                                                    $size_id = $row_size['id'];
 
-                                                                                                                        $size_title = $row_size['name'];
+                                                    $size_title = $row_size['name'];
 
-                                                                                                                        $size_number = $row_size['number'];
+                                                    $size_number = $row_size['number'];
 
-                                                                                                                        echo ("
+                                                    echo ("
                                     <tr>
                                             <td> $size_title </td>
                                         <td>
@@ -376,9 +376,9 @@ if (!isset($_SESSION['admin_email'])) {
                                     <input id="file_upload" name="file_upload" type="file" multiple="true">
                                     <br>
                                     <?php
-                                                                                                                    foreach (preg_split("/\,/", $image) as $value) {
-                                                                                                                        echo "<img width='70' height='70' src='product_images/$value' alt= $value style = 'margin-left: 10px'>";
-                                                                                                                    }
+                                    foreach (preg_split("/\,/", $image) as $value) {
+                                        echo "<img width='70' height='70' src='product_images/$value' alt= $value style = 'margin-left: 10px'>";
+                                    }
 
                                     ?>
 
