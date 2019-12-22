@@ -30,9 +30,9 @@
                    
                    while($row_slides=mysqli_fetch_array($run_slides)){
                        
-                       $slide_name = $row_slides['slide_name'];
-                       $slide_image = $row_slides['slide_image'];
-                       $slide_url = $row_slides['slide_url'];
+                       $slide_name = $row_slides['slider_name'];
+                       $slide_image = $row_slides['slider_image'];
+                       $slide_url = $row_slides['slider_url'];
                        
                        echo "
                        <div class='item active'>
@@ -50,9 +50,9 @@
                    
                    while($row_slides=mysqli_fetch_array($run_slides)){
                        
-                       $slide_name = $row_slides['slide_name'];
-                       $slide_image = $row_slides['slide_image'];
-                       $slide_url = $row_slides['slide_url'];
+                       $slide_name = $row_slides['slider_name'];
+                       $slide_image = $row_slides['slider_image'];
+                       $slide_url = $row_slides['slider_url'];
                        
                        echo "
                        
@@ -148,7 +148,7 @@
                <div class="col-md-12"><!-- col-md-12 Begin -->
                    
                    <h2>
-                       Our Latest Products
+                       <strong> Sản phẩm mới nhất </strong>
                    </h2>
                    
                </div><!-- col-md-12 Finish -->

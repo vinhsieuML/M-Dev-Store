@@ -5,16 +5,17 @@
         <?php 
         
         $customer_session = $_SESSION['customer_email'];
+
         
-        $get_customer = "select * from customers where customer_email='$customer_session'";
+        $get_customer = "select * from users where email='$customer_session'";
         
         $run_customer = mysqli_query($con,$get_customer);
         
         $row_customer = mysqli_fetch_array($run_customer);
         
-        $customer_image = $row_customer['customer_image'];
+        // $customer_image = $row_customer['customer_image'];
         
-        $customer_name = $row_customer['customer_name'];
+        $customer_name = $row_customer['name'];
         
         if(!isset($_SESSION['customer_email'])){
             
@@ -22,17 +23,13 @@
             
             echo "
             
-                <center>
                 
-                    <img src='customer_images/$customer_image' class='img-responsive' >
-                
-                </center>
                 
                 <br/>
                 
                 <h3 class='panel-title' align='center'>
                 
-                    Name: $customer_name
+                    Tên: $customer_name
                 
                 </h3>
             
@@ -52,7 +49,7 @@
                 
                 <a href="my_account.php?my_orders">
                     
-                    <i class="fa fa-list"></i> My Orders
+                    <i class="fa fa-list"></i> Đơn hàng của tôi
                     
                 </a>
                 
@@ -72,7 +69,7 @@
                 
                 <a href="my_account.php?edit_account">
                     
-                    <i class="fa fa-pencil"></i> Edit Account
+                    <i class="fa fa-pencil"></i> Chỉnh sửa tài khoản
                     
                 </a>
                 
@@ -82,7 +79,7 @@
                 
                 <a href="my_account.php?change_pass">
                     
-                    <i class="fa fa-user"></i> Change Password
+                    <i class="fa fa-user"></i> Đổi mật khẩu
                     
                 </a>
                 
@@ -92,7 +89,7 @@
                 
                 <a href="my_account.php?delete_account">
                     
-                    <i class="fa fa-trash-o"></i> Delete Account
+                    <i class="fa fa-trash-o"></i> Xóa tài khoản
                     
                 </a>
                 
@@ -102,7 +99,7 @@
                 
                 <a href="logout.php">
                     
-                    <i class="fa fa-sign-out"></i> Log Out
+                    <i class="fa fa-sign-out"></i> Đăng xuất
                     
                 </a>
                 

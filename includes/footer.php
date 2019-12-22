@@ -1,161 +1,140 @@
-<div id="footer"><!-- #footer Begin -->
-    <div class="container"><!-- container Begin -->
-        <div class="row"><!-- row Begin -->
-            <div class="col-sm-6 col-md-3"><!-- col-sm-6 col-md-3 Begin -->
-               
-               <h4>Pages</h4>
-                
-                <ul><!-- ul Begin -->
-                    <li><a href="cart.php">Shopping Cart</a></li>
-                    <li><a href="contact.php">Contact Us</a></li>
-                    <li><a href="shop.php">Shop</a></li>
-                    <li><a href="customer/my_account.php">My Account</a></li>
-                </ul><!-- ul Finish -->
-                
-                <hr>
-                
-                <h4>User Section</h4>
-                
-                <ul><!-- ul Begin -->
-                           
-                           <?php 
-                           
-                           if(!isset($_SESSION['customer_email'])){
-                               
-                               echo"<a href='checkout.php'>Login</a>";
-                               
-                           }else{
-                               
-                              echo"<a href='customer/my_account.php?my_orders'>My Account</a>"; 
-                               
-                           }
-                           
-                           ?>
-                    
-                    <li><a href="customer_register.php">Register</a></li>
-                    <li><a href="terms.php">Terms & Conditions</a></li>
-                </ul><!-- ul Finish -->
-                
-                <hr class="hidden-md hidden-lg hidden-sm">
-                
-            </div><!-- col-sm-6 col-md-3 Finish -->
-            
-            <div class="com-sm-6 col-md-3"><!-- col-sm-6 col-md-3 Begin -->
-                
-                <h4>Top Products Categories</h4>
-                
-                <ul><!-- ul Begin -->
-                
-                    <?php 
-                    
-                        $get_p_cats = "select * from product_categories";
-                    
-                        $run_p_cats = mysqli_query($con,$get_p_cats);
-                    
-                        while($row_p_cats=mysqli_fetch_array($run_p_cats)){
-                            
-                            $p_cat_id = $row_p_cats['p_cat_id'];
-                            
-                            $p_cat_title = $row_p_cats['p_cat_title'];
-                            
-                            echo "
-                            
-                                <li>
-                                
-                                    <a href='shop.php?p_cat=$p_cat_id'>
-                                    
-                                        $p_cat_title
-                                    
-                                    </a>
-                                
-                                </li>
-                            
-                            ";
-                            
-                        }
-                    
-                    ?>
-                
-                </ul><!-- ul Finish -->
-                
-                <hr class="hidden-md hidden-lg">
-                
-            </div><!-- col-sm-6 col-md-3 Finish -->
-            
-            <div class="col-sm-6 col-md-3"><!-- col-sm-6 col-md-3 Begin -->
-                
-                <h4>Find Us</h4>
-                
-                <p><!-- p Start -->
-                    
-                    <strong>M-Dev Media inc.</strong>
-                    <br/>Cibubur
-                    <br/>Ciracas
-                    <br/>0818-0683-3157
-                    <br/>mugianto4th@gmail.com
-                    <br/><strong>MrGhie</strong>
-                    
-                </p><!-- p Finish -->
-                
-                <a href="contact.php">Check Our Contact Page</a>
-                
-                <hr class="hidden-md hidden-lg">
-                
-            </div><!-- col-sm-6 col-md-3 Finish -->
-            
+<div id="footer"> <!-- Footer Begin-->
+    <div class="container">
+        <div class="row">
             <div class="col-sm-6 col-md-3">
-                
-                <h4>Get The News</h4>
-                
-                <p class="text-muted">
-                    Dont miss our latest update products.
+
+                <h4><img src="images/logo2.png" alt=""></h4>
+                <!-- <p class="addressp">Với mong muốn lan tỏa tình yêu với trái bóng cam 
+                    đến tất cả mọi người. SH Shop luôn cập nhật những sản phẩm mới nhất,
+                     tốt nhất cùng với những lời tư vấn chân thành nhất.
                 </p>
+
+                <hr> -->
+              
+                <ul>
+                    <li class="space_line"><a href="cart.php">Giỏ hàng</a></li>
+                    <li class="space_line"><a href="customer/my_account.php">Tài khoản</a></li>
+                    <li class="space_line"><a href="shop.php">Cửa hàng</a></li>  
+                    <li class="space_line"><a href="contact.php">Liên hệ</a></li>                 
+                </ul>
+
+                <h4 class="headline">Thao tác</h4>
                 
-                <form action="https://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" onsubmit="window.open('https://feedburner.google.com/fb/a/mailverify?uri=M-devMedia', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true" method="post"><!-- form begin -->
-                    <div class="input-group"><!-- input-group begin -->
+                <ul>
+                    <li class="space_line2"><a href="cart.php">Đăng nhập</a></li>
+                    <li class="space_line2"><a href="customer_register.php">Đăng ký</a></li>            
+                </ul>
+
+                <hr class="hidden-md hidden-lg hidden-sm">
+
+                <!-- <hr>
+
+                <h4>User Section</h4>
+                <ul>
+                    <li><a href="cart.php">Đăng nhập</a></li>
+                    <li><a href="checkout.php">Đăng ký</a></li>            
+                </ul>
+
+                <hr class="hidden-md hidden-lg hidden-sm"> -->
+
+            </div>
+
+            <div class="col-sm-6 col-md-3">
+                <h4 class="headline">Danh mục sản phẩm</h4>
+                <ul>
+                <?php 
+                    
+                    $get_p_cats = "select * from product_type";
+                
+                    $run_p_cats = mysqli_query($con,$get_p_cats);
+                
+                    while($row_p_cats=mysqli_fetch_array($run_p_cats)){
                         
+                        $p_cat_id = $row_p_cats['id'];
+                        
+                        $p_cat_title = $row_p_cats['name'];
+                        
+                        echo "
+                        
+                            <li class='space_line'>
+                            
+                                <a href='shop.php?p_cat=$p_cat_id'>
+                                
+                                    $p_cat_title
+                                
+                                </a>
+                            
+                            </li>
+                        
+                        ";
+                        
+                    }
+                
+                ?>
+                </ul>
+
+                <!-- <h4 class="headline">Thao tác</h4>
+                
+                <ul>
+                    <li class="space_line2"><a href="cart.php">Đăng nhập</a></li>
+                    <li class="space_line2"><a href="checkout.php">Đăng ký</a></li>            
+                </ul>
+
+                <hr class="hidden-md hidden-lg hidden-sm"> -->
+
+            </div>
+
+            <div class="col-sm-6 col-md-3">
+                <h4 class="headline">Liên hệ với chúng tôi</h4>
+                <p class="addressp">
+                    <!-- <strong>SH Shop</strong> -->
+                    Mr.Sieu - 0897644321
+                    <br/>Mr.Hoang - 0377577205
+                    <br/>shshop_basketball@gmail.com
+                    <br/>Địa chỉ: 417 KTX khu A, Linh Trung, Thủ Đức, TP.HCM
+                </p>
+
+                <a href="contact.php">Xem thông tin liên hệ của chúng tôi</a>
+                <hr class="hidden-md hidden-lg">
+
+            </div>
+
+            <div class="com-sm-6 col-md-3">
+                <h4 class="headline">Nhận thông tin mới nhất</h4>
+                <p class="text-muted addressp">
+                    Hãy đăng ký nhận thông tin để không bỏ lỡ những sản phẩm mới nhất!
+                     
+                 </p>
+
+               <form action="https://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" 
+                onsubmit="window.open('feedburner.google.com/fb/a/mailverify?uri=FlyToAnotherSky', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true" method="post">
+                    <div class="input-group">
                         <input type="text" class="form-control" name="email">
-                        
-                        <input type="hidden" value="M-devMedia" name="uri"/><input type="hidden" name="loc" value="en_US"/>
-                        
-                        <span class="input-group-btn"><!-- input-group-btn begin -->
-                            
-                            <input type="submit" value="subscribe" class="btn btn-default">
-                            
-                        </span><!-- input-group-btn Finish -->
-                        
-                    </div><!-- input-group Finish -->
-                </form><!-- form Finish -->
-                
+                        <input type="hidden" value="FlyToAnotherSky" name="uri"/><input type="hidden" name="loc" value="en_US"/>
+                        <span class="input-group-btn">
+                            <input type="submit" value="Subscribe" class="btn btn-default subc">
+                        </span>
+                    </div>               
+               </form>
+
+               
+
                 <hr>
-                
-                <h4>Keep In Touch</h4>
-                
+
+               <h4 class="headline">Theo dõi shop trên:</h4>
                 <p class="social">
                     <a href="#" class="fa fa-facebook"></a>
-                    <a href="#" class="fa fa-twitter"></a>
+                    
                     <a href="#" class="fa fa-instagram"></a>
-                    <a href="#" class="fa fa-google-plus"></a>
+                   
                     <a href="#" class="fa fa-envelope"></a>
                 </p>
-                
             </div>
-        </div><!-- row Finish -->
-    </div><!-- container Finish -->
-</div><!-- #footer Finish -->
 
 
-<div id="copyright"><!-- #copyright Begin -->
-    <div class="container"><!-- container Begin -->
-        <div class="col-md-6"><!-- col-md-6 Begin -->
-            
-            <p class="pull-left">&copy; 2019 M-Dev Store All Rights Reserve</p>
-            
-        </div><!-- col-md-6 Finish -->
-        <div class="col-md-6"><!-- col-md-6 Begin -->
-            
-            <p class="pull-right">Theme by: <a href="#">MrGhie</a></p>
-            
-        </div><!-- col-md-6 Finish -->
-    </div><!-- container Finish -->
-</div><!-- #copyright Finish -->
+
+        </div>
+    </div>
+</div> <!-- Footer Finish-->
+
+<p class="footer-bottom-text">&copy;2019 SH Shop All Right Reserve</p>

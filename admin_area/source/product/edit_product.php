@@ -376,9 +376,9 @@ if (!isset($_SESSION['admin_email'])) {
                                     <input id="file_upload" name="file_upload" type="file" multiple="true">
                                     <br>
                                     <?php
-                                                                                                                    foreach (preg_split("/\,/", $image) as $value) {
-                                                                                                                        echo "<img width='70' height='70' src='product_images/$value' alt= $value style = 'margin-left: 10px'>";
-                                                                                                                    }
+                                            foreach (preg_split("/\,/", $image) as $value) {
+                                                echo "<img width='70' height='70' src='product_images/$value' alt= $value style = 'margin-left: 10px'>";
+                                            }
 
                                     ?>
 

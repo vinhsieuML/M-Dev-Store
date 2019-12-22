@@ -58,13 +58,13 @@
             
             $_SESSION['admin_email']=$admin_email;
             
-            echo "<script>alert('Logged in. Welcome Back')</script>";
+            echo "<script>alert('Đăng nhập thành công. Chào mừng bạn quay trở lại')</script>";
             
             echo "<script>window.open('index.php?dashboard','_self')</script>";
             
         }else{
             
-            echo "<script>alert('Email or Password is Wrong !')</script>";
+            echo "<script>alert('Sai mật khẩu hoặc tài khoản!')</script>";
             
         }
         

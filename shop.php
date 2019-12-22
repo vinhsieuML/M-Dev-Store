@@ -11,10 +11,10 @@
                
                <ul class="breadcrumb"><!-- breadcrumb Begin -->
                    <li>
-                       <a href="index.php">Home</a>
+                       <a href="index.php">Trang chủ</a>
                    </li>
                    <li>
-                       Shop
+                       Cửa hàng
                    </li>
                </ul><!-- breadcrumb Finish -->
                
@@ -32,26 +32,159 @@
            
            <div class="col-md-9"><!-- col-md-9 Begin -->
 
-                <div class='box'><!-- box Begin -->
-                    <h1>Shop</h1>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo deleniti accusamus, consequuntur illum quasi ut. Voluptate a, ipsam repellendus ut fugiat minima? Id facilis itaque autem, officiis veritatis perferendis, quaerat!
-                    </p>
-                </div><!-- box Finish -->
-               
-               <div id="products" class="row"><!-- row Begin -->
+           <?php
+                    if(!isset($_GET['p_cat'])){
+                        if (!isset($_GET['cat'])) {
+                            echo "
 
-                    <?php getProducts(); ?>
+                <div class='box'> <!-- box Begin -->
+
+                    <h1>Cửa hàng</h1>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio explicabo, tenetur alias ratione voluptates saepe inventore labore aliquam velit sed eos modi aliquid autem ipsum hic, unde, necessitatibus at. Ex?
+                    </p>
+                </div> <!-- box Finish -->
+                ";
+                        }
+                    }
+                ?>
                
-               </div><!-- row Finish -->
+               <div class="row"> <!-- row Begin  (product class eff)--> 
+                <?php 
+                   
+                   if (!isset($_GET['p_cat'])) {
+                       if (!isset($_GET['cat'])) {
+                           $per_page=6;
+                        
+                           if (isset($_GET['page'])) {
+                               $page = $_GET['page'];
+                           } else {
+                               $page=1;
+                           }
+                       
+                           $start_from = ($page-1) * $per_page;
+                        
+                           $get_products = "SELECT p.id, p.id_hang ,p.name,p.price,GROUP_CONCAT(img.link) as link FROM product p JOIN images img on p.id = img.id_product GROUP BY p.id order by 1 DESC LIMIT $start_from,$per_page";
+                        
+                           $run_products = mysqli_query($con, $get_products);
+                        
+                           while ($row_products=mysqli_fetch_array($run_products)) {
+                               $pro_id = $row_products['id'];
+        
+                               $pro_title = $row_products['name'];
+        
+                               $pro_price = $row_products['price'];
+
+                               $pro_price_f = number_format($pro_price, 0, ',', '.');
+
+               
+        
+                               $pro_link =preg_split("/\,/", $row_products['link'])[0];
+        
+           
+                               $manufacturer_id = $row_products['id_hang'];
+                           
+                               echo "
+                           
+                               <div class='col-md-4 col-sm-6 center-responsive'>
+                               
+                                   <div class='product eff'>
+                                   
+                                       <a href='details.php?pro_id=$pro_id'>
+                                       
+                                           <img class='img-responsive' src='admin_area/product_images/$pro_link'>
+                                       
+                                       </a>
+                                       
+                                       <div class='text'>
+                                       
+                                           <h3 class='pad_h'>
+                                           
+                                               <a href='details.php?pro_id=$pro_id'> $pro_title </a>
+                                           
+                                           </h3>
+                                       
+                                           <p class='price'>
+
+                                               $pro_price_f VNĐ
+
+                                           </p>
+
+                                           <p class='buttons'>
+
+                                               <a class='btn btn-default' href='details.php?pro_id=$pro_id'>
+
+                                                   Xem
+
+                                               </a>
+
+                                               <a class='btn btn-primary' href='details.php?pro_id=$pro_id'>
+
+                                                   <i class='fa fa-shopping-cart'></i> Thêm vào giỏ hàng
+
+                                               </a>
+
+                                           </p>
+                                       
+                                       </div>
+                                   
+                                   </div>
+                               
+                               </div>
+                           
+                           ";
+                           }
+                       }
+                   }
+                   
+                ?>
+                </div> <!-- row Finish -->
                
                <center>
-                   <ul class="pagination"><!-- pagination Begin -->
+                    <ul class="pagination"> <!-- pagination Begin -->
+                        <?php
+                            $query = "select * from product";
+                            $result = mysqli_query($con,$query);
+                            $total_records = mysqli_num_rows($result);
+                            $total_pages = ceil($total_records/6);
 
-                        <?php getPaginator(); ?>
+                            echo "
+                                <li>
+                                    <a href='shop.php?page=1'> ".'Trang đầu'." </a>
+                                <li>
+                            ";
 
-                   </ul><!-- pagination Finish -->
-               </center>
+                            for($i=1;$i<=$total_pages;$i++)
+                            {
+                                echo "
+                                <li>
+                                    <a href='shop.php?page=".$i."'> ".$i." </a>
+                                <li>
+                                ";
+                            };
+                            
+                            echo "
+                                <li>
+                                    <a href='shop.php?page=$total_pages'> ".'Trang cuối'." </a>
+                                <li>
+                            ";
+
+
+
+
+                            
+                        
+                        ?>
+                    </ul> <!-- pagination Finish -->
+                </center>
+
+                <?php 
+
+                    getpcatpro(); 
+
+                    gethang();
+                    
+                ?>
                
            </div><!-- col-md-9 Finish -->
 
@@ -68,254 +201,7 @@
     
     <script src="js/jquery-331.min.js"></script>
     <script src="js/bootstrap-337.min.js"></script>
-    <script>
-    
-        $(document).ready(function(){
-
-            // Hide & Show Sidebar Toggle //
-
-            $('.nav-toggle').click(function(){
-                
-                $('.panel-collapse,.collapse-data').slideToggle(700,function(){
-
-                    if($(this).css('display')=='none'){
-
-                        $(".hide-show").html('Show');
-
-                    }else{
-
-                        $(".hide-show").html('Hide');
-
-                    }
-
-                });
-
-            });
-
-            // Finish Hide & Show Sidebar Toggle //
-
-            // Search Filters | by Letter // 
-
-            $(function(){
-
-                $.fn.extend({
-
-                    filterTable: function(){
-
-                        return this.each(function(){
-
-                            $(this).on('keyup', function(){
-
-                                var $this = $(this),
-                                search = $this.val().toLowerCase(),
-                                target = $this.attr('data-filters'),
-                                handle = $(target),
-                                rows = handle.find('li a');
-
-                                if(search == ''){
-
-                                    rows.show();
-
-                                }else{
-
-                                    rows.each(function(){
-
-                                        var $this = $(this);
-
-                                        $this.text().toLowerCase().indexOf(search) === -1 ? $this.hide() : $this.show();
-
-                                    });
-
-                                }
-                            });
-
-                        });
-
-                    }
-
-                });
-
-                $('[data-action="filter"][id="dev-table-filter"]').filterTable();
-
-            });
-
-            // Finish Search Filters | by Letter //
-
-        });
-    
-    </script>
-
-    <script>
-    
-        $(document).ready(function(){
-
-            // getProducts Function Begin //
-
-            function getProducts(){
-
-                // Code For Manufacturers Begin //
-
-                var sPath = '';
-                var aInputs = $('li').find('.get_manufacturer');
-                var aKeys = Array();
-                var aValues = Array();
-
-                iKey = 0;
-
-                $.each(aInputs, function(key, oInput){
-
-                    if(oInput.checked){
-
-                        aKeys[iKey] = oInput.value
-
-                    };
-
-                    iKey++;
-
-                });
-
-                if(aKeys.length>0){
-
-                    var sPath = '';
-
-                    for(var i = 0; i < aKeys.length; i++){
-
-                        sPath = sPath + 'man[]=' + aKeys[i]+'&';
-
-                    }
-
-                }
-
-                // Code For Manufacturers Finish //
-
-                // Code For Product Categories Begin //
-
-                var aInputs = Array();
-                var aInputs = $('li').find('.get_p_cat');
-                var aKeys = Array();
-                var aValues = Array();
-
-                iKey = 0;
-
-                $.each(aInputs, function(key, oInput){
-
-                    if(oInput.checked){
-
-                        aKeys[iKey] = oInput.value
-
-                    };
-
-                    iKey++;
-
-                });
-
-                if(aKeys.length>0){
-
-                    var sPath = '';
-
-                    for(var i = 0; i < aKeys.length; i++){
-
-                        sPath = sPath + 'p_cat[]=' + aKeys[i]+'&';
-
-                    }
-
-                }
-
-                // Code For Product Categories Finish //
-
-                // Code For Categories Begin //
-
-                var aInputs = Array();
-                var aInputs = $('li').find('.get_cat');
-                var aKeys = Array();
-                var aValues = Array();
-
-                iKey = 0;
-
-                $.each(aInputs, function(key, oInput){
-
-                    if(oInput.checked){
-
-                        aKeys[iKey] = oInput.value
-
-                    };
-
-                    iKey++;
-
-                });
-
-                if(aKeys.length>0){
-
-                    var sPath = '';
-
-                    for(var i = 0; i < aKeys.length; i++){
-
-                        sPath = sPath + 'cat[]=' + aKeys[i]+'&';
-
-                    }
-
-                }
-
-                // Code For Categories Finish //
-
-                // Loader When Loading Begin //    
-
-                $('#wait').html('<img src="images/load.gif"');
-
-                // Loader When Loading Finish //  
-
-                $.ajax({
-
-                    url:"load.php",
-                    method:"POST",
-
-                    data: sPath+'sAction=getProducts',
-
-                    success:function(data){
-
-                        $('#products').html('');
-                        $('#products').html(data);
-                        $('#wait').empty();
-
-                    }
-
-                });
-
-                $.ajax({
-
-                    url:"load.php",
-                    method:"POST",
-
-                    data: sPath+'sAction=getPaginator',
-
-                    success:function(data){
-
-                        $('.pagination').html('');
-                        $('.pagination').html(data);
-
-                    }
-
-                });
-
-            }
-
-            // getProducts Function Finish //
-
-            $('.get_manufacturer').click(function(){
-                getProducts();
-            });
-
-            $('.get_p_cat').click(function(){
-                getProducts();
-            });
-
-            $('.get_cat').click(function(){
-                getProducts();
-            });
-
-        });
-    
-    </script>
+   
     
     
 </body>
