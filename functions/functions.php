@@ -132,64 +132,25 @@ function getPro(){
     
     global $db;
     
-    $get_products = "select * from products order by 1 DESC LIMIT 0,8";
+    $get_products = "SELECT p.id, p.name,p.price,GROUP_CONCAT(img.link) as link FROM product p JOIN images img on p.id = img.id_product GROUP BY p.id order by 1 DESC LIMIT 0,8";
     
     $run_products = mysqli_query($db,$get_products);
     
     while($row_products=mysqli_fetch_array($run_products)){
         
-        $pro_id = $row_products['product_id'];
+        $pro_id = $row_products['id'];
         
-        $pro_title = $row_products['product_title'];
+        $pro_title = $row_products['name'];
         
-        $pro_price = $row_products['product_price'];
+        $pro_price = $row_products['price'];
 
-        $pro_sale_price = $row_products['product_sale'];
+        $pro_price_f = number_format($pro_price , 0, ',', '.');
+
+        // $pro_sale_price = $row_products['product_sale'];
         
-        $pro_img1 = $row_products['product_img1'];
+        $pro_link =preg_split("/\,/", $row_products['link'])[0];
         
-        $pro_label = $row_products['product_label'];
-        
-        $manufacturer_id = $row_products['manufacturer_id'];
-
-        $get_manufacturer = "select * from manufacturers where manufacturer_id='$manufacturer_id'";
-
-        $run_manufacturer = mysqli_query($db,$get_manufacturer);
-
-        $row_manufacturer = mysqli_fetch_array($run_manufacturer);
-
-        $manufacturer_title = $row_manufacturer['manufacturer_title'];
-
-        if($pro_label == "sale"){
-
-            $product_price = " <del> $ $pro_price </del> ";
-
-            $product_sale_price = "/ $ $pro_sale_price ";
-
-        }else{
-
-            $product_price = "  $ $pro_price  ";
-
-            $product_sale_price = "";
-
-        }
-
-        if($pro_label == ""){
-
-        }else{
-
-            $product_label = "
-            
-                <a href='#' class='label $pro_label'>
-                
-                    <div class='theLabel'> $pro_label </div>
-                    <div class='labelBackground'>  </div>
-                
-                </a>
-            
-            ";
-
-        }
+      
         
         echo "
         
@@ -199,17 +160,13 @@ function getPro(){
             
                 <a href='details.php?pro_id=$pro_id'>
                 
-                    <img class='img-responsive' src='admin_area/product_images/$pro_img1'>
+                    <img class='img-responsive' src='admin_area/product_images/$pro_link'>
                 
                 </a>
                 
                 <div class='text'>
 
-                <center>
-                
-                    <p class='btn btn-primary'> $manufacturer_title </p>
-                
-                </center>
+               
                 
                     <h3 class='pad_h'>
             
@@ -223,7 +180,7 @@ function getPro(){
                     
                     <p class='price'>
                     
-                    $product_price &nbsp;$product_sale_price
+                    $pro_price_f VNĐ
                     
                     </p>
                     
@@ -231,13 +188,13 @@ function getPro(){
                     
                         <a class='btn btn-default' href='details.php?pro_id=$pro_id'>
 
-                            View Details
+                            Chi tiết
 
                         </a>
                     
                         <a class='btn btn-primary' href='details.php?pro_id=$pro_id'>
 
-                            <i class='fa fa-shopping-cart'></i> Add to Cart
+                            <i class='fa fa-shopping-cart'></i> Thêm vào giỏ hàng
 
                         </a>
                     
@@ -245,7 +202,7 @@ function getPro(){
                 
                 </div>
 
-                $product_label
+                
             
             </div>
         
@@ -265,19 +222,19 @@ function getPCats(){
     
     global $db;
     
-    $get_p_cats = "select * from product_categories";
+    $get_p_cats = "select * from product_type";
     
     $run_p_cats = mysqli_query($db,$get_p_cats);
     
     while($row_p_cats=mysqli_fetch_array($run_p_cats)){
         
-        $p_cat_id = $row_p_cats['p_cat_id'];
+        $p_cat_id = $row_p_cats['id'];
         
-        $p_cat_title = $row_p_cats['p_cat_title'];
+        $p_cat_title = $row_p_cats['name'];
         
         echo "
         
-            <li>
+            <li class='mar_bot'>
             
                 <a href='shop.php?p_cat=$p_cat_id'> $p_cat_title </a>
             
@@ -297,20 +254,20 @@ function getCats(){
     
     global $db;
     
-    $get_cats = "select * from categories";
+    $get_cats = "select * from hang";
     
     $run_cats = mysqli_query($db,$get_cats);
     
     while($row_cats=mysqli_fetch_array($run_cats)){
         
-        $cat_id = $row_cats['cat_id'];
+        $cat_id = $row_cats['id'];
         
-        $cat_title = $row_cats['cat_title'];
+        $cat_title = $row_cats['name'];
         
         echo "
         
-            <li>
-            
+            <li class='mar_bot'>
+                
                 <a href='shop.php?cat=$cat_id'> $cat_title </a>
             
             </li>
@@ -319,6 +276,207 @@ function getCats(){
         
     }
     
+}
+
+function gethang(){
+
+    global $db;
+
+    if(isset($_GET['cat'])){
+
+        $cat_id = $_GET['cat'];
+
+        $get_cat = "select * from hang where id='$cat_id' ";
+
+        $run_cat = mysqli_query($db,$get_cat);
+
+        $row_cat = mysqli_fetch_array($run_cat);
+
+        $cat_title = $row_cat['name'];
+
+        
+
+        $get_cat = "SELECT p.id, p.id_hang ,p.name,p.price,GROUP_CONCAT(img.link) as link FROM product p JOIN images img on p.id = img.id_product where id_hang='$cat_id' GROUP BY p.id LIMIT 0,6";
+
+        $run_products = mysqli_query($db,$get_cat);
+
+        $count = mysqli_num_rows($run_products);
+
+        if($count==0){
+            echo "
+                <div class='box'>
+
+                    <h1> Không có sản phẩm nào </h1>
+                    
+                </div>
+            
+            ";
+
+        } else{
+
+            echo"
+            <div class='box'>
+
+            <h1> $cat_title </h1>
+
+            
+            
+            </div>
+            ";
+        }
+
+        while($row_products=mysqli_fetch_array($run_products)){
+
+            $pro_id = $row_products['id'];
+
+            $pro_title = $row_products['name'];
+    
+            $pro_price = $row_products['price'];
+            $pro_price_f = number_format($pro_price, 0, ',', '.');
+
+    
+            $pro_link =preg_split("/\,/", $row_products['link'])[0];
+        
+
+            echo "
+            
+            <div class='col-md-4 col-sm-6 center-responsive'>
+                
+            <div class='product eff'>
+                <a href='details.php?pro_id=$pro_id'>
+                    <img class='img-responsive' src='admin_area/product_images/$pro_link'>
+                </a>
+
+                <div class='text'>
+                    <h3 class='pad_h'>
+                        <a href='details.php?pro_id=$pro_id' class='pro_title_size'>
+                            $pro_title
+                        </a>
+                    </h3>
+
+                    <p class='price'>
+                        <strong>  $pro_price_f VNĐ </strong>
+                    </p>
+
+                    <p class='button'>
+                        <a class='btn btn-default' href='details.php?pro_id=$pro_id'>
+                            Chi tiết
+                        </a>
+
+                        <a class='btn btn-primary' href='details.php?pro_id=$pro_id'>
+                            <i class='fa fa-shoping-cart'></i> Thêm vào giỏ hàng
+                        </a>
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+            ";
+        }
+
+    }
+
+}
+
+
+function getpcatpro(){
+    global $db;
+    if(isset($_GET['p_cat'])){
+        $p_cat_id = $_GET['p_cat'];
+
+        $get_p_cat = "select * from product_type where id='$p_cat_id'";
+
+        $run_p_cat = mysqli_query($db,$get_p_cat);
+
+        $row_p_cat = mysqli_fetch_array($run_p_cat);
+
+        $p_cat_title = $row_p_cat['name'];
+
+        $cat_id = $row_p_cat['id'];
+
+
+        $get_products = "SELECT p.id, p.id_hang ,p.name,p.price,GROUP_CONCAT(img.link) as link FROM product p JOIN images img on p.id = img.id_product where id_type='$cat_id' GROUP BY p.id LIMIT 0,6";
+
+        $run_products = mysqli_query($db,$get_products);
+
+        $count = mysqli_num_rows($run_products);
+
+        if($count==0)
+        {
+            echo"
+                <div class='box'>
+
+                    <h1> Không có sản phẩm nào </h1>
+
+                </div>
+            ";
+        }else{
+            
+            echo"
+                <div class='box'>
+
+                    <h1> $p_cat_title </h1>
+
+                   
+
+                </div>
+            ";
+
+        }
+        
+        while($row_products=mysqli_fetch_array($run_products)){
+
+            $pro_id = $row_products['id'];
+
+            $pro_title = $row_products['name'];
+    
+            $pro_price = $row_products['price'];
+            $pro_price_f = number_format($pro_price, 0, ',', '.');
+
+    
+            $pro_link =preg_split("/\,/", $row_products['link'])[0];
+        
+
+            echo "
+            
+            <div class='col-md-4 col-sm-6 center-responsive'>
+                
+            <div class='product eff'>
+                <a href='details.php?pro_id=$pro_id'>
+                    <img class='img-responsive' src='admin_area/product_images/$pro_link'>
+                </a>
+
+                <div class='text'>
+                    <h3 class='pad_h'>
+                        <a href='details.php?pro_id=$pro_id' class='pro_title_size'>
+                            $pro_title
+                        </a>
+                    </h3>
+
+                    <p class='price'>
+                        <strong>  $pro_price_f VNĐ </strong>
+                    </p>
+
+                    <p class='button'>
+                        <a class='btn btn-default' href='details.php?pro_id=$pro_id'>
+                            Chi tiết
+                        </a>
+
+                        <a class='btn btn-primary' href='details.php?pro_id=$pro_id'>
+                            <i class='fa fa-shoping-cart'></i> Thêm vào giỏ hàng
+                        </a>
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+            ";
+        }
+    }
 }
     
 /// finish getCats functions ///
@@ -382,151 +540,66 @@ function getProducts(){
     global $db;
     $aWhere = array();
 
-    /// Begin for Manufacturer ///
-    
-    if(isset($_REQUEST['man'])&&is_array($_REQUEST['man'])){
+    if(!isset($_GET['p_cat'])){
+    if (!isset($_GET['cat'])) {
+        $per_page=6;
 
-        foreach($_REQUEST['man'] as $sKey=>$sVal){
-
-            if((int)$sVal!=0){
-
-                $aWhere[] = 'manufacturer_id='.(int)$sVal;
-
-            }
-
+        if (isset($_GET['page'])) {
+            $page = $_GET['page'];
+        } else {
+            $page=1;
         }
 
-    }
-
-    /// Finish for Manufacturer ///  
-
-    /// Begin for Product Categories /// 
-
-    if(isset($_REQUEST['p_cat'])&&is_array($_REQUEST['p_cat'])){
-
-        foreach($_REQUEST['p_cat'] as $sKey=>$sVal){
-
-            if((int)$sVal!=0){
-
-                $aWhere[] = 'p_cat_id='.(int)$sVal;
-
-            }
-
-        }
-
-    }    
-
-    /// Finish for Product Categories /// 
-
-    /// Begin for Categories /// 
-
-    if(isset($_REQUEST['cat'])&&is_array($_REQUEST['cat'])){
-
-        foreach($_REQUEST['cat'] as $sKey=>$sVal){
-
-            if((int)$sVal!=0){
-
-                $aWhere[] = 'cat_id='.(int)$sVal;
-
-            }
-
-        }
-
-    }    
-
-    /// Finish for Categories /// 
-
-    $per_page=6;
-
-    if(isset($_GET['page'])){
-
-        $page = $_GET['page'];
-
-    }else{
-        $page=1;
-    }
-
-    $start_from = ($page-1) * $per_page;
-    $sLimit = " order by 1 DESC LIMIT $start_from,$per_page";
-    $sWhere = (count($aWhere)>0?' WHERE '.implode(' or ',$aWhere):'').$sLimit;
-    $get_products = "select * from products ".$sWhere;
-    $run_products = mysqli_query($db,$get_products);
-    while($row_products=mysqli_fetch_array($run_products)){
+        $start_from = ($page-1) * $per_page;
+        $sLimit = " order by 1 DESC LIMIT $start_from,$per_page";
         
-        $pro_id = $row_products['product_id'];
+        $get_products = "SELECT p.id, p.id_hang ,p.name,p.price,GROUP_CONCAT(img.link) as link FROM product p JOIN images img on p.id = img.id_product GROUP BY p.id".$sLimit;
+        $run_products = mysqli_query($db, $get_products);
+        while ($row_products=mysqli_fetch_array($run_products)) {
+            $pro_id = $row_products['id'];
         
-        $pro_title = $row_products['product_title'];
+            $pro_title = $row_products['name'];
         
-        $pro_price = $row_products['product_price'];
+            $pro_price = $row_products['price'];
 
-        $pro_sale_price = $row_products['product_sale'];
+            $pro_price_f = number_format($pro_price, 0, ',', '.');
+
+            // $pro_sale_price = $row_products['product_sale'];
         
-        $pro_img1 = $row_products['product_img1'];
+            $pro_link =preg_split("/\,/", $row_products['link'])[0];
         
-        $pro_label = $row_products['product_label'];
+            // $pro_label = $row_products['product_label'];
         
-        $manufacturer_id = $row_products['manufacturer_id'];
+            $manufacturer_id = $row_products['id_hang'];
 
-        $get_manufacturer = "select * from manufacturers where manufacturer_id='$manufacturer_id'";
+            $get_manufacturer = "select * from hang where id='$manufacturer_id'";
 
-        $run_manufacturer = mysqli_query($db,$get_manufacturer);
+            $run_manufacturer = mysqli_query($db, $get_manufacturer);
 
-        $row_manufacturer = mysqli_fetch_array($run_manufacturer);
+            $row_manufacturer = mysqli_fetch_array($run_manufacturer);
 
-        $manufacturer_title = $row_manufacturer['manufacturer_title'];
+            $manufacturer_title = $row_manufacturer['name'];
 
-        if($pro_label == "sale"){
-
-            $product_price = " <del> $ $pro_price </del> ";
-
-            $product_sale_price = "/ $ $pro_sale_price ";
-
-        }else{
-
-            $product_price = "  $ $pro_price  ";
-
-            $product_sale_price = "";
-
-        }
-
-        if($pro_label == ""){
-
-        }else{
-
-            $product_label = "
-            
-                <a href='#' class='label $pro_label'>
-                
-                    <div class='theLabel'> $pro_label </div>
-                    <div class='labelBackground'>  </div>
-                
-                </a>
-            
-            ";
-
-        }
         
-        echo "
+
+        
+            echo "
         
         <div class='col-md-4 col-sm-6 center-responsive'>
         
-            <div class='product'>
+            <div class='product eff'>
             
                 <a href='details.php?pro_id=$pro_id'>
                 
-                    <img class='img-responsive' src='admin_area/product_images/$pro_img1'>
+                    <img class='img-responsive' src='admin_area/product_images/$pro_link'>
                 
                 </a>
                 
                 <div class='text'>
 
-                <center>
+               
                 
-                    <p class='btn btn-primary'> $manufacturer_title </p>
-                
-                </center>
-                
-                    <h3>
+                    <h3 class='pad_h'>
             
                         <a href='details.php?pro_id=$pro_id'>
 
@@ -537,22 +610,20 @@ function getProducts(){
                     </h3>
                     
                     <p class='price'>
-                    
-                    $product_price &nbsp;$product_sale_price
-                    
+                        $pro_price_f VNĐ
                     </p>
                     
                     <p class='button'>
                     
                         <a class='btn btn-default' href='details.php?pro_id=$pro_id'>
 
-                            View Details
+                            Chi tiết
 
                         </a>
                     
                         <a class='btn btn-primary' href='details.php?pro_id=$pro_id'>
 
-                            <i class='fa fa-shopping-cart'></i> Add to Cart
+                            <i class='fa fa-shopping-cart'></i> Thêm vào giỏ hàng
 
                         </a>
                     
@@ -560,119 +631,26 @@ function getProducts(){
                 
                 </div>
 
-                $product_label
+                
             
             </div>
         
         </div>
         
         ";
-        
+        }
+    }
     }
 
 }
+
+
 
 /// finish getProducts(); functions ///
 
 /// begin getPaginator(); functions ///
 
-function getPaginator(){
 
-    global $db;
-
-    $per_page=6;
-    $aWhere = array();
-    $aPath = '';
-
-    /// Begin for Manufacturer ///
-    
-    if(isset($_REQUEST['man'])&&is_array($_REQUEST['man'])){
-
-        foreach($_REQUEST['man'] as $sKey=>$sVal){
-
-            if((int)$sVal!=0){
-
-                $aWhere[] = 'manufacturer_id='.(int)$sVal;
-                $aPath .= 'man[]='.(int)$sVal.'&';
-
-            }
-
-        }
-
-    }
-
-    /// Finish for Manufacturer ///  
-
-    /// Begin for Product Categories /// 
-
-    if(isset($_REQUEST['p_cat'])&&is_array($_REQUEST['p_cat'])){
-
-        foreach($_REQUEST['p_cat'] as $sKey=>$sVal){
-
-            if((int)$sVal!=0){
-
-                $aWhere[] = 'p_cat_id='.(int)$sVal;
-                $aPath .= 'p_cat[]='.(int)$sVal.'&';
-
-            }
-
-        }
-
-    }    
-
-    /// Finish for Product Categories /// 
-
-    /// Begin for Categories /// 
-
-    if(isset($_REQUEST['cat'])&&is_array($_REQUEST['cat'])){
-
-        foreach($_REQUEST['cat'] as $sKey=>$sVal){
-
-            if((int)$sVal!=0){
-
-                $aWhere[] = 'cat_id='.(int)$sVal;
-                $aPath .= 'cat[]='.(int)$sVal.'&';
-
-            }
-
-        }
-
-    }    
-
-    /// Finish for Categories ///   
-    
-    $sWhere = (count($aWhere)>0?' WHERE '.implode(' or ',$aWhere):'');
-    $query = "select * from products".$sWhere;
-    $result = mysqli_query($db,$query);
-    $total_records = mysqli_num_rows($result);
-    $total_pages = ceil($total_records / $per_page);
-
-    echo "<li> <a href='shop.php?page=1";
-    if(!empty($aPath)){
-
-        echo "&".$aPath;
-
-    }
-
-    echo "'>".'First Page'."</a></li>";
-
-    for($i=1; $i<=$total_pages; $i++){
-
-        echo "<li> <a href='shop.php?page=".$i.(!empty($aPath)?'&'.$aPath:'')."'>".$i."</a></li>";
-
-    };
-
-    echo "<li> <a href='shop.php?page=$total_pages";
-
-    if(!empty($aPath)){
-
-        echo "&".$aPath;
-
-    }
-
-    echo "'>".'Last Page'."</a></li>";
-
-}
 
 /// finish getPaginator(); functions ///
 

@@ -12,7 +12,7 @@ include("functions/functions.php");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>M-Dev Store</title>
+    <title>SH Basketball</title>
     <link rel="stylesheet" href="styles/bootstrap-337.min.css">
     <link rel="stylesheet" href="font-awsome/css/font-awesome.min.css">
     <link rel="stylesheet" href="styles/style.css">
@@ -93,8 +93,8 @@ include("functions/functions.php");
                
                <a href="index.php" class="navbar-brand home"><!-- navbar-brand home Begin -->
                    
-                   <img src="images/ecom-store-logo.png" alt="M-dev-Store Logo" class="hidden-xs">
-                   <img src="images/ecom-store-logo-mobile.png" alt="M-dev-Store Logo Mobile" class="visible-xs">
+                   <img src="images/logo2.png" alt="M-dev-Store Logo" class="hidden-xs">
+                   <img src="images/logo-res.png" alt="M-dev-Store Logo Mobile" class="visible-xs">
                    
                </a><!-- navbar-brand home Finish -->
                
@@ -123,14 +123,14 @@ include("functions/functions.php");
                    <ul class="nav navbar-nav left"><!-- nav navbar-nav left Begin -->
                        
                        <li class="<?php if($active=='Home') echo"active"; ?>">
-                           <a href="index.php">Home</a>
+                           <a href="index.php">Trang chủ</a>
                        </li>
                        <li class="<?php if($active=='Shop') echo"active"; ?>">
-                           <a href="shop.php">Shop</a>
+                           <a href="shop.php">Cửa hàng</a>
                        </li>
                        
                        <li class="<?php if($active=='Contact') echo"active"; ?>">
-                           <a href="contact.php">Contact Us</a>
+                           <a href="contact.php">Liên hệ</a>
                        </li>
                        
                    </ul><!-- nav navbar-nav left Finish -->

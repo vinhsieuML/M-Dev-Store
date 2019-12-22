@@ -12,54 +12,43 @@ include("functions/functions.php");
 <?php
 
 if (isset($_GET['pro_id'])) {
-
     $product_id = $_GET['pro_id'];
 
-    $get_product = "select * from products where product_id='$product_id'";
+    $get_product = "SELECT p.id, p.id_type ,p.description,p.id_hang ,p.name,p.price,GROUP_CONCAT(img.link) as link FROM product p JOIN images img on p.id = img.id_product where p.id='$product_id' GROUP BY p.id ";
 
     $run_product = mysqli_query($con, $get_product);
 
     $row_products = mysqli_fetch_array($run_product);
 
-    $p_cat_id = $row_products['p_cat_id'];
+    $p_cat_id = $row_products['id_type'];
 
-    $pro_title = $row_products['product_title'];
+    $pro_title = $row_products['name'];
 
-    $pro_price = $row_products['product_price'];
+    $pro_price = $row_products['price'];
 
-    $pro_sale_price = $row_products['product_sale'];
 
-    $pro_desc = $row_products['product_desc'];
+    $pro_desc = $row_products['description'];
+    
 
-    $pro_img1 = $row_products['product_img1'];
+    $get_link = "SELECT p.id, p.id_hang ,p.name,p.price,GROUP_CONCAT(img.link) as link FROM product p JOIN images img on p.id = img.id_product WHERE p.id='$product_id' GROUP BY p.id ";
+    $run_link = mysqli_query($con, $get_link);
+    $row_link = mysqli_fetch_array($run_link);
+    
 
-    $pro_img2 = $row_products['product_img2'];
 
-    $pro_img3 = $row_products['product_img3'];
+    $pro_link = $row_link['link'];
 
-    $pro_label = $row_products['product_label'];
 
-    if ($pro_label == "") { } else {
 
-        $product_label = "
-        
-            <a href='#' class='label $pro_label'>
-            
-                <div class='theLabel'> $pro_label </div>
-                <div class='labelBackground'>  </div>
-            
-            </a>
-        
-        ";
-    }
+    
 
-    $get_p_cat = "select * from product_categories where p_cat_id='$p_cat_id'";
+    $get_p_cat = "select * from product_type where id='$p_cat_id'";
 
     $run_p_cat = mysqli_query($con, $get_p_cat);
 
     $row_p_cat = mysqli_fetch_array($run_p_cat);
 
-    $p_cat_title = $row_p_cat['p_cat_title'];
+    $p_cat_title = $row_p_cat['name'];
 }
 
 ?>
@@ -70,7 +59,7 @@ if (isset($_GET['pro_id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>M-Dev Store</title>
+    <title>SH Shop</title>
     <link rel="stylesheet" href="styles/bootstrap-337.min.css">
     <link rel="stylesheet" href="font-awsome/css/font-awesome.min.css">
     <link rel="stylesheet" href="styles/style.css">
@@ -92,10 +81,8 @@ if (isset($_GET['pro_id'])) {
                     <?php
 
                     if (!isset($_SESSION['customer_email'])) {
-
                         echo "Welcome: Guest";
                     } else {
-
                         echo "Welcome: " . $_SESSION['customer_email'] . "";
                     }
 
@@ -113,13 +100,13 @@ if (isset($_GET['pro_id'])) {
                     <!-- cmenu Begin -->
 
                     <li>
-                        <a href="customer_register.php">Register</a>
+                        <a href="customer_register.php">Đăng ký</a>
                     </li>
                     <li>
                         <a href="checkout.php">My Account</a>
                     </li>
                     <li>
-                        <a href="cart.php">Go To Cart</a>
+                        <a href="cart.php">Giỏ hàng</a>
                     </li>
                     <li>
                         <a href="checkout.php">
@@ -127,10 +114,8 @@ if (isset($_GET['pro_id'])) {
                             <?php
 
                             if (!isset($_SESSION['customer_email'])) {
-
                                 echo "<a href='checkout.php'> Login </a>";
                             } else {
-
                                 echo " <a href='logout.php'> Log Out </a> ";
                             }
 
@@ -159,9 +144,9 @@ if (isset($_GET['pro_id'])) {
                 <a href="index.php" class="navbar-brand home">
                     <!-- navbar-brand home Begin -->
 
-                    <img src="images/ecom-store-logo.png" alt="M-dev-Store Logo" class="hidden-xs">
-                    <img src="images/ecom-store-logo-mobile.png" alt="M-dev-Store Logo Mobile" class="visible-xs">
-
+                    <img src="images/logo2.png" alt="M-dev-Store Logo" class="hidden-xs">
+                   <img src="images/logo-res.png" alt="M-dev-Store Logo Mobile" class="visible-xs">
+                   
                 </a><!-- navbar-brand home Finish -->
 
                 <button class="navbar-toggle" data-toggle="collapse" data-target="#navigation">
@@ -191,32 +176,21 @@ if (isset($_GET['pro_id'])) {
                     <ul class="nav navbar-nav left">
                         <!-- nav navbar-nav left Begin -->
 
-                        <li class="<?php if ($active == 'Home') echo "active"; ?>">
-                            <a href="index.php">Home</a>
+                        <li class="<?php if ($active == 'Home') {
+                                echo "active";
+                            } ?>">
+                            <a href="index.php">Trang chủ</a>
                         </li>
-                        <li class="<?php if ($active == 'Shop') echo "active"; ?>">
-                            <a href="shop.php">Shop</a>
+                        <li class="<?php if ($active == 'Shop') {
+                                echo "active";
+                            } ?>">
+                            <a href="shop.php">Cửa hàng</a>
                         </li>
-                        <li class="<?php if ($active == 'Account') echo "active"; ?>">
-
-                            <?php
-
-                            if (!isset($_SESSION['customer_email'])) {
-
-                                echo "<a href='checkout.php'>My Account</a>";
-                            } else {
-
-                                echo "<a href='customer/my_account.php?my_orders'>My Account</a>";
-                            }
-
-                            ?>
-
-                        </li>
-                        <li class="<?php if ($active == 'Cart') echo "active"; ?>">
-                            <a href="cart.php">Shopping Cart</a>
-                        </li>
-                        <li class="<?php if ($active == 'Contact') echo "active"; ?>">
-                            <a href="contact.php">Contact Us</a>
+                        
+                        <li class="<?php if ($active == 'Contact') {
+                                echo "active";
+                            } ?>">
+                            <a href="contact.php">Liên hệ</a>
                         </li>
 
                     </ul><!-- nav navbar-nav left Finish -->
@@ -291,10 +265,10 @@ if (isset($_GET['pro_id'])) {
                 <ul class="breadcrumb">
                     <!-- breadcrumb Begin -->
                     <li>
-                        <a href="index.php">Home</a>
+                        <a href="index.php">Trang chủ</a>
                     </li>
                     <li>
-                        Shop
+                        <a href="shop.php">Cửa hàng</a>
                     </li>
 
                     <li>
@@ -323,15 +297,23 @@ if (isset($_GET['pro_id'])) {
                                 </ol><!-- carousel-indicators Finish -->
 
                                 <div class="carousel-inner">
-                                    <div class="item active">
-                                        <center><img class="img-responsive" src="admin_area/product_images/<?php echo $pro_img1; ?>" alt="Product 3-a"></center>
-                                    </div>
-                                    <div class="item">
-                                        <center><img class="img-responsive" src="admin_area/product_images/<?php echo $pro_img2; ?>" alt="Product 3-b"></center>
-                                    </div>
-                                    <div class="item">
-                                        <center><img class="img-responsive" src="admin_area/product_images/<?php echo $pro_img3; ?>" alt="Product 3-c"></center>
-                                    </div>
+                                    <?php
+                                            foreach (preg_split("/\,/", $pro_link) as $key=>$value) {
+                                                if ($key==0) {
+                                                    echo "
+                                                <div class='item active'>
+                                                    <center><img class='img-responsive' src='admin_area/product_images/$value' alt='Product 3-a'></center>
+                                                </div>";
+                                                } else {
+                                                    echo "
+                                            <div class='item'>
+                                                <center><img class='img-responsive' src='admin_area/product_images/$value' alt='Product 3-a'></center>
+                                            </div>";
+                                                }
+                                            }
+
+                                    ?>
+                                
                                 </div>
 
                                 <a href="#myCarousel" class="left carousel-control" data-slide="prev">
@@ -349,7 +331,6 @@ if (isset($_GET['pro_id'])) {
                             </div><!-- carousel slide Finish -->
                         </div><!-- mainImage Finish -->
 
-                        <?php echo $product_label; ?>
 
                     </div><!-- col-sm-6 Finish -->
 
@@ -406,23 +387,36 @@ if (isset($_GET['pro_id'])) {
                                     <label class="col-md-5 control-label">Chọn size</label>
 
                                     <div class="col-md-7">
+                                        
+                                
 
-                                        <select name="product_size" class="form-control">
+
+                                <?php
+                                  $get_link = "SELECT * from size s JOIN size_detail dt on dt.id_size = s.id where s.id_type = $p_cat_id and dt.number>0 and dt.id_product = $product_id";
+
+                             
+                                  $run_link = mysqli_query($con, $get_link);
+                                 
+
+                                ?>
+
+                                <select name="product_size" class="setw">      
+                                <?php
+                                while ( $row_link = mysqli_fetch_array($run_link)) {
+                                echo "<option >".$row_link['name']."</option>";
+                                }
+                                ?>        
+                                </select>
 
 
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
 
-                                        </select>
-
+                                      
                                     </div>
                                 </div> <!-- form-group Finish-->
                                 <hr>
-                                <p class="price"> <?php echo $pro_price; ?> VNĐ</p>
+                                <p class="price"> <?php echo  number_format($pro_price , 0, ',', '.');  ?> VNĐ</p>
 
-                                <p class="text-center button"><button class="btn btn-primary i fa fa-shopping-cart">Thêm vào giỏ</button></p>
+                                <p class="text-center button"><button class="btn btn-primary i fa fa-shopping-cart"><strong> Thêm vào giỏ </strong></button></p>
 
                             </form>
                             <!--form-horizontal Finish-->
@@ -431,29 +425,21 @@ if (isset($_GET['pro_id'])) {
                         <div class="row" id="thumbs">
                             <!-- row Begin -->
 
-                            <div class="col-xs-4">
-                                <a data-target="#myCarousel" data-slide-to="0" href="#" class="thumbs">
-                                    <img src="admin_area\product_images\<?php echo $pro_img1 ?>" alt="" class="img-responsive">
-                                </a>
-                            </div>
+                            <?php
+                                            foreach (preg_split("/\,/", $pro_link) as $key=>$value) {
+                                                echo "
+                                                <div class='col-xs-4'>
+                                                <a data-target='#myCarousel' data-slide-to='$key' href='#' class='thumbs'>
+                                                    <img src='admin_area/product_images/$value' alt='' class='img-responsive'>
+                                                </a>
+                                                </div>
+                                                ";
+                                            }
+                                          
 
-                            <div class="col-xs-4">
-                                <a data-target="#myCarousel" data-slide-to="1" href="#" class="thumbs">
-                                    <img src="admin_area\product_images\<?php echo $pro_img2 ?>" alt="" class="img-responsive">
-                                </a>
-                            </div>
+                            ?>
 
-                            <div class="col-xs-4">
-                                <a data-target="#myCarousel" data-slide-to="2" href="#" class="thumbs">
-                                    <img src="admin_area\product_images\<?php echo $pro_img3 ?>" alt="" class="img-responsive">
-                                </a>
-                            </div>
-
-                            <div class="col-xs-4">
-                                <a data-target="#myCarousel" data-slide-to="2" href="#" class="thumbs">
-                                    <img src="admin_area\product_images\<?php echo $pro_img4 ?>" alt="" class="img-responsive">
-                                </a>
-                            </div>
+                           
 
 
 
@@ -466,7 +452,7 @@ if (isset($_GET['pro_id'])) {
                 <div class="box" id="details">
                     <!-- box Begin -->
 
-                    <h4>Product Details</h4>
+                    <h4> <font size="6">Chi tiết sản phẩm</font> </h4>
 
                     <p>
 
@@ -474,13 +460,6 @@ if (isset($_GET['pro_id'])) {
 
                     </p>
 
-                    <h4>Size</h4>
-
-                    <ul>
-                        <li>Small</li>
-                        <li>Medium</li>
-                        <li>Large</li>
-                    </ul>
 
                     <hr>
 
@@ -492,87 +471,51 @@ if (isset($_GET['pro_id'])) {
                         <!-- col-md-3 col-sm-6 Begin -->
                         <div class="box same-height headline">
                             <!-- box same-height headline Begin -->
-                            <h3 class="text-center">Products You Maybe Like</h3>
+                            <h3 class="text-center">Sản phẩm <br> bạn có <br> thể thích</h3>
                         </div><!-- box same-height headline Finish -->
                     </div><!-- col-md-3 col-sm-6 Finish -->
 
                     <?php
 
-                    $get_products = "select * from products order by rand() LIMIT 0,3";
+                    $get_products = "select * from product order by rand() LIMIT 0,3";
+                    $get_products = "SELECT p.id, p.name,p.price,GROUP_CONCAT(img.link) as link FROM product p JOIN images img on p.id = img.id_product GROUP BY p.id order by rand() LIMIT 0,3";
+                    
 
                     $run_products = mysqli_query($con, $get_products);
 
                     while ($row_products = mysqli_fetch_array($run_products)) {
+                        $pro_id = $row_products['id'];
 
-                        $pro_id = $row_products['product_id'];
+                        $pro_title = $row_products['name'];
 
-                        $pro_title = $row_products['product_title'];
+                        $pro_price = $row_products['price'];
+                        $pro_price_f = number_format($pro_price , 0, ',', '.');
 
-                        $pro_price = $row_products['product_price'];
+                     
+                        $pro_link =preg_split("/\,/", $row_products['link'])[0];
 
-                        $pro_sale_price = $row_products['product_sale'];
-
-                        $pro_img1 = $row_products['product_img1'];
-
-                        $pro_label = $row_products['product_label'];
-
-                        $manufacturer_id = $row_products['manufacturer_id'];
-
-                        $get_manufacturer = "select * from manufacturers where manufacturer_id='$manufacturer_id'";
-
-                        $run_manufacturer = mysqli_query($db, $get_manufacturer);
-
-                        $row_manufacturer = mysqli_fetch_array($run_manufacturer);
-
-                        $manufacturer_title = $row_manufacturer['manufacturer_title'];
-
-                        if ($pro_label == "sale") {
-
-                            $product_price = " <del> $ $pro_price </del> ";
-
-                            $product_sale_price = "/ $ $pro_sale_price ";
-                        } else {
-
-                            $product_price = "  $ $pro_price  ";
-
-                            $product_sale_price = "";
-                        }
-
-                        if ($pro_label == "") { } else {
-
-                            $product_label = "
                         
-                            <a href='#' class='label $pro_label'>
-                            
-                                <div class='theLabel'> $pro_label </div>
-                                <div class='labelBackground'>  </div>
-                            
-                            </a>
-                        
-                        ";
-                        }
+
+                       
+                       
 
                         echo "
                     
                     <div class='col-md-3 col-sm-6 center-responsive'>
                     
-                        <div class='product'>
+                        <div class='product eff'>
                         
                             <a href='details.php?pro_id=$pro_id'>
                             
-                                <img class='img-responsive' src='admin_area/product_images/$pro_img1'>
+                                <img class='img-responsive' src='admin_area/product_images/$pro_link'>
                             
                             </a>
                             
                             <div class='text'>
             
-                            <center>
+                           
                             
-                                <p class='btn btn-primary'> $manufacturer_title </p>
-                            
-                            </center>
-                            
-                                <h3>
+                                <h3 class='pad_h'>
                         
                                     <a href='details.php?pro_id=$pro_id'>
             
@@ -584,7 +527,7 @@ if (isset($_GET['pro_id'])) {
                                 
                                 <p class='price'>
                                 
-                                $product_price &nbsp;$product_sale_price
+                                $pro_price_f VNĐ
                                 
                                 </p>
                                 
@@ -592,13 +535,13 @@ if (isset($_GET['pro_id'])) {
                                 
                                     <a class='btn btn-default' href='details.php?pro_id=$pro_id'>
             
-                                        View Details
+                                        Chi tiết
             
                                     </a>
                                 
                                     <a class='btn btn-primary' href='details.php?pro_id=$pro_id'>
             
-                                        <i class='fa fa-shopping-cart'></i> Add to Cart
+                                        <i class='fa fa-shopping-cart'></i> Thêm vào giỏ
             
                                     </a>
                                 
@@ -606,7 +549,7 @@ if (isset($_GET['pro_id'])) {
                             
                             </div>
             
-                            $product_label
+                            
                         
                         </div>
                     

@@ -41,11 +41,11 @@
         
                     while($row_slides=mysqli_fetch_array($run_slides)){
                         
-                        $slide_id = $row_slides['slide_id'];
+                        $slide_id = $row_slides['id'];
                         
-                        $slide_name = $row_slides['slide_name'];
+                        $slide_name = $row_slides['slider_name'];
                         
-                        $slide_image = $row_slides['slide_image'];
+                        $slide_image = $row_slides['slider_image'];
                 
                 ?>
                 

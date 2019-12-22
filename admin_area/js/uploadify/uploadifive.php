@@ -1,7 +1,7 @@
 <?php
 
 // Set the upload directory
-$uploadDir = '/M-Dev-Store/admin_area/product_images/';
+$uploadDir = '/web_bas_shop/admin_area/product_images/';
 
 // Set the allowed file extensions
 $fileTypes = array('jpg', 'jpeg', 'png'); // Allowed file extensions

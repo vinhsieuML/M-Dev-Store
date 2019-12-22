@@ -122,7 +122,7 @@
             
             $run_slide = mysqli_query($con,$insert_slide);
             
-            echo "<script>alert('Đã thêm slide')</script>";
+            echo "<script>alert('Your new slide image has been inserted')</script>";
             
             echo "<script>window.open('index.php?view_slides','_self')</script>";
             

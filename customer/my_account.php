@@ -18,7 +18,7 @@ include("functions/functions.php");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>M-Dev Store</title>
+    <title>SH Shop</title>
     <link rel="stylesheet" href="styles/bootstrap-337.min.css">
     <link rel="stylesheet" href="font-awsome/css/font-awesome.min.css">
     <link rel="stylesheet" href="styles/style.css">
@@ -131,19 +131,19 @@ include("functions/functions.php");
                    <ul class="nav navbar-nav left"><!-- nav navbar-nav left Begin -->
                        
                        <li>
-                           <a href="../index.php">Home</a>
+                           <a href="../index.php">Trang chủ</a>
                        </li>
                        <li>
-                           <a href="../shop.php">Shop</a>
+                           <a href="../shop.php">Cửa hàng</a>
                        </li>
                        <li class="active">
-                           <a href="my_account.php">My Account</a>
+                           <a href="my_account.php">Tài khoản của tôi</a>
                        </li>
                        <li>
-                           <a href="../cart.php">Shopping Cart</a>
+                           <a href="../cart.php">Giỏ hàng</a>
                        </li>
                        <li>
-                           <a href="../contact.php">Contact Us</a>
+                           <a href="../contact.php">Liên hệ</a>
                        </li>
                        
                    </ul><!-- nav navbar-nav left Finish -->
@@ -206,10 +206,10 @@ include("functions/functions.php");
                
                <ul class="breadcrumb"><!-- breadcrumb Begin -->
                    <li>
-                       <a href="index.php">Home</a>
+                       <a href="index.php">Trang chủ</a>
                    </li>
                    <li>
-                       My Account
+                       Tài khoản của tôi
                    </li>
                </ul><!-- breadcrumb Finish -->
                

@@ -11,10 +11,10 @@
                
                <ul class="breadcrumb"><!-- breadcrumb Begin -->
                    <li>
-                       <a href="index.php">Home</a>
+                       <a href="index.php">Trang chủ</a>
                    </li>
                    <li>
-                       Contact Us
+                       Liên hệ
                    </li>
                </ul><!-- breadcrumb Finish -->
                
@@ -28,11 +28,12 @@
                        
                        <center><!-- center Begin -->
                            
-                           <h2> Feel free to Contact Us</h2>
+                           <h2> Đừng ngại liên lạc với chúng tôi </h2>
                            
                            <p class="text-muted"><!-- text-muted Begin -->
                                
-                               If you have any questions, feel free to contact us. Our Customer Service work <strong>24/7</strong>
+                                Nếu bạn có bất kỳ câu hỏi hay thắc mắc nào thì hãy liên hệ với shop. 
+                                Dịch vụ chăm sóc khách hàng của SH Shop luôn hoạt động <strong>24/7</strong>
                                
                            </p><!-- text-muted Finish -->
                            
@@ -42,7 +43,7 @@
                            
                            <div class="form-group"><!-- form-group Begin -->
                                
-                               <label>Name</label>
+                               <label>Tên: </label>
                                
                                <input type="text" class="form-control" name="name" required>
                                
@@ -50,7 +51,7 @@
                            
                            <div class="form-group"><!-- form-group Begin -->
                                
-                               <label>Email</label>
+                               <label>Email: </label>
                                
                                <input type="text" class="form-control" name="email" required>
                                
@@ -58,7 +59,7 @@
                            
                            <div class="form-group"><!-- form-group Begin -->
                                
-                               <label>Subject</label>
+                               <label>Chủ đề: </label>
                                
                                <input type="text" class="form-control" name="subject" required>
                                
@@ -66,7 +67,7 @@
                            
                            <div class="form-group"><!-- form-group Begin -->
                                
-                               <label>Message</label>
+                               <label>Lời nhắn: </label>
                                
                                <textarea name="message" class="form-control"></textarea>
                                
@@ -76,7 +77,7 @@
                                
                                <button type="submit" name="submit" class="btn btn-primary">
                                
-                               <i class="fa fa-user-md"></i> Send Message
+                               <i class="fa fa-user-md"></i> Gửi
                                
                                </button>
                                
