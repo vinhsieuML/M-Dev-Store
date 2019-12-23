@@ -107,8 +107,8 @@
 
            while($run_boxes_section=mysqli_fetch_array($run_boxes)){
 
-            $box_id = $run_boxes_section['box_id'];
-            $box_title = $run_boxes_section['box_title'];
+            $box_id = $run_boxes_section['id'];
+            $box_title = $run_boxes_section['box_tile'];
             $box_desc = $run_boxes_section['box_desc'];
            
            ?>
