@@ -26,21 +26,19 @@
                    
                    <form action="cart.php" method="post" enctype="multipart/form-data"><!-- form Begin -->
                        
-                       <h1>Shopping Cart</h1>
+                       <h1>Giỏ hàng</h1>
                        
                        <?php 
-                       
-                       $ip_add = getRealIpUser();
-                       
-                       $select_cart = "select * from cart where ip_add='$ip_add'";
+                       $email = $_SESSION['customer_email'];
+
+                       $select_cart = "SELECT * from cart_detail cdt JOIN users urs ON urs.id = cdt.id_customer WHERE email = '$email'";
                        
                        $run_cart = mysqli_query($con,$select_cart);
                        
                        $count = mysqli_num_rows($run_cart);
-                       
                        ?>
                        
-                       <p class="text-muted">You currently have <?php echo $count; ?> item(s) in your cart</p>
+                       <p class="text-muted">Bạn có <?php echo $count; ?> sản phẩm trong giỏ hàng</p>
                        
                        <div class="table-responsive"><!-- table-responsive Begin -->
                            
@@ -50,11 +48,11 @@
                                    
                                    <tr><!-- tr Begin -->
                                        
-                                       <th colspan="2">Product</th>
-                                       <th>Quantity</th>
-                                       <th>Unit Price</th>
+                                       <th colspan="2">Sản phẩm</th>
+                                       <th>Số Lượng</th>
+                                       <th>Đơn giá</th>
                                        <th>Size</th>
-                                       <th colspan="1">Delete</th>
+                                       <th colspan="1">Xóa bớt</th>
                                        <th colspan="2">Sub-Total</th>
                                        
                                    </tr><!-- tr Finish -->
@@ -69,46 +67,38 @@
                                    
                                    while($row_cart = mysqli_fetch_array($run_cart)){
                                        
-                                     $pro_id = $row_cart['p_id'];
+                                     $pro_id = $row_cart['id_product'];
                                        
-                                     $pro_size = $row_cart['size'];
+                                     $pro_size = $row_cart['id_size_detail'];
                                        
-                                     $pro_qty = $row_cart['qty'];
-
-                                     $pro_sale = $row_cart['p_price'];
+                                     $pro_qty = $row_cart['quantity'];
                                        
-                                       $get_products = "select * from products where product_id='$pro_id'";
+                                     $get_products = "SELECT p.id, p.name, p.price, p.id_hang, GROUP_CONCAT(img.link) as imageID from product p JOIN images img  ON p.id = img.id_product WHERE p.id='$pro_id' GROUP BY p.id";
                                        
-                                       $run_products = mysqli_query($con,$get_products);
+                                     $run_products = mysqli_query($con,$get_products);
                                        
-                                       while($row_products = mysqli_fetch_array($run_products)){
+                                     while($row_products = mysqli_fetch_array($run_products)){
                                            
-                                           $product_title = $row_products['product_title'];
+                                           $product_title = $row_products['name'];
                                            
-                                           $product_img1 = $row_products['product_img1'];
+                                           $product_img1 = preg_split("/\,/", $row_products['imageID'])[0];
                                            
-                                           $only_price = $row_products['product_price'];
+                                           $only_price = $row_products['price'];
                                            
-                                           $sub_total = $pro_sale*$pro_qty;
+                                           $sub_total = $only_price*$pro_qty;
 
                                            $_SESSION['pro_qty'] = $pro_qty;
                                            
                                            $total += $sub_total;
-                                           
                                    ?>
                                    
                                    <tr><!-- tr Begin -->
                                        
                                        <td>
-                                           
-                                           <img class="img-responsive" src="admin_area/product_images/<?php echo $product_img1; ?>" alt="Product 3a">
-                                           
+                                           <img class="img-responsive" src="admin_area/product_images/<?php echo $product_img1; ?>" alt="$product_img1">
                                        </td>
-                                       
                                        <td>
-                                           
-                                           <a href="details.php?pro_id=<?php echo $pro_id; ?>"> <?php echo $product_title; ?> </a>
-                                           
+                                           <a href="details.php?pro_id=<?php echo $pro_id; ?>"><?php echo $product_title; ?> </a>
                                        </td>
                                        
                                        <td>
@@ -119,7 +109,7 @@
                                        
                                        <td>
                                            
-                                           <?php echo $pro_sale; ?>
+                                           <?php echo number_format($only_price, 0, ',', '.'); ?>
                                            
                                        </td>
                                        
@@ -137,7 +127,7 @@
                                        
                                        <td>
                                            
-                                           $<?php echo $sub_total; ?>
+                                           <?php echo number_format($sub_total, 0, ',', '.'); ?> VNĐ
                                            
                                        </td>
                                        
@@ -152,7 +142,7 @@
                                    <tr><!-- tr Begin -->
                                        
                                        <th colspan="5">Total</th>
-                                       <th colspan="2">$<?php echo $total; ?></th>
+                                       <th colspan="2"><?php echo number_format($total, 0, ',', '.');?> VNĐ</th>
                                        
                                    </tr><!-- tr Finish -->
                                    
@@ -178,7 +168,7 @@
                                
                                <a href="index.php" class="btn btn-default"><!-- btn btn-default Begin -->
                                    
-                                   <i class="fa fa-chevron-left"></i> Continue Shopping
+                                   <i class="fa fa-chevron-left"></i> Tiếp tục mua sắm
                                    
                                </a><!-- btn btn-default Finish -->
                                
@@ -188,13 +178,13 @@
                                
                                <button type="submit" name="update" value="Update Cart" class="btn btn-default"><!-- btn btn-default Begin -->
                                    
-                                   <i class="fa fa-refresh"></i> Update Cart
+                                   <i class="fa fa-refresh"></i> Cập Nhật Giỏ Hàng
                                    
                                </button><!-- btn btn-default Finish -->
                                
                                <a href="checkout.php" class="btn btn-primary">
                                    
-                                   Proceed Checkout <i class="fa fa-chevron-right"></i>
+                                   Thanh Toán <i class="fa fa-chevron-right"></i>
                                    
                                </a>
                                
@@ -306,88 +296,42 @@
                        </div><!-- box same-height headline Finish -->
                    </div><!-- col-md-3 col-sm-6 Finish -->
                    
-                   <?php 
-                   
-                   $get_products = "select * from products order by rand() LIMIT 0,3";
-                   
-                   $run_products = mysqli_query($con,$get_products);
-                   
-                   while($row_products=mysqli_fetch_array($run_products)){
-                       
-                    $pro_id = $row_products['product_id'];
-        
-                    $pro_title = $row_products['product_title'];
-                    
-                    $pro_price = $row_products['product_price'];
-            
-                    $pro_sale_price = $row_products['product_sale'];
-                    
-                    $pro_img1 = $row_products['product_img1'];
-                    
-                    $pro_label = $row_products['product_label'];
-                    
-                    $manufacturer_id = $row_products['manufacturer_id'];
-            
-                    $get_manufacturer = "select * from manufacturers where manufacturer_id='$manufacturer_id'";
-            
-                    $run_manufacturer = mysqli_query($db,$get_manufacturer);
-            
-                    $row_manufacturer = mysqli_fetch_array($run_manufacturer);
-            
-                    $manufacturer_title = $row_manufacturer['manufacturer_title'];
-            
-                    if($pro_label == "sale"){
-            
-                        $product_price = " <del> $ $pro_price </del> ";
-            
-                        $product_sale_price = "/ $ $pro_sale_price ";
-            
-                    }else{
-            
-                        $product_price = "  $ $pro_price  ";
-            
-                        $product_sale_price = "";
-            
-                    }
-            
-                    if($pro_label == ""){
-            
-                    }else{
-            
-                        $product_label = "
-                        
-                            <a href='#' class='label $pro_label'>
-                            
-                                <div class='theLabel'> $pro_label </div>
-                                <div class='labelBackground'>  </div>
-                            
-                            </a>
-                        
-                        ";
-            
-                    }
-                    
-                    echo "
+                   <?php
+
+                    $get_products = "select * from product order by rand() LIMIT 0,3";
+                    $get_products = "SELECT p.id, p.name,p.price,GROUP_CONCAT(img.link) as link FROM product p JOIN images img on p.id = img.id_product GROUP BY p.id order by rand() LIMIT 0,3";
+
+
+                    $run_products = mysqli_query($con, $get_products);
+
+                    while ($row_products = mysqli_fetch_array($run_products)) {
+                        $pro_id = $row_products['id'];
+
+                        $pro_title = $row_products['name'];
+
+                        $pro_price = $row_products['price'];
+                        $pro_price_f = number_format($pro_price, 0, ',', '.');
+
+
+                        $pro_link = preg_split("/\,/", $row_products['link'])[0];
+
+                        echo "
                     
                     <div class='col-md-3 col-sm-6 center-responsive'>
                     
-                        <div class='product'>
+                        <div class='product eff'>
                         
                             <a href='details.php?pro_id=$pro_id'>
                             
-                                <img class='img-responsive' src='admin_area/product_images/$pro_img1'>
+                                <img class='img-responsive' src='admin_area/product_images/$pro_link'>
                             
                             </a>
                             
                             <div class='text'>
             
-                            <center>
+                           
                             
-                                <p class='btn btn-primary'> $manufacturer_title </p>
-                            
-                            </center>
-                            
-                                <h3>
+                                <h3 class='pad_h'>
                         
                                     <a href='details.php?pro_id=$pro_id'>
             
@@ -399,7 +343,7 @@
                                 
                                 <p class='price'>
                                 
-                                $product_price &nbsp;$product_sale_price
+                                $pro_price_f VNĐ
                                 
                                 </p>
                                 
@@ -407,31 +351,28 @@
                                 
                                     <a class='btn btn-default' href='details.php?pro_id=$pro_id'>
             
-                                        View Details
+                                        Chi tiết
             
                                     </a>
                                 
                                     <a class='btn btn-primary' href='details.php?pro_id=$pro_id'>
             
-                                        <i class='fa fa-shopping-cart'></i> Add to Cart
+                                        <i class='fa fa-shopping-cart'></i> Thêm vào giỏ
             
                                     </a>
                                 
                                 </p>
                             
                             </div>
-            
-                            $product_label
                         
                         </div>
                     
                     </div>
                     
                     ";
-                       
-                   }
-                   
-                   ?>
+                    }
+
+                    ?>
                    
                </div><!-- #row same-heigh-row Finish -->
                
@@ -443,13 +384,13 @@
                    
                    <div class="box-header"><!-- box-header Begin -->
                        
-                       <h3>Order Summary</h3>
+                       <h3>Tóm Tắt Giỏ Hàng</h3>
                        
                    </div><!-- box-header Finish -->
                    
                    <p class="text-muted"><!-- text-muted Begin -->
                        
-                       Shipping and additional costs are calculated based on value you have entered
+                       Phí ship được tính theo địa chỉ bạn nhập
                        
                    </p><!-- text-muted Finish -->
                    
@@ -461,14 +402,14 @@
                                
                                <tr><!-- tr Begin -->
                                    
-                                   <td> Order All Sub-Total </td>
-                                   <th> $<?php echo $total; ?> </th>
+                                   <td> Tổng hóa đơn </td>
+                                   <th> <?php echo number_format($total, 0, ',', '.'); ?> VNĐ</th>
                                    
                                </tr><!-- tr Finish -->
                                
                                <tr><!-- tr Begin -->
                                    
-                                   <td> Shipping and Handling </td>
+                                   <td> Phí ship </td>
                                    <td> $0 </td>
                                    
                                </tr><!-- tr Finish -->
@@ -482,8 +423,8 @@
                                
                                <tr class="total"><!-- tr Begin -->
                                    
-                                   <td> Total </td>
-                                   <th> $<?php echo $total; ?> </th>
+                                   <td>Tổng Tiền</td>
+                                   <th> $<?php echo number_format($total, 0, ',', '.'); ?> </th>
                                    
                                </tr><!-- tr Finish -->
                                

@@ -1,6 +1,6 @@
 <?php 
 
-$db = mysqli_connect("localhost","root","","ecom_store");
+$db = mysqli_connect("localhost","root","","db_app");
 
 /// begin getRealIpUser functions ///
 
@@ -458,13 +458,11 @@ function getcatpro(){
 
 /// finish getRealIpUser functions ///
 
-function items(){
+function items($useremail){
     
     global $db;
     
-    $ip_add = getRealIpUser();
-    
-    $get_items = "select * from cart where ip_add='$ip_add'";
+    $get_items = "select * from cart_detail cdt join users urs on cdt.id_customer = urs.id where email='$useremail'";
     
     $run_items = mysqli_query($db,$get_items);
     

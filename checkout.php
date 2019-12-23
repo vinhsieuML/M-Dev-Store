@@ -11,10 +11,10 @@
                
                <ul class="breadcrumb"><!-- breadcrumb Begin -->
                    <li>
-                       <a href="index.php">Home</a>
+                       <a href="index.php">Trang Chủ</a>
                    </li>
                    <li>
-                       Register
+                       Thanh Toán
                    </li>
                </ul><!-- breadcrumb Finish -->
                

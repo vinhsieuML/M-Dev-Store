@@ -28,19 +28,19 @@ if (isset($_GET['pro_id'])) {
 
 
     $pro_desc = $row_products['description'];
-    
+
 
     $get_link = "SELECT p.id, p.id_hang ,p.name,p.price,GROUP_CONCAT(img.link) as link FROM product p JOIN images img on p.id = img.id_product WHERE p.id='$product_id' GROUP BY p.id ";
     $run_link = mysqli_query($con, $get_link);
     $row_link = mysqli_fetch_array($run_link);
-    
+
 
 
     $pro_link = $row_link['link'];
 
 
 
-    
+
 
     $get_p_cat = "select * from product_type where id='$p_cat_id'";
 
@@ -89,7 +89,6 @@ if (isset($_GET['pro_id'])) {
                     ?>
 
                 </a>
-                <a href="checkout.php"><?php items(); ?> Items In Your Cart | Total Price: <?php total_price(); ?> </a>
 
             </div><!-- col-md-6 offer Finish -->
 
@@ -145,8 +144,8 @@ if (isset($_GET['pro_id'])) {
                     <!-- navbar-brand home Begin -->
 
                     <img src="images/logo2.png" alt="M-dev-Store Logo" class="hidden-xs">
-                   <img src="images/logo-res.png" alt="M-dev-Store Logo Mobile" class="visible-xs">
-                   
+                    <img src="images/logo-res.png" alt="M-dev-Store Logo Mobile" class="visible-xs">
+
                 </a><!-- navbar-brand home Finish -->
 
                 <button class="navbar-toggle" data-toggle="collapse" data-target="#navigation">
@@ -177,19 +176,19 @@ if (isset($_GET['pro_id'])) {
                         <!-- nav navbar-nav left Begin -->
 
                         <li class="<?php if ($active == 'Home') {
-                                echo "active";
-                            } ?>">
+                                        echo "active";
+                                    } ?>">
                             <a href="index.php">Trang chủ</a>
                         </li>
                         <li class="<?php if ($active == 'Shop') {
-                                echo "active";
-                            } ?>">
+                                        echo "active";
+                                    } ?>">
                             <a href="shop.php">Cửa hàng</a>
                         </li>
-                        
+
                         <li class="<?php if ($active == 'Contact') {
-                                echo "active";
-                            } ?>">
+                                        echo "active";
+                                    } ?>">
                             <a href="contact.php">Liên hệ</a>
                         </li>
 
@@ -202,7 +201,7 @@ if (isset($_GET['pro_id'])) {
 
                     <i class="fa fa-shopping-cart"></i>
 
-                    <span><?php items(); ?> Items In Your Cart</span>
+                    <span><?php items($_SESSION['customer_email']); ?> Items In Your Cart</span>
 
                 </a><!-- btn navbar-btn btn-primary Finish -->
 
@@ -298,22 +297,22 @@ if (isset($_GET['pro_id'])) {
 
                                 <div class="carousel-inner">
                                     <?php
-                                            foreach (preg_split("/\,/", $pro_link) as $key=>$value) {
-                                                if ($key==0) {
-                                                    echo "
+                                    foreach (preg_split("/\,/", $pro_link) as $key => $value) {
+                                        if ($key == 0) {
+                                            echo "
                                                 <div class='item active'>
                                                     <center><img class='img-responsive' src='admin_area/product_images/$value' alt='Product 3-a'></center>
                                                 </div>";
-                                                } else {
-                                                    echo "
+                                        } else {
+                                            echo "
                                             <div class='item'>
                                                 <center><img class='img-responsive' src='admin_area/product_images/$value' alt='Product 3-a'></center>
                                             </div>";
-                                                }
-                                            }
+                                        }
+                                    }
 
                                     ?>
-                                
+
                                 </div>
 
                                 <a href="#myCarousel" class="left carousel-control" data-slide="prev">
@@ -338,10 +337,9 @@ if (isset($_GET['pro_id'])) {
                         <!-- col-sm-6 Begin -->
                         <div class="box">
                             <h1 class="text-center"> <?php echo $pro_title; ?> </h1>
-
                             <?php add_cart(); ?>
-
-                            <form action="details.php?add_cart= <?php echo $product_id; ?>" class="form-horizontal" method="post">
+                            <form action="details.php?add_cart=<?php echo $product_id; ?>" class="form-horizontal" method="post">
+                                <input id="number" value=<?php echo  $_SESSION['customer_email'] ?> name='email' readonly hidden/>
                                 <!--form-horizontal Begin-->
                                 <div class="form-group">
                                     <!-- form-group Begin-->
@@ -367,16 +365,6 @@ if (isset($_GET['pro_id'])) {
                                                 document.getElementById('number').value = value;
                                             }
                                         </script>
-                                        <!-- <input class="form-control"  type="number" id="number" value="1" min="1" oninput="this.value = Math.abs(this.value)" disable /> -->
-                                        <!-- <select name="product_qty" id="" class="form-control">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
-                                        </select> -->
-
-
                                     </div>
 
                                 </div> <!-- form-group Finish-->
@@ -387,34 +375,23 @@ if (isset($_GET['pro_id'])) {
                                     <label class="col-md-5 control-label">Chọn size</label>
 
                                     <div class="col-md-7">
-                                        
-                                
-
-
-                                <?php
-                                  $get_link = "SELECT * from size s JOIN size_detail dt on dt.id_size = s.id where s.id_type = $p_cat_id and dt.number>0 and dt.id_product = $product_id";
-
-                             
-                                  $run_link = mysqli_query($con, $get_link);
-                                 
-
-                                ?>
-
-                                <select name="product_size" class="setw">      
-                                <?php
-                                while ( $row_link = mysqli_fetch_array($run_link)) {
-                                echo "<option >".$row_link['name']."</option>";
-                                }
-                                ?>        
-                                </select>
-
-
-
-                                      
+                                        <?php
+                                        $get_link = "SELECT s.name,sdt.number, sdt.id as id_size_detail FROM product p INNER JOIN size_detail sdt ON sdt.id_product = p.id INNER JOIN size s ON s.id = sdt.id_size WHERE p.id = $product_id and sdt.number > 0 ";
+                                        $run_link = mysqli_query($con, $get_link);
+                                        ?>
+                                        <select name="product_size" class="setw">
+                                            <?php
+                                            while ($row_link = mysqli_fetch_array($run_link)) {
+                                                $id = $row_link['id_size_detail'];
+                                                $name = $row_link['name'];
+                                                echo '<option value= "' . $id . '"> ' . $name . '</option>';
+                                            }
+                                            ?>
+                                        </select>
                                     </div>
                                 </div> <!-- form-group Finish-->
                                 <hr>
-                                <p class="price"> <?php echo  number_format($pro_price , 0, ',', '.');  ?> VNĐ</p>
+                                <p class="price"> <?php echo number_format($pro_price, 0, ',', '.'); ?> VNĐ</p>
 
                                 <p class="text-center button"><button class="btn btn-primary i fa fa-shopping-cart"><strong> Thêm vào giỏ </strong></button></p>
 
@@ -426,23 +403,16 @@ if (isset($_GET['pro_id'])) {
                             <!-- row Begin -->
 
                             <?php
-                                            foreach (preg_split("/\,/", $pro_link) as $key=>$value) {
-                                                echo "
+                            foreach (preg_split("/\,/", $pro_link) as $key => $value) {
+                                echo "
                                                 <div class='col-xs-4'>
                                                 <a data-target='#myCarousel' data-slide-to='$key' href='#' class='thumbs'>
                                                     <img src='admin_area/product_images/$value' alt='' class='img-responsive'>
                                                 </a>
                                                 </div>
                                                 ";
-                                            }
-                                          
-
+                            }
                             ?>
-
-                           
-
-
-
                         </div> <!-- row Begin -->
                     </div> <!-- col-sm-6 Finish -->
 
@@ -451,16 +421,12 @@ if (isset($_GET['pro_id'])) {
 
                 <div class="box" id="details">
                     <!-- box Begin -->
-
-                    <h4> <font size="6">Chi tiết sản phẩm</font> </h4>
-
+                    <h4>
+                        <font size="6">Chi tiết sản phẩm</font>
+                    </h4>
                     <p>
-
                         <?php echo $pro_desc; ?>
-
                     </p>
-
-
                     <hr>
 
                 </div><!-- box Finish -->
@@ -479,7 +445,7 @@ if (isset($_GET['pro_id'])) {
 
                     $get_products = "select * from product order by rand() LIMIT 0,3";
                     $get_products = "SELECT p.id, p.name,p.price,GROUP_CONCAT(img.link) as link FROM product p JOIN images img on p.id = img.id_product GROUP BY p.id order by rand() LIMIT 0,3";
-                    
+
 
                     $run_products = mysqli_query($con, $get_products);
 
@@ -489,15 +455,15 @@ if (isset($_GET['pro_id'])) {
                         $pro_title = $row_products['name'];
 
                         $pro_price = $row_products['price'];
-                        $pro_price_f = number_format($pro_price , 0, ',', '.');
+                        $pro_price_f = number_format($pro_price, 0, ',', '.');
 
-                     
-                        $pro_link =preg_split("/\,/", $row_products['link'])[0];
 
-                        
+                        $pro_link = preg_split("/\,/", $row_products['link'])[0];
 
-                       
-                       
+
+
+
+
 
                         echo "
                     

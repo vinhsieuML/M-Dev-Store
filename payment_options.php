@@ -4,21 +4,21 @@
     
     $session_email = $_SESSION['customer_email'];
     
-    $select_customer = "select * from customers where customer_email='$session_email'";
+    $select_customer = "select * from users where email='$session_email'";
     
     $run_customer = mysqli_query($con,$select_customer);
     
     $row_customer = mysqli_fetch_array($run_customer);
     
-    $customer_id = $row_customer['customer_id'];
+    $customer_id = $row_customer['id'];
     
     ?>
     
-    <h1 class="text-center">Payment Options For You</h1>  
+    <h1 class="text-center">Lựa chọn thanh toán</h1>  
     
      <p class="lead text-center"><!-- lead text-center Begin -->
          
-         <a href="order.php?c_id=<?php echo $customer_id ?>"> Offline Payment </a>
+         <a href="order.php?c_id=<?php echo $customer_id ?>"> Thanh toán CASH ON DELIVERY (COD) </a>
          
      </p><!-- lead text-center Finish -->
      
@@ -28,9 +28,9 @@
             
             <a href="#">
                 
-                Paypall Payment
+                Thanh Toán Online
                 
-                <img class="img-responsive" src="images/paypall_img.png" alt="img-paypall">
+                <!-- <img class="img-responsive" src="images/paypall_img.png" alt="img-paypall"> -->
                 
             </a>
             

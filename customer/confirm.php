@@ -53,7 +53,7 @@ if(isset($_GET['order_id'])){
                    ?>
                
                </a>
-               <a href="checkout.php"> <?php items(); ?> Items In Your Cart | Total Price: <?php total_price(); ?> </a>
+               <a href="checkout.php"> <?php items($_SESSION['customer_email']); ?> Items In Your Cart | Total Price: <?php total_price(); ?> </a>
                
            </div><!-- col-md-6 offer Finish -->
            
@@ -159,7 +159,7 @@ if(isset($_GET['order_id'])){
                    
                    <i class="fa fa-shopping-cart"></i>
                    
-                   <span><?php items(); ?> Items In Your Cart</span>
+                   <span><?php items($_SESSION['customer_email']); ?> Items In Your Cart</span>
                    
                </a><!-- btn navbar-btn btn-primary Finish -->
                

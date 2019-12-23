@@ -31,7 +31,7 @@ include("functions/functions.php");
            
            <div class="col-md-6 offer"><!-- col-md-6 offer Begin -->
                
-               <a href="#" class="btn btn-success btn-sm">
+               <a class="btn btn-success btn-sm">
                    
                    <?php 
                    
@@ -44,11 +44,10 @@ include("functions/functions.php");
                        echo "Welcome: " . $_SESSION['customer_email'] . "";
                        
                    }
-                   
                    ?>
                
                </a>
-               <a href="checkout.php"> <?php items(); ?> Items In Your Cart | Total Price: <?php total_price(); ?> </a>
+               
                
            </div><!-- col-md-6 offer Finish -->
            
@@ -56,14 +55,14 @@ include("functions/functions.php");
                
                <ul class="menu"><!-- cmenu Begin -->
                    
-                   <li>
+                   <!-- <li>
                        <a href="../customer_register.php">Register</a>
+                   </li> -->
+                   <li>
+                       <a href="my_account.php">Tài khoản của tôi</a>
                    </li>
                    <li>
-                       <a href="my_account.php">My Account</a>
-                   </li>
-                   <li>
-                       <a href="../cart.php">Go To Cart</a>
+                       <a href="../cart.php">Giỏ Hàng</a>
                    </li>
                    <li>
                        <a href="../checkout.php">
@@ -136,12 +135,12 @@ include("functions/functions.php");
                        <li>
                            <a href="../shop.php">Cửa hàng</a>
                        </li>
-                       <li class="active">
+                       <!-- <li class="active">
                            <a href="my_account.php">Tài khoản của tôi</a>
                        </li>
                        <li>
                            <a href="../cart.php">Giỏ hàng</a>
-                       </li>
+                       </li> -->
                        <li>
                            <a href="../contact.php">Liên hệ</a>
                        </li>
@@ -154,7 +153,7 @@ include("functions/functions.php");
                    
                    <i class="fa fa-shopping-cart"></i>
                    
-                   <span><?php items(); ?> Items In Your Cart</span>
+                   <span><?php items($_SESSION['customer_email']); ?> Items In Your Cart</span>
                    
                </a><!-- btn navbar-btn btn-primary Finish -->
                
