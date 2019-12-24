@@ -11,16 +11,17 @@ include("functions/functions.php");
 
 <?php 
 
-$ip_add = getRealIpUser();
-
-if(isset($_POST['id'])){
-
-    $id = $_POST['id'];
+if(isset($_POST['id_user'])){
+    $id_user = $_POST['id_user'];
+    $id_size = $_POST['id_size'];
     $qty = $_POST['quantity'];
-    $update_qty = "update cart set qty='$qty' where p_id='$id' AND ip_add='$ip_add'";
-
+    $update_qty = "update cart_detail set quantity='$qty' where id_customer=(select id FROM users WHERE email = '$id_user') AND id_size_detail='$id_size'";
     $run_qty = mysqli_query($con,$update_qty);
-
+    if($run_qty){
+        echo 'THANH_CONG';
+    }
+    else{
+        echo 'THAT_BAI';
+    }
 }
-
 ?>

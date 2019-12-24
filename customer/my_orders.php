@@ -54,7 +54,7 @@
 
             $customer_id = $row_customer['id'];
 
-            $get_orders = "select * from bill where id_customer='$customer_id'";
+            $get_orders = "select * from bill where id_customer='$customer_id' ORDER BY id DESC";
 
             $run_orders = mysqli_query($con, $get_orders);
 
@@ -90,19 +90,22 @@
                     <td> <?php
                             switch ($order_status) {
                                 case 0:
-                                    echo 'Đang Chờ Duyệt COD';
+                                    echo "<p style='color:blue;'>Đang Chờ Duyệt COD</p>";
                                     break;
                                 case 1:
-                                    echo 'Đã Thanh Toán Online';
+                                    echo "<p style='color:green;'>Đã Thanh Toán Online</p>";
                                     break;
                                 case 2:
-                                    echo 'Đã Hủy Online';
+                                    echo "<p style='color:red;'>Đã Hủy Online</p>";
                                     break;
                                 case 3:
                                     echo 'Đang Giao Hàng';
                                     break;
                                 case 4:
-                                    echo 'Hoàn Thành';
+                                    echo "<p style='color:orange;'>Hoàn Thành</p>";
+                                    break;
+                                case 5:
+                                    echo "<p style='color:red;'>Đã Hủy</p>";
                                     break;
                             }
                             ?> </td>
@@ -115,13 +118,16 @@
                                 echo 'Chờ xác thực';
                                 break;
                             case 2:
-                                echo '<a href="'.$url_payment.'" target="_blank" class="btn btn-primary btn-sm" disable> Thanh toán lại </a>';
+                                echo '<a href="' . $url_payment . '" target="_blank" class="btn btn-primary btn-sm" disable> Thanh toán lại </a>';
                                 break;
                             case 3:
-                                echo '<a href="confirm.php?order_id='.$order_id.'" target="_blank" class="btn btn-primary btn-sm" disable> Đã Nhận Hàng </a>';
+                                echo '<a href="confirm.php?order_id=' . $order_id . '" class="btn btn-primary btn-sm" disable> Đã Nhận Hàng </a>';
                                 break;
                             case 4:
                                 echo 'Hoàn Thành';
+                                break;
+                            case 5:
+                                echo 'Đã hủy bởi bạn';
                                 break;
                         }
                         ?>

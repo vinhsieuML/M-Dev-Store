@@ -50,7 +50,7 @@ include("functions/functions.php");
                
                <ul class="menu"><!-- cmenu Begin -->
                    <li>
-                       <a href="customer/my_account.php?my_orders">My Account</a>
+                       <a href="customer/my_account.php?my_orders">Tài khoản của tôi</a>
                    </li>
                    <!-- <li>
                        <a href="cart.php">Go To Cart</a>
@@ -62,13 +62,13 @@ include("functions/functions.php");
                            
                            if(!isset($_SESSION['customer_email'])){
                        
-                                echo "<a href='checkout.php'> Login </a>";
+                                echo "<a href='checkout.php'> Đăng Nhập </a>";
                                 echo "<li>
-                                    <a href='customer_register.php'>Register</a>
+                                    <a href='customer_register.php'>Đăng Kí</a>
                                       </li>";
                                }else{
 
-                                echo " <a href='logout.php'> Log Out </a> ";
+                                echo " <a href='logout.php'> Đăng xuất </a> ";
 
                                }
                            
@@ -141,7 +141,9 @@ include("functions/functions.php");
                    
                    <i class="fa fa-shopping-cart"></i>
                    
-                   <span><?php items($_SESSION['customer_email']); ?> Items In Your Cart</span>
+                   <span><?php if(isset($_SESSION['customer_email'])){
+                       items($_SESSION['customer_email']);}
+                   ?> Sản phẩm trong giỏ hàng</span>
                    
                </a><!-- btn navbar-btn btn-primary Finish -->
                

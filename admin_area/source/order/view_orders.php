@@ -58,6 +58,7 @@ if (!isset($_SESSION['admin_email'])) {
                                     <th> Tổng Tiền: </th>
                                     <th> Status: </th>
                                     <th> Hành Động: </th>
+                                    <th> Mã GHN: </th>
                                 </tr><!-- tr finish -->
                             </thead><!-- thead finish -->
 
@@ -68,7 +69,7 @@ if (!isset($_SESSION['admin_email'])) {
 
                                 $i = 0;
 
-                                $get_orders = "select * from bill b JOIN users urs ON b.id_customer = urs.id ";
+                                $get_orders = "select b.id, b.id_customer, b.status, b.total, urs.email, urs.phone, b.date_order, urs.name from bill b JOIN users urs ON b.id_customer = urs.id ORDER BY b.id DESC";
 
                                 $run_orders = mysqli_query($con, $get_orders);
 
@@ -109,35 +110,61 @@ if (!isset($_SESSION['admin_email'])) {
 
                                             switch ($order_status) {
                                                 case 0:
-                                                    echo 'Đang Chờ Duyệt COD';
+                                                    echo "<p style='color:blue;'>Đang Chờ Duyệt COD</p>";
                                                     break;
                                                 case 1:
-                                                    echo 'Đã Thanh Toán Online';
+                                                    echo "<p style='color:green;'>Đã Thanh Toán Online</p>";
                                                     break;
                                                 case 2:
-                                                    echo 'Đã Hủy Online';
+                                                    echo "<p style='color:red;'>Đã Hủy Online</p>";
                                                     break;
                                                 case 3:
                                                     echo 'Đang Giao Hàng';
                                                     break;
                                                 case 4:
-                                                    echo 'Hoàn Thành';
+                                                    echo "<p style='color:orange;'>Hoàn Thành</p>";
+                                                    break;
+                                                case 5:
+                                                    echo "<p style='color:red;'>Đã Hủy</p>";
                                                     break;
                                             }
 
                                             ?>
                                         </td>
                                         <td>
-                                            <a href="index.php?delete_order=<?php echo $order_id; ?>">
+                                            <?php
+                                            switch ($order_status) {
+                                                case 0:
+                                                    echo '
+                                                    <a href="index.php?delete_order=' . $order_id . ' ?>">
+                                                        <i class="fa fa-trash-o"></i> Huỷ đơn hàng
+                                                    </a>
+                                                    <a href="index.php?verify_order=' . $order_id . '?>" style="marginLeft: 10px" >
+                                                        <i class="fa fa-check"></i> Xác Thực
+                                                    </a>
+                                                ';
+                                                    break;
+                                                case 1:
+                                                    echo '
+                                                    <a href="index.php?delete_order=' . $order_id . ' ?>">
+                                                        <i class="fa fa-trash-o"></i> Huỷ đơn hàng
+                                                    </a>
+                                                     <a href="index.php?verify_order=' . $order_id . '?>" style="marginLeft: 10px" >
+                                                        <i class="fa fa-check"></i> Xác Thực
+                                                    </a>
+                                                    ';
+                                                    break;
+                                                case 2:
+                                                case 3:
+                                                case 4:
+                                                case 5:
+                                                    echo 'Không có hành động';
+                                                    break;
+                                            }
 
-                                                <i class="fa fa-trash-o"></i> Huỷ đơn hàng
-
-                                            </a>
-                                            <a href="index.php?delete_order=<?php echo $order_id; ?>" style="marginLeft: 10px" >
-
-                                                <i class="fa fa-check"></i> Xác Thực
-
-                                            </a>
+                                            ?>
+                                        </td>
+                                        <td>
 
                                         </td>
                                     </tr><!-- tr finish -->

@@ -139,7 +139,9 @@ CREATE TABLE `users` (
   `password` varchar(255) DEFAULT NULL,
   `name` varchar(100) DEFAULT NULL,
   `phone` varchar(20) DEFAULT NULL,
-  `address` varchar(255) DEFAULT NULL
+  `address` varchar(255) DEFAULT NULL,
+  `districtID` int DEFAULT NULL,
+  `wardID` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 --
 -- Table structure for table `bill`
@@ -156,11 +158,16 @@ CREATE TABLE `bill` (
   `status` tinyint(4) DEFAULT '0', -- 0 la cho duyet cod, 1 la da thanh toan online,2 da huy online, 3 dang giao hang, 4 thanh cong
   `name` varchar(100) DEFAULT NULL,
   `phone` varchar(20) DEFAULT NULL,
+  `districtID` int DEFAULT NULL,
+  `wardID` int DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
   `check_out_id` varchar(255) DEFAULT NULL,
   `check_out_date` datetime DEFAULT NULL,
   `magiaodich`	varchar(255) DEFAULT NULL,
   `url_payment` varchar(255) DEFAULT NULL,
+  `OrderID` int DEFAULT NULL,
+  `OrderCode` int DEFAULT NULL,
+  `ExpectedDeliveryTime` datetime DEFAULT NULL,
   foreign key (id_customer) references users(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

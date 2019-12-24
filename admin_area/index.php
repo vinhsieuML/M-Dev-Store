@@ -11,27 +11,27 @@
         
         $admin_session = $_SESSION['admin_email'];
         
-        $get_admin = "select * from admin where email='$admin_session'";
-        
+        $get_admin = "select * from admin where username='$admin_session'";
+
         $run_admin = mysqli_query($con,$get_admin);
         
         $row_admin = mysqli_fetch_array($run_admin);
         
-        $admin_id = $row_admin['admin_id'];
+        $admin_id = $row_admin['id'];
         
-        $admin_name = $row_admin['admin_name'];
+        $admin_name = $row_admin['name'];
         
-        $admin_email = $row_admin['admin_email'];
+        $admin_email = $row_admin['username'];
         
-        $admin_image = $row_admin['admin_image'];
+        $admin_image = $row_admin['image'];
         
-        $admin_country = $row_admin['admin_country'];
+        // $admin_country = $row_admin['admin_country'];
         
-        $admin_about = $row_admin['admin_about'];
+        // $admin_about = $row_admin['admin_about'];
         
-        $admin_contact = $row_admin['admin_contact'];
+        // $admin_contact = $row_admin['admin_contact'];
         
-        $admin_job = $row_admin['admin_job'];
+        // $admin_job = $row_admin['admin_job'];
         
         $get_products = "select * from product";
         
@@ -180,7 +180,9 @@
                 }   if(isset($_GET['delete_order'])){
                         
                         include("./source/order/delete_order.php");
+                }   if(isset($_GET['verify_order'])){
                         
+                        include("./source/order/verify_order.php");
                 }   if(isset($_GET['view_payments'])){
                         
                         include("view_payments.php");

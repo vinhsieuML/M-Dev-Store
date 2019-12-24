@@ -30,28 +30,10 @@ if (!isset($_SESSION['admin_email'])) {
         $p_price = $row_edit['price'];
 
         $image = $row_edit['imagesID'];
-        // $p_sale = $row_edit['product_sale'];
 
         $p_desc = $row_edit['description'];
     }
 
-    // $get_manufacturer = "select * from hang where id='$m_id'";
-
-    // $run_manufacturer = mysqli_query($con, $get_manufacturer);
-
-    // $row_manufacturer = mysqli_fetch_array($run_manufacturer);
-
-    // $manufacturer_id = $row_manufacturer['id'];
-
-    // $manufacturer_title = $row_manufacturer['name'];
-
-    // $get_p_cat = "select * from product_type where id='$p_cat'";
-
-    // $run_p_cat = mysqli_query($con, $get_p_cat);
-
-    // $row_p_cat = mysqli_fetch_array($run_p_cat);
-
-    // $p_cat_title = $row_p_cat['name'];
 
     ?>
 

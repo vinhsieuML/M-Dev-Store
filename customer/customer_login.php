@@ -71,9 +71,9 @@ if (isset($_POST['login'])) {
 
     $customer_email = $_POST['c_email'];
 
+    $pass = $_POST['c_pass'];
+
     $customer_pass = md5($_POST['c_pass']);
-
-
 
     $select_customer = "select * from users where email='$customer_email' AND password='$customer_pass'";
 
@@ -96,18 +96,38 @@ if (isset($_POST['login'])) {
 
     $check_cart = mysqli_num_rows($run_cart);
 
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => "http://localhost:3000/api/login",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "POST",
+        CURLOPT_POSTFIELDS => "email=$customer_email&pass=$pass",
+        CURLOPT_HTTPHEADER => array(
+            "Content-Type: application/x-www-form-urlencoded"
+        ),
+    ));
+
+    $response = curl_exec($curl);
+
+    curl_close($curl);
+
+    if (!isset($response['message'])) {
+        $_SESSION['token'] = json_decode($response,true)['token'];
+    }
     if ($check_customer == 1 and $check_cart == 0) {
 
         $_SESSION['customer_email'] = $customer_email;
-
-        echo "<script>alert('Bạn đã đang nhập thành công')</script>";
 
         echo "<script>window.open('customer/my_account.php?my_orders','_self')</script>";
     } else {
 
         $_SESSION['customer_email'] = $customer_email;
-
-        echo "<script>alert('Bạn đã đang nhập thành công')</script>";
 
         echo "<script>window.open('index.php','_self')</script>";
     }

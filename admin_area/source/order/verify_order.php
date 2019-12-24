@@ -10,17 +10,17 @@
 
 <?php 
 
-    if(isset($_GET['delete_order'])){
+    if(isset($_GET['verify_order'])){
         
-        $delete_id = $_GET['delete_order'];
+        $verify_id = $_GET['verify_order'];
         
-        $delete_order = "UPDATE bill SET status = '5' where id='$delete_id'";
+        $delete_order = "UPDATE  bill SET status = '3' where id='$verify_id'";
         
         $run_delete = mysqli_query($con,$delete_order);
         
         if($run_delete){
             
-            echo "<script>alert('Đã xóa thành công đơn hàng')</script>";
+            echo "<script>alert('Xác nhận thành công hay giao hàng cho bên vận chuyển')</script>";
             
             echo "<script>window.open('index.php?view_orders','_self')</script>";
             
