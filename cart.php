@@ -424,10 +424,10 @@ include("includes/header.php");
 
                 <p class="text-muted">
                     <!-- text-muted Begin -->
-                    Phí ship được tính theo địa chỉ bạn nhập
+                    Phí ship được tính theo địa chỉ trong thông tin cá nhân
                     <div class="column">
                         <div class="row">
-                            <label class="col-md-5 control-label">TP</label>
+                            <label class="col-md-5 control-label">Thành Phố</label>
                             <select name="city_select" id="city_select" class="setw form-control" style="width : 230px">
                             </select>
                         </div>
@@ -503,7 +503,23 @@ include("includes/header.php");
 include("includes/footer.php");
 
 ?>
+<?php
+$get_customer = "select * from users where email='$email'";
 
+$run_customer = mysqli_query($con, $get_customer);
+
+$row_customer = mysqli_fetch_array($run_customer);
+
+$customer_city_id = $row_customer['cityID'];
+
+$customer_district_id = $row_customer['districtID'];
+
+$customer_ward_id = $row_customer['wardID'];
+echo '
+    <input type="text" name="o_city_id" id="o_city_id" value=' . $customer_city_id . ' hidden>
+    <input type="text" name="o_district_id" id="o_district_id" value=' . $customer_district_id . ' hidden>
+    <input type="text" name="o_ward_id" id="o_ward_id" value=' . $customer_ward_id . ' hidden>'
+?>
 <script src="js/jquery-331.min.js"></script>
 <script src="js/bootstrap-337.min.js"></script>
 <style>
@@ -593,7 +609,11 @@ include("includes/footer.php");
                     type: 1 // 1 la cod, 2 la online
                 },
                 success: function(response) {
-                    window.open('customer/my_account.php?my_orders', '_self');
+                    if (parseInt(response) === 1) {
+                        alert('Giỏ hàng rỗng');
+                    } else {
+                        window.open('customer/my_account.php?my_orders', '_self');
+                    }
                 }
             });
         });
@@ -605,7 +625,11 @@ include("includes/footer.php");
                     type: 2 // 1 la cod, 2 la online
                 },
                 success: function(response) {
-                    window.open(response, '_self');
+                    if (parseInt(response) === 1) {
+                        alert('Giỏ hàng rỗng');
+                    } else {
+                        window.open(response, '_self');
+                    }
                 }
             });
         });
@@ -626,6 +650,8 @@ include("includes/footer.php");
                         text: response[index]['ProvinceName']
                     }));
                 });
+                $('option[value=' + $('#o_city_id').val() + ']').attr('selected', true);
+                $select.trigger('change');
             }
         });
 
@@ -646,6 +672,8 @@ include("includes/footer.php");
                             text: response[index]['DistrictName']
                         }));
                     });
+                    $('option[value=' + $('#o_ward_id').val() + ']').attr('selected', true);
+                    $select.trigger('change');
                 }
             });
         });
@@ -668,6 +696,8 @@ include("includes/footer.php");
                             text: response[index]['WardName']
                         }));
                     });
+                    $('option[value=' + $('#o_district_id').val() + ']').attr('selected', true);
+                    $select.trigger('change');
                 }
             });
         });

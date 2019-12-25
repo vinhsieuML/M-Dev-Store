@@ -21,8 +21,11 @@ if (!isset($_SESSION['customer_email'])) {
         <title>SH Shop</title>
         <link rel="stylesheet" href="styles/bootstrap-337.min.css">
         <link rel="stylesheet" href="font-awsome/css/font-awesome.min.css">
-        <link rel="stylesheet" href="styles/style.css">  
-       
+        <link rel="stylesheet" href="styles/style.css">
+
+        <script src="js/jquery-331.min.js"></script>
+        <script src="js/bootstrap-337.min.js"></script>
+
     </head>
 
     <body>
@@ -280,7 +283,13 @@ if (!isset($_SESSION['customer_email'])) {
                         if (isset($_GET['delete_account'])) {
                             include("delete_account.php");
                         }
+                        ?>
 
+                        <?php
+
+                        if (isset($_GET['order_detail'])) {
+                            include("order_detail.php");
+                        }
                         ?>
 
                     </div><!-- box Finish -->
@@ -296,85 +305,8 @@ if (!isset($_SESSION['customer_email'])) {
 
         ?>
 
-        <script src="js/jquery-331.min.js"></script>
-        <script src="js/bootstrap-337.min.js"></script>
 
-        <script>
-            $(document).ready(function() {
-                $.ajax({
-                    url: "http://localhost:3000/api/city",
-                    method: "GET",
-                    headers: {},
-                    contentType: 'application/json; charset=utf-8',
-                    success: function(response) {
-                        var $select = $('#city_select');
-                        $.each(response, function(index, val) {
-                            $select.append($('<option />', {
-                                value: response[index]['ProvinceID'],
-                                text: response[index]['ProvinceName']
-                            }));
-                        });
-                    }
-                });
 
-                $('#city_select').on('change', function() {
-                    const cityid = this.value;
-                    $.ajax({
-                        url: "http://localhost:3000/api/district/" + cityid,
-                        method: "GET",
-                        headers: {},
-                        contentType: 'application/json; charset=utf-8',
-                        success: function(response) {
-                            var $select = $('#district_select');
-                            $select.empty();
-                            $('#ward_select').empty();
-                            $.each(response, function(index, val) {
-                                $select.append($('<option />', {
-                                    value: response[index]['DistrictID'],
-                                    text: response[index]['DistrictName']
-                                }));
-                            });
-                        }
-                    });
-                });
-
-                $('#district_select').on('change', function() {
-                    const districtID = this.value;
-                    var $select = $('#ward_select');
-                    $select.empty();
-                    $select.append("<div class='loader'></div>");
-                    $.ajax({
-                        url: "http://localhost:3000/api/ward/" + districtID,
-                        method: "GET",
-                        headers: {},
-                        contentType: 'application/json; charset=utf-8',
-                        success: function(response) {
-                            $select.empty();
-                            $.each(response, function(index, val) {
-                                $select.append($('<option />', {
-                                    value: response[index]['WardCode'],
-                                    text: response[index]['WardName']
-                                }));
-                            });
-                        }
-                    });
-                });
-                $('#ward_select').on('change', function() {
-                    const districtID = $('#district_select').val();
-                    $('#shipFee').html("<div class='loader'></div>");
-                    $.ajax({
-                        url: "http://localhost:3000/api/shipFee/" + districtID + "/" + 1000,
-                        method: "GET",
-                        headers: {},
-                        contentType: 'application/json; charset=utf-8',
-                        success: function(response) {
-                            console.log(response);
-                            $('#shipFee').html(response['CalculatedFee']);
-                        }
-                    });
-                });
-            });
-        </script>
 
     </body>
 

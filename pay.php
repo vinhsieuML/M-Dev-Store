@@ -23,6 +23,10 @@ if (isset($_POST['type'])) {
     $run_cart = mysqli_query($con, $select_cart);
 
     $count = mysqli_num_rows($run_cart);
+    if($count == 0){
+        echo 1;
+        exit();
+    }
 
     $arrayDetail = array();
     while ($row_cart = mysqli_fetch_array($run_cart)) {

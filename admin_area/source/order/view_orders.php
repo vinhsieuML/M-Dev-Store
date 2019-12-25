@@ -69,7 +69,7 @@ if (!isset($_SESSION['admin_email'])) {
 
                                 $i = 0;
 
-                                $get_orders = "select b.id, b.id_customer, b.status, b.total, urs.email, urs.phone, b.date_order, urs.name from bill b JOIN users urs ON b.id_customer = urs.id ORDER BY b.id DESC";
+                                $get_orders = "select b.id, b.id_customer, b.status, b.total, urs.email, urs.phone, b.date_order, urs.name, b.orderCode from bill b JOIN users urs ON b.id_customer = urs.id ORDER BY b.status ASC";
 
                                 $run_orders = mysqli_query($con, $get_orders);
 
@@ -91,6 +91,8 @@ if (!isset($_SESSION['admin_email'])) {
 
                                     $name = $row_order['name'];
 
+                                    $orderCode = $row_order['orderCode'];
+
                                     $i++;
 
                                 ?>
@@ -105,7 +107,7 @@ if (!isset($_SESSION['admin_email'])) {
                                                 echo date_format($date, 'd-m-Y');
                                                 ?></td>
                                         <td> <?php echo $total; ?> </td>
-                                        <td>
+                                        <td id= "status<?php echo $order_id ?>"">
                                             <?php
 
                                             switch ($order_status) {
@@ -131,25 +133,16 @@ if (!isset($_SESSION['admin_email'])) {
 
                                             ?>
                                         </td>
-                                        <td>
+                                        <td id="action<?php echo $order_id ?>">
                                             <?php
                                             switch ($order_status) {
                                                 case 0:
-                                                    echo '
-                                                    <a href="index.php?delete_order=' . $order_id . ' ?>">
-                                                        <i class="fa fa-trash-o"></i> Huỷ đơn hàng
-                                                    </a>
-                                                    <a href="index.php?verify_order=' . $order_id . '?>" style="marginLeft: 10px" >
-                                                        <i class="fa fa-check"></i> Xác Thực
-                                                    </a>
-                                                ';
-                                                    break;
                                                 case 1:
                                                     echo '
                                                     <a href="index.php?delete_order=' . $order_id . ' ?>">
                                                         <i class="fa fa-trash-o"></i> Huỷ đơn hàng
                                                     </a>
-                                                     <a href="index.php?verify_order=' . $order_id . '?>" style="marginLeft: 10px" >
+                                                    <a style="marginLeft: 10px" id="verify" name ="verify" data-order_id=' . $order_id . '>
                                                         <i class="fa fa-check"></i> Xác Thực
                                                     </a>
                                                     ';
@@ -164,8 +157,8 @@ if (!isset($_SESSION['admin_email'])) {
 
                                             ?>
                                         </td>
-                                        <td>
-
+                                        <td id="GHN<?php echo $order_id ?>">
+                                        <?php echo $orderCode ?>
                                         </td>
                                     </tr><!-- tr finish -->
 
@@ -180,5 +173,67 @@ if (!isset($_SESSION['admin_email'])) {
             </div><!-- panel panel-default finish -->
         </div><!-- col-lg-12 finish -->
     </div><!-- row 2 finish -->
+    <style>
+        .loader {
+            border: 6px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 6px solid #3498db;
+            width: 20px;
+            height: 20px;
+            -webkit-animation: spin 2s linear infinite;
+            /* Safari */
+            animation: spin 2s linear infinite;
+        }
 
+        /* Safari */
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+    <script>
+        $(document).ready(function() {
+            $('a[name ="verify"]').click(function() {
+                var id_order = $(this).data("order_id");
+                $('#GHN'+id_order).html("<div class='loader'></div>");
+                $.ajax({
+                    "url": "http://localhost:3000/api/getGHN",
+                    "method": "POST",
+                    "timeout": 0,
+                    "headers": {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    "data": {
+                        "billID": id_order,
+                        "isCod": "0"
+                    },
+                    success: function(response) {
+                        if(response !== 'THAT_BAI'){
+                            $('#GHN'+id_order).html(response);
+                            $('#status'+id_order).html('Đang Giao Hàng');
+                            $('#action'+id_order).html('Không có hành động');
+                        }
+                        else{
+                            $('#GHN'+id_order).html('Lỗi đường truyền, vui lòng thực hiện lại');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 <?php } ?>

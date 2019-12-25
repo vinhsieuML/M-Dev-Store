@@ -33,6 +33,8 @@
                 <th> Tổng Tiền: </th>
                 <th> Ngày đặt </th>
                 <th> Tình Trạng: </th>
+                <th> Mã GHN: </th>
+                <th> GH Dự Kiến: </th>
                 <th> Hành Động</th>
 
             </tr><!--  tr Finish  -->
@@ -72,6 +74,10 @@
 
                 $url_payment = $row_orders['url_payment'];
 
+                $order_code =  $row_orders['orderCode'];
+
+                $expectedDeliveryTime = $row_orders['expectedDeliveryTime'];
+
                 $i++;
 
 
@@ -81,8 +87,8 @@
                 <tr>
                     <!--  tr Begin  -->
 
-                    <th> <?php echo "ORD$order_id"; ?> </th>
-                    <td> <?php echo $due_amount; ?> </td>
+                    <th> <?php echo '<a href="my_account.php?order_detail=' . $order_id . '" disable> ORD' . $order_id . ' </a>' ?> </th>
+                    <td> <?php echo number_format($due_amount, 0, ',', '.'); ?> đ</td>
                     <td> <?php $date = date_create($order_date);
                             echo date_format($date, 'd-m-Y');
                             ?></td>
@@ -108,8 +114,14 @@
                                     echo "<p style='color:red;'>Đã Hủy</p>";
                                     break;
                             }
-                            ?> </td>
-
+                            ?>
+                    </td>
+                    <td>
+                        <?php echo $order_code ?>
+                    </td>
+                    <td>
+                        <?php echo $expectedDeliveryTime ?>
+                    </td>
                     <td>
                         <?php
                         switch ($order_status) {

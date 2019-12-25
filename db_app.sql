@@ -140,6 +140,7 @@ CREATE TABLE `users` (
   `name` varchar(100) DEFAULT NULL,
   `phone` varchar(20) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
+  `cityID` int DEFAULT NULL,
   `districtID` int DEFAULT NULL,
   `wardID` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -166,7 +167,7 @@ CREATE TABLE `bill` (
   `magiaodich`	varchar(255) DEFAULT NULL,
   `url_payment` varchar(255) DEFAULT NULL,
   `OrderID` int DEFAULT NULL,
-  `OrderCode` int DEFAULT NULL,
+  `OrderCode` varchar(11) DEFAULT NULL,
   `ExpectedDeliveryTime` datetime DEFAULT NULL,
   foreign key (id_customer) references users(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
