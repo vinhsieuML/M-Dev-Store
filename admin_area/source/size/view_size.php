@@ -5,7 +5,7 @@ if (!isset($_SESSION['admin_email'])) {
     echo "<script>window.open('login.php','_self')</script>";
 } else {
 
-    ?>
+?>
 
     <div class="row">
         <!-- row 1 begin -->
@@ -62,26 +62,36 @@ if (!isset($_SESSION['admin_email'])) {
                                 <?php
 
 
-                                    $get_cats = "select * from product_type";
+                                $get_cats = "select * from product_type";
 
-                                    $run_cats = mysqli_query($con, $get_cats);
+                                $run_cats = mysqli_query($con, $get_cats);
+                                while ($row_cats = mysqli_fetch_array($run_cats)) {
 
-                                    while ($row_cats = mysqli_fetch_array($run_cats)) {
+                                    $cat_id = $row_cats['id'];
 
-                                        $cat_id = $row_cats['id'];
-
-                                        $cat_title = $row_cats['name'];
-
-                                        
+                                    $cat_title = $row_cats['name'];
 
 
-                                        $get_size = "select * from size where  id_type = $cat_id";
-                                        $run_size = mysqli_query($con, $get_size);
-                                        $count_row_size = mysqli_num_rows($run_size);
+
+
+                                    $get_size = "select * from size where  id_type = $cat_id";
+                                    $run_size = mysqli_query($con, $get_size);
+                                    $count_row_size = mysqli_num_rows($run_size);
+
+                                    if ($count_row_size == 0) {
+                                        echo ("
+                                    <tr>
+                                    <td > $cat_title </td>");
+                                        echo ("
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>");
+                                    } else {
                                         echo ("
                                     <tr>
                                     <td rowspan= '$count_row_size'> $cat_title </td>");
-                                        while ($row_size = mysqli_fetch_array($run_size)){
+                                        while ($row_size = mysqli_fetch_array($run_size)) {
                                             $size_name = $row_size['name'];
                                             $size_id = $row_size['id'];
                                             echo ("
@@ -99,11 +109,11 @@ if (!isset($_SESSION['admin_email'])) {
                                     </tr>
                                             ");
                                         }
+                                    }
+                                ?>
 
-                                        ?>
 
-                                    
-                                        <!-- tr finish -->
+                                    <!-- tr finish -->
 
                                 <?php } ?>
 

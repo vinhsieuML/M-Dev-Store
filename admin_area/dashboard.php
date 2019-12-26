@@ -48,7 +48,7 @@ if (!isset($admin_email)) {
                             <!-- col-xs-9 text-right begin -->
                             <div class="huge"> <?php echo $count_products; ?> </div>
 
-                            <div> Products </div>
+                            <div> Sản phẩm hiện có </div>
 
                         </div><!-- col-xs-9 text-right finish -->
 
@@ -62,7 +62,7 @@ if (!isset($admin_email)) {
 
                         <span class="pull-left">
                             <!-- pull-left begin -->
-                            View Details
+                            Chi tiết
                         </span><!-- pull-left finish -->
 
                         <span class="pull-right">
@@ -98,7 +98,7 @@ if (!isset($admin_email)) {
                             <!-- col-xs-9 text-right begin -->
                             <div class="huge"> <?php echo $count_customers; ?> </div>
 
-                            <div> Customers </div>
+                            <div> Số lượng tài khoản </div>
 
                         </div><!-- col-xs-9 text-right finish -->
 

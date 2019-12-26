@@ -15,10 +15,10 @@ include("includes/header.php");
             <ul class="breadcrumb">
                 <!-- breadcrumb Begin -->
                 <li>
-                    <a href="index.php">Home</a>
+                    <a href="index.php">Trang chủ</a>
                 </li>
                 <li>
-                    Cart
+                    Giỏ hàng
                 </li>
             </ul><!-- breadcrumb Finish -->
 
@@ -168,7 +168,7 @@ include("includes/header.php");
                                 <tr>
                                     <!-- tr Begin -->
 
-                                    <th colspan="5">Total</th>
+                                    <th colspan="5">Tổng tiền</th>
                                     <th colspan="2"><?php echo number_format($total, 0, ',', '.'); ?> VNĐ</th>
 
                                 </tr><!-- tr Finish -->
@@ -236,59 +236,7 @@ include("includes/header.php");
 
             </div><!-- box Finish -->
 
-            <?php
-
-            if (isset($_POST['apply_coupon'])) {
-
-                $code = $_POST['code'];
-
-                if ($code == "") {
-                } else {
-
-                    $get_coupons = "select * from coupons where coupon_code='$code'";
-                    $run_coupons = mysqli_query($con, $get_coupons);
-                    $check_coupons = mysqli_num_rows($run_coupons);
-
-                    if ($check_coupons == "1") {
-
-                        $row_coupons = mysqli_fetch_array($run_coupons);
-
-                        $coupon_pro_id = $row_coupons['product_id'];
-                        $coupon_price = $row_coupons['coupon_price'];
-                        $coupon_limit = $row_coupons['coupon_limit'];
-                        $coupon_used = $row_coupons['coupon_used'];
-
-                        if ($coupon_limit == $coupon_used) {
-
-                            echo "<script>alert('Your Coupon Already Expired')</script>";
-                        } else {
-
-                            $get_cart = "select * from cart where p_id='$coupon_pro_id' AND ip_add='$ip_add'";
-                            $run_cart = mysqli_query($con, $get_cart);
-                            $check_cart = mysqli_num_rows($run_cart);
-
-                            if ($check_cart == "1") {
-
-                                $add_used = "update coupons set coupon_used=coupon_used+1 where coupon_code='$code'";
-                                $run_used = mysqli_query($con, $add_used);
-                                $update_cart = "update cart set p_price='$coupon_price' where p_id='$coupon_pro_id' AND ip_add='$ip_add'";
-                                $run_update_cart = mysqli_query($con, $update_cart);
-
-                                echo "<script>alert('Your Coupon Has Been Applied')</script>";
-                                echo "<script>window.open('cart.php','_self')</script>";
-                            } else {
-
-                                echo "<script>alert('Your Coupon Didnt Match With Your Product On Your Cart')</script>";
-                            }
-                        }
-                    } else {
-
-                        echo "<script>alert('You Coupon Is Not Valid')</script>";
-                    }
-                }
-            }
-
-            ?>
+            
 
             <?php
 
@@ -296,21 +244,21 @@ include("includes/header.php");
             {
 
                 global $con;
+                echo "<script> console.log('aaaa')</script>";
+                // if (isset($_POST['update'])) {
 
-                if (isset($_POST['update'])) {
+                //     foreach ($_POST['remove'] as $remove_id) {
 
-                    foreach ($_POST['remove'] as $remove_id) {
+                //         $delete_product = "delete from cart where p_id='$remove_id'";
 
-                        $delete_product = "delete from cart where p_id='$remove_id'";
+                //         $run_delete = mysqli_query($con, $delete_product);
 
-                        $run_delete = mysqli_query($con, $delete_product);
+                //         if ($run_delete) {
 
-                        if ($run_delete) {
-
-                            echo "<script>window.open('cart.php','_self')</script>";
-                        }
-                    }
-                }
+                //             echo "<script>window.open('cart.php','_self')</script>";
+                //         }
+                //     }
+                // }
             }
 
             echo @$up_cart = update_cart();
@@ -323,7 +271,7 @@ include("includes/header.php");
                     <!-- col-md-3 col-sm-6 Begin -->
                     <div class="box same-height headline">
                         <!-- box same-height headline Begin -->
-                        <h3 class="text-center">Products You Maybe Like</h3>
+                        <h3 class="text-center">Sản phẩm bạn có thể thích</h3>
                     </div><!-- box same-height headline Finish -->
                 </div><!-- col-md-3 col-sm-6 Finish -->
 
@@ -464,24 +412,18 @@ include("includes/header.php");
                             <tr>
                                 <!-- tr Begin -->
 
-                                <td> Phí ship </td>
+                                <td> Phí ship ước tính</td>
                                 <td id="shipFee"> $0 </td>
 
                             </tr><!-- tr Finish -->
 
-                            <tr>
-                                <!-- tr Begin -->
-
-                                <td> Tax </td>
-                                <th> $0 </th>
-
-                            </tr><!-- tr Finish -->
+                            
 
                             <tr class="total">
                                 <!-- tr Begin -->
 
                                 <td>Tổng Tiền</td>
-                                <th> $<?php echo number_format($total, 0, ',', '.'); ?> </th>
+                                <th> <?php echo number_format($total, 0, ',', '.'); ?> VNĐ</th>
 
                             </tr><!-- tr Finish -->
 
@@ -597,9 +539,6 @@ echo '
     });
 </script>
 <script>
-    // $(document).ready(function() {
-    //     
-    // });
     $(document).ready(function() {
         $("#COD").click(function() {
             $.ajax({
@@ -672,7 +611,7 @@ echo '
                             text: response[index]['DistrictName']
                         }));
                     });
-                    $('option[value=' + $('#o_ward_id').val() + ']').attr('selected', true);
+                    $('option[value=' + $('#o_district_id').val() + ']').attr('selected', true);
                     $select.trigger('change');
                 }
             });
@@ -682,7 +621,7 @@ echo '
             const districtID = this.value;
             var $select = $('#ward_select');
             $select.empty();
-            $select.append("<div class='loader'></div>");
+            $select.append("<option> Đang Tải Dữ Liệu </option>");
             $.ajax({
                 url: "http://localhost:3000/api/ward/" + districtID,
                 method: "GET",
@@ -696,7 +635,7 @@ echo '
                             text: response[index]['WardName']
                         }));
                     });
-                    $('option[value=' + $('#o_district_id').val() + ']').attr('selected', true);
+                    $('option[value=' + $('#o_ward_id').val() + ']').attr('selected', true);
                     $select.trigger('change');
                 }
             });
@@ -711,7 +650,7 @@ echo '
                 contentType: 'application/json; charset=utf-8',
                 success: function(response) {
                     console.log(response);
-                    $('#shipFee').html(response['CalculatedFee']);
+                    $('#shipFee').html(response['CalculatedFee']+ ' VNĐ');
                 }
             });
         });

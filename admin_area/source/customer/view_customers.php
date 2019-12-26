@@ -38,13 +38,10 @@
                         <thead><!-- thead begin -->
                             <tr><!-- tr begin -->
                                 <th> No: </th>
-                                <th> Name: </th>
-                                <th> Image: </th>
-                                <th> E-Mail: </th>
-                                <th> Country: </th>
-                                <th> City: </th>
-                                <th> Address: </th>
-                                <th> Contact: </th>
+                                <th> Tên: </th>
+                                <th> Email: </th>
+                                <th> Địa chỉ </th>
+                                <th> Điện thoại: </th>
                                 <th> Delete: </th>
                             </tr><!-- tr finish -->
                         </thead><!-- thead finish -->
@@ -55,27 +52,21 @@
           
                                 $i=0;
                             
-                                $get_c = "select * from customers";
+                                $get_c = "select * from users";
                                 
                                 $run_c = mysqli_query($con,$get_c);
           
                                 while($row_c=mysqli_fetch_array($run_c)){
                                     
-                                    $c_id = $row_c['customer_id'];
+                                    $c_id = $row_c['id'];
                                     
-                                    $c_name = $row_c['customer_name'];
+                                    $c_name = $row_c['name'];
                                     
-                                    $c_img = $row_c['customer_image'];
+                                    $c_email = $row_c['email'];
                                     
-                                    $c_email = $row_c['customer_email'];
+                                    $c_address = $row_c['address'];
                                     
-                                    $c_country = $row_c['customer_country'];
-                                    
-                                    $c_city = $row_c['customer_city'];
-                                    
-                                    $c_address = $row_c['customer_address'];
-                                    
-                                    $c_contact = $row_c['customer_contact'];
+                                    $c_phone = $row_c['phone'];
                                     
                                     $i++;
                             
@@ -84,12 +75,9 @@
                             <tr><!-- tr begin -->
                                 <td> <?php echo $i; ?> </td>
                                 <td> <?php echo $c_name; ?> </td>
-                                <td> <img src="../customer/customer_images/<?php echo $c_img; ?>" width="60" height="60"></td>
                                 <td> <?php echo $c_email; ?> </td>
-                                <td> <?php echo $c_country; ?></td>
-                                <td> <?php echo $c_city; ?> </td>
                                 <td> <?php echo $c_address ?> </td>
-                                <td> <?php echo $c_contact ?> </td>
+                                <td> <?php echo $c_phone ?> </td>
                                 <td> 
                                      
                                      <a href="index.php?delete_customer=<?php echo $c_id; ?>">

@@ -51,6 +51,7 @@ if (!isset($_SESSION['admin_email'])) {
                                 <tr>
                                     <!-- tr begin -->
                                     <th> ID: </th>
+                                    <th> Mã Đơn Hàng: </th>
                                     <th> Tên khách hàng: </th>
                                     <th> SĐT: </th>
                                     <th> Email khách: </th>
@@ -100,6 +101,7 @@ if (!isset($_SESSION['admin_email'])) {
                                     <tr>
                                         <!-- tr begin -->
                                         <td> <?php echo $i; ?> </td>
+                                        <td> <?php echo '<a href="index.php?order_detail=' . $order_id . '" disable> ORD' . $order_id . ' </a>' ?></td>
                                         <td> <?php echo $name; ?> </td>
                                         <td> <?php echo $sdt; ?></td>
                                         <td> <?php echo $customer_email; ?> </td>

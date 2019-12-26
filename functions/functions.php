@@ -43,25 +43,6 @@ function checkUpload($file)
 }
 
 
-function getRealIpUser()
-{
-
-    switch (true) {
-
-        case (!empty($_SERVER['HTTP_X_REAL_IP'])):
-            console_log($_SERVER['HTTP_X_REAL_IP']);
-            return $_SERVER['HTTP_X_REAL_IP'];
-        case (!empty($_SERVER['HTTP_CLIENT_IP'])):
-            console_log($_SERVER['HTTP_CLIENT_IP']);
-            return $_SERVER['HTTP_CLIENT_IP'];
-        case (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])):
-            console_log($_SERVER['HTTP_X_FORWARDED_FOR']);
-            return $_SERVER['HTTP_X_FORWARDED_FOR'];
-
-        default:
-            return $_SERVER['REMOTE_ADDR'];
-    }
-}
 
 /// finish getRealIpUser functions ///
 
@@ -83,7 +64,7 @@ function add_cart()
 
         $email = $_POST['email'];
 
-        $check = "SELECT * from cart_detail cdt JOIN users urs ON cdt.id_customer = urs.id WHERE urs.email AND cdt.id_size_detail = '$product_size' AND email = '$email' ";
+        $check = "SELECT * from cart_detail cdt JOIN users urs ON cdt.id_customer = urs.id WHERE cdt.id_size_detail = '$product_size' AND urs.email = '$email' ";
 
         $run_products = mysqli_query($db, $check);
 
@@ -212,7 +193,7 @@ function getPCats()
         
             <li class='mar_bot'>
             
-                <a href='shop.php?p_cat=$p_cat_id'> $p_cat_title </a>
+                <a href='shop.php?p_cat=$p_cat_id&page=1'> $p_cat_title </a>
             
             </li>
         
@@ -243,7 +224,7 @@ function getCats()
         
             <li class='mar_bot'>
                 
-                <a href='shop.php?cat=$cat_id'> $cat_title </a>
+                <a href='shop.php?cat=$cat_id&page=1'> $cat_title </a>
             
             </li>
         
@@ -260,6 +241,10 @@ function gethang()
 
         $cat_id = $_GET['cat'];
 
+        $page = $_GET['page'];
+
+        $start_from = ($page - 1) * 6;
+
         $get_cat = "select * from hang where id='$cat_id' ";
 
         $run_cat = mysqli_query($db, $get_cat);
@@ -270,11 +255,38 @@ function gethang()
 
 
 
-        $get_cat = "SELECT p.id, p.id_hang ,p.name,p.price,GROUP_CONCAT(img.link) as link FROM product p JOIN images img on p.id = img.id_product where id_hang='$cat_id' GROUP BY p.id LIMIT 0,6";
+        $get_cat = "SELECT p.id, p.id_hang ,p.name,p.price,GROUP_CONCAT(img.link) as link FROM product p JOIN images img on p.id = img.id_product where id_hang='$cat_id' GROUP BY p.id LIMIT $start_from,6";
 
         $run_products = mysqli_query($db, $get_cat);
 
+        $get_cat2 = "SELECT p.id, p.id_hang ,p.name,p.price,GROUP_CONCAT(img.link) as link FROM product p JOIN images img on p.id = img.id_product where id_hang='$cat_id' GROUP BY p.id";
+
+        $run_products2 = mysqli_query($db, $get_cat2);
+
         $count = mysqli_num_rows($run_products);
+
+        echo '<center>
+        <ul class="pagination">';
+        $total_pages = ceil(mysqli_num_rows($run_products2) / 6);
+        echo "
+            <li>
+                <a href='shop.php?cat=$cat_id&page=1'> Trang Đầu </a>
+            <li>
+        ";
+        for ($i = 1; $i <= $total_pages; $i++) {
+            echo "
+                <li>
+                    <a href='shop.php?cat=$cat_id&page=" . $i . "'> " . $i . " </a>
+                <li>
+            ";
+        };
+        echo "
+                <li>
+                    <a href='shop.php?cat=$cat_id&page=$total_pages'> " . 'Trang cuối' . " </a>
+                <li>
+                </ul> <!-- pagination Finish -->
+        </center>
+        ";
 
         if ($count == 0) {
             echo "
@@ -285,6 +297,7 @@ function gethang()
                 </div>
             
             ";
+            exit();
         } else {
 
             echo "
@@ -344,9 +357,7 @@ function gethang()
 
             </div>
 
-        </div>
-
-            ";
+        </div>";
         }
     }
 }
@@ -357,6 +368,10 @@ function getpcatpro()
     global $db;
     if (isset($_GET['p_cat'])) {
         $p_cat_id = $_GET['p_cat'];
+
+        $page = $_GET['page'];
+
+        $start_from = ($page - 1) * 6;
 
         $get_p_cat = "select * from product_type where id='$p_cat_id'";
 
@@ -369,11 +384,37 @@ function getpcatpro()
         $cat_id = $row_p_cat['id'];
 
 
-        $get_products = "SELECT p.id, p.id_hang ,p.name,p.price,GROUP_CONCAT(img.link) as link FROM product p JOIN images img on p.id = img.id_product where id_type='$cat_id' GROUP BY p.id LIMIT 0,6";
+        $get_products = "SELECT p.id, p.id_hang ,p.name,p.price,GROUP_CONCAT(img.link) as link FROM product p JOIN images img on p.id = img.id_product where id_type='$cat_id' GROUP BY p.id LIMIT $start_from,6";
 
         $run_products = mysqli_query($db, $get_products);
 
+        $get_products2 = "SELECT p.id, p.id_hang ,p.name,p.price,GROUP_CONCAT(img.link) as link FROM product p JOIN images img on p.id = img.id_product where id_type='$cat_id' GROUP BY p.id";
+
+        $run_products2 = mysqli_query($db, $get_products2);
+
         $count = mysqli_num_rows($run_products);
+        echo '<center>
+        <ul class="pagination">';
+        $total_pages = ceil(mysqli_num_rows($run_products2) / 6);
+        echo "
+            <li>
+                <a href='shop.php?p_cat=$p_cat_id&page=1'> Trang Đầu </a>
+            <li>
+        ";
+        for ($i = 1; $i <= $total_pages; $i++) {
+            echo "
+                    <li>
+                        <a href='shop.php?p_cat=$p_cat_id&page=" . $i . "'> " . $i . " </a>
+                    <li>
+                    ";
+        };
+        echo "
+            <li>
+                <a href='shop.php?p_cat=$p_cat_id&page=$total_pages'> " . 'Trang cuối' . " </a>
+            <li>
+            </ul> <!-- pagination Finish -->
+    </center>
+        ";
 
         if ($count == 0) {
             echo "
@@ -383,15 +424,12 @@ function getpcatpro()
 
                 </div>
             ";
+            exit();
         } else {
 
             echo "
                 <div class='box'>
-
                     <h1> $p_cat_title </h1>
-
-                   
-
                 </div>
             ";
         }
@@ -442,9 +480,122 @@ function getpcatpro()
 
             </div>
 
-        </div>
+        </div>";
+        }
+    }
+}
 
+function search()
+{
+    global $db;
+    if (isset($_GET['search'])) {
+        $Key = $_GET['user_query'];
+
+        $page = !isset($_GET['page']) ? 1 : $_GET['page'];
+
+        $start_from = ($page - 1) * 6;
+
+        
+
+
+        $get_products = "SELECT p.*, GROUP_CONCAT(i.link) AS link FROM product p INNER JOIN images i ON p.id = i.id_product where name like '%$Key%' group by p.id LIMIT $start_from,6";
+
+        $run_products = mysqli_query($db, $get_products);
+
+        $get_products2 = "SELECT p.*, GROUP_CONCAT(i.id) AS imagesID FROM product p INNER JOIN images i ON p.id = i.id_product where name like '%$Key%' group by p.id";
+
+        $run_products2 = mysqli_query($db, $get_products2);
+
+        $count = mysqli_num_rows($run_products);
+
+        echo '<center>
+        <ul class="pagination">';
+        $total_pages = ceil(mysqli_num_rows($run_products2) / 6);
+        echo "
+            <li>
+                <a href='shop.php?user_query=$Key&search=Search&page=1'> Trang Đầu </a>
+            <li>
+        ";
+        for ($i = 1; $i <= $total_pages; $i++) {
+            echo "
+                    <li>
+                        <a href='shop.php?user_query=$Key&search=Search&page=" . $i . "'> " . $i . " </a>
+                    <li>
+                    ";
+        };
+        echo "
+            <li>
+                <a href='shop.php?user_query=$Key&search=Search&page=$total_pages'> " . 'Trang cuối' . " </a>
+            <li>
+            </ul> <!-- pagination Finish -->
+    </center>
+        ";
+
+        if ($count == 0) {
+            echo "
+                <div class='box'>
+
+                    <h1> Không có sản phẩm nào </h1>
+
+                </div>
             ";
+            exit();
+        } else {
+
+            echo "
+                <div class='box'>
+                    <h1> Tìm Kiếm </h1>
+                </div>
+            ";
+        }
+
+        while ($row_products = mysqli_fetch_array($run_products)) {
+
+            $pro_id = $row_products['id'];
+
+            $pro_title = $row_products['name'];
+
+            $pro_price = $row_products['price'];
+            $pro_price_f = number_format($pro_price, 0, ',', '.');
+
+
+            $pro_link = preg_split("/\,/", $row_products['link'])[0];
+
+
+            echo "
+            
+            <div class='col-md-4 col-sm-6 center-responsive'>
+                
+            <div class='product eff'>
+                <a href='details.php?pro_id=$pro_id'>
+                    <img class='img-responsive' src='admin_area/product_images/$pro_link'>
+                </a>
+
+                <div class='text'>
+                    <h3 class='pad_h'>
+                        <a href='details.php?pro_id=$pro_id' class='pro_title_size'>
+                            $pro_title
+                        </a>
+                    </h3>
+
+                    <p class='price'>
+                        <strong>  $pro_price_f VNĐ </strong>
+                    </p>
+
+                    <p class='button'>
+                        <a class='btn btn-default' href='details.php?pro_id=$pro_id'>
+                            Chi tiết
+                        </a>
+
+                        <a class='btn btn-primary' href='details.php?pro_id=$pro_id'>
+                            <i class='fa fa-shoping-cart'></i> Thêm vào giỏ hàng
+                        </a>
+                    </p>
+                </div>
+
+            </div>
+
+        </div>";
         }
     }
 }
@@ -470,32 +621,32 @@ function items($useremail)
 
 /// begin total_price functions ///
 
-function total_price()
-{
+// function total_price()
+// {
 
-    global $db;
+//     global $db;
 
-    $ip_add = getRealIpUser();
+//     $ip_add = getRealIpUser();
 
-    $total = 0;
+//     $total = 0;
 
-    $select_cart = "select * from cart where ip_add='$ip_add'";
+//     $select_cart = "select * from cart where ip_add='$ip_add'";
 
-    $run_cart = mysqli_query($db, $select_cart);
+//     $run_cart = mysqli_query($db, $select_cart);
 
-    while ($record = mysqli_fetch_array($run_cart)) {
+//     while ($record = mysqli_fetch_array($run_cart)) {
 
-        $pro_id = $record['p_id'];
+//         $pro_id = $record['p_id'];
 
-        $pro_qty = $record['qty'];
+//         $pro_qty = $record['qty'];
 
-        $sub_total = $record['p_price'] * $pro_qty;
+//         $sub_total = $record['p_price'] * $pro_qty;
 
-        $total += $sub_total;
-    }
+//         $total += $sub_total;
+//     }
 
-    echo "$" . $total;
-}
+//     echo "$" . $total;
+// }
 
 /// finish total_price functions ///
 

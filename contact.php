@@ -99,7 +99,7 @@
                            
                            $sender_message = $_POST['message'];
                            
-                           $receiver_email = "mugianto4th@gmail.com";
+                           $receiver_email = "dangvinhsieu.a10@gmail.com";
                            
                            mail($receiver_email,$sender_name,$sender_subject,$sender_message,$sender_email);
                            
@@ -111,7 +111,7 @@
                            
                            $msg = "Thanks for sending us message. ASAP we will reply your message";
                            
-                           $from = "mugianto4th@gmail.com";
+                           $from = "dangvinhsieu.a10@gmail.com";
                            
                            mail($email,$subject,$msg,$from);
                            

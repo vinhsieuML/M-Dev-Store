@@ -100,7 +100,6 @@ $customer_ward_id = $row_customer['wardID'];
     </div><!-- text-center Finish -->
 
 </form><!-- form Finish -->
-
 <script>
     $(document).ready(function() {
         $.ajax({
@@ -138,7 +137,7 @@ $customer_ward_id = $row_customer['wardID'];
                             text: response[index]['DistrictName']
                         }));
                     });
-                    $('option[value=' + $('#o_ward_id').val() + ']').attr('selected', true);
+                    $('option[value=' + $('#o_district_id').val() + ']').attr('selected', true);
                     $select.trigger('change');
                 }
             });
@@ -148,7 +147,7 @@ $customer_ward_id = $row_customer['wardID'];
             const districtID = this.value;
             var $select = $('#ward_select');
             $select.empty();
-            $select.append("<div class='loader'></div>");
+            $select.append("<option> Đang Tải Dữ Liệu...</option>");
             $.ajax({
                 url: "http://localhost:3000/api/ward/" + districtID,
                 method: "GET",
@@ -162,7 +161,7 @@ $customer_ward_id = $row_customer['wardID'];
                             text: response[index]['WardName']
                         }));
                     });
-                    $('option[value=' + $('#o_district_id').val() + ']').attr('selected', true);
+                    $('option[value=' + $('#o_ward_id').val() + ']').attr('selected', true);
                 }
             });
         });
@@ -196,8 +195,7 @@ if (isset($_POST['update'])) {
         if ($run_customer) {
 
             echo "<script>alert('Cập Nhật Thành Công')</script>";
-
-            // echo "<script>window.open('logout.php','_self')</script>";
+            echo "<script>window.open('my_account.php?edit_account','_self')</script>";
         }
     }
 }

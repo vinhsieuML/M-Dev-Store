@@ -339,7 +339,7 @@ if (isset($_GET['pro_id'])) {
                             <h1 class="text-center"> <?php echo $pro_title; ?> </h1>
                             <?php add_cart(); ?>
                             <form action="details.php?add_cart=<?php echo $product_id; ?>" class="form-horizontal" method="post">
-                                <input id="number" value=<?php echo  $_SESSION['customer_email'] ?> name='email' readonly hidden/>
+                                <input id="email" value=<?php echo  $_SESSION['customer_email'] ?> name='email' readonly hidden/>
                                 <!--form-horizontal Begin-->
                                 <div class="form-group">
                                     <!-- form-group Begin-->
@@ -354,6 +354,7 @@ if (isset($_GET['pro_id'])) {
                                                 var value = parseInt(document.getElementById('number').value, 10);
                                                 value = isNaN(value) ? 0 : value;
                                                 value++;
+                                                console.log(value);
                                                 document.getElementById('number').value = value;
                                             }
 

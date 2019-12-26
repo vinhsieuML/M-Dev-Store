@@ -161,7 +161,7 @@ function getPCats(){
         
             <li>
             
-                <a href='shop.php?p_cat=$p_cat_id'> $p_cat_title </a>
+                <a href='shop.php?p_cat=$p_cat_id&page=1'> $p_cat_title </a>
             
             </li>
         
@@ -193,7 +193,7 @@ function getCats(){
         
             <li>
             
-                <a href='shop.php?cat=$cat_id'> $cat_title </a>
+                <a href='shop.php?cat=$cat_id&page=1'> $cat_title </a>
             
             </li>
         
@@ -207,252 +207,252 @@ function getCats(){
 
 /// begin getpcatpro functions ///
 
-function getpcatpro(){
+// function getpcatpro(){
     
-    global $db;
+//     global $db;
     
-    if(isset($_GET['p_cat'])){
+//     if(isset($_GET['p_cat'])){
         
-        $p_cat_id = $_GET['p_cat'];
+//         $p_cat_id = $_GET['p_cat'];
         
-        $get_p_cat ="select * from product_categories where p_cat_id='$p_cat_id'";
+//         $get_p_cat ="select * from product_categories where p_cat_id='$p_cat_id'";
         
-        $run_p_cat = mysqli_query($db,$get_p_cat);
+//         $run_p_cat = mysqli_query($db,$get_p_cat);
         
-        $row_p_cat = mysqli_fetch_array($run_p_cat);
+//         $row_p_cat = mysqli_fetch_array($run_p_cat);
         
-        $p_cat_title = $row_p_cat['p_cat_title'];
+//         $p_cat_title = $row_p_cat['p_cat_title'];
         
-        $p_cat_desc = $row_p_cat['p_cat_desc'];
+//         $p_cat_desc = $row_p_cat['p_cat_desc'];
         
-        $get_products ="select * from products where p_cat_id='$p_cat_id'";
+//         $get_products ="select * from products where p_cat_id='$p_cat_id'";
         
-        $run_products = mysqli_query($db,$get_products);
+//         $run_products = mysqli_query($db,$get_products);
         
-        $count = mysqli_num_rows($run_products);
+//         $count = mysqli_num_rows($run_products);
         
-        if($count==0){
+//         if($count==0){
             
-            echo "
+//             echo "
             
-                <div class='box'>
+//                 <div class='box'>
                 
-                    <h1> No Product Found In This Product Categories </h1>
+//                     <h1> No Product Found In This Product Categories </h1>
                 
-                </div>
+//                 </div>
             
-            ";
+//             ";
             
-        }else{
+//         }else{
             
-            echo "
+//             echo "
             
-                <div class='box'>
+//                 <div class='box'>
                 
-                    <h1> $p_cat_title </h1>
+//                     <h1> $p_cat_title </h1>
                     
-                    <p> $p_cat_desc </p>
+//                     <p> $p_cat_desc </p>
                 
-                </div>
+//                 </div>
             
-            ";
+//             ";
             
-        }
+//         }
         
-        while($row_products=mysqli_fetch_array($run_products)){
+//         while($row_products=mysqli_fetch_array($run_products)){
             
-            $pro_id = $row_products['product_id'];
+//             $pro_id = $row_products['product_id'];
         
-            $pro_title = $row_products['product_title'];
+//             $pro_title = $row_products['product_title'];
 
-            $pro_price = $row_products['product_price'];
+//             $pro_price = $row_products['product_price'];
 
-            $pro_img1 = $row_products['product_img1'];
+//             $pro_img1 = $row_products['product_img1'];
             
-            echo "
+//             echo "
             
-                <div class='col-md-4 col-sm-6 center-responsive'>
+//                 <div class='col-md-4 col-sm-6 center-responsive'>
         
-            <div class='product'>
+//             <div class='product'>
             
-                <a href='details.php?pro_id=$pro_id'>
+//                 <a href='details.php?pro_id=$pro_id'>
                 
-                    <img class='img-responsive' src='admin_area/product_images/$pro_img1'>
+//                     <img class='img-responsive' src='admin_area/product_images/$pro_img1'>
                 
-                </a>
+//                 </a>
                 
-                <div class='text'>
+//                 <div class='text'>
                 
-                    <h3>
+//                     <h3>
             
-                        <a href='details.php?pro_id=$pro_id'>
+//                         <a href='details.php?pro_id=$pro_id'>
 
-                            $pro_title
+//                             $pro_title
 
-                        </a>
+//                         </a>
                     
-                    </h3>
+//                     </h3>
                     
-                    <p class='price'>
+//                     <p class='price'>
                     
-                        $ $pro_price
+//                         $ $pro_price
                     
-                    </p>
+//                     </p>
                     
-                    <p class='button'>
+//                     <p class='button'>
                     
-                        <a class='btn btn-default' href='details.php?pro_id=$pro_id'>
+//                         <a class='btn btn-default' href='details.php?pro_id=$pro_id'>
 
-                            View Details
+//                             View Details
 
-                        </a>
+//                         </a>
                     
-                        <a class='btn btn-primary' href='details.php?pro_id=$pro_id'>
+//                         <a class='btn btn-primary' href='details.php?pro_id=$pro_id'>
 
-                            <i class='fa fa-shopping-cart'></i> Add to Cart
+//                             <i class='fa fa-shopping-cart'></i> Add to Cart
 
-                        </a>
+//                         </a>
                     
-                    </p>
+//                     </p>
                 
-                </div>
+//                 </div>
             
-            </div>
+//             </div>
         
-        </div>
+//         </div>
             
-            ";
+//             ";
             
-        }
+//         }
         
-    }
+//     }
     
-}
+// }
 
 /// finish getpcatpro functions ///
 
 /// begin getcatpro functions ///
 
-function getcatpro(){
+// function getcatpro(){
     
-    global $db;
+//     global $db;
     
-    if(isset($_GET['cat'])){
+//     if(isset($_GET['cat'])){
         
-        $cat_id = $_GET['cat'];
+//         $cat_id = $_GET['cat'];
         
-        $get_cat = "select * from categories where cat_id='$cat_id'";
+//         $get_cat = "select * from categories where cat_id='$cat_id'";
         
-        $run_cat = mysqli_query($db,$get_cat);
+//         $run_cat = mysqli_query($db,$get_cat);
         
-        $row_cat = mysqli_fetch_array($run_cat);
+//         $row_cat = mysqli_fetch_array($run_cat);
         
-        $cat_title = $row_cat['cat_title'];
+//         $cat_title = $row_cat['cat_title'];
         
-        $cat_desc = $row_cat['cat_desc'];
+//         $cat_desc = $row_cat['cat_desc'];
         
-        $get_cat = "select * from products where cat_id='$cat_id' LIMIT 0,6";
+//         $get_cat = "select * from products where cat_id='$cat_id' LIMIT 0,6";
         
-        $run_products = mysqli_query($db,$get_cat);
+//         $run_products = mysqli_query($db,$get_cat);
         
-        $count = mysqli_num_rows($run_products);
+//         $count = mysqli_num_rows($run_products);
         
-        if($count==0){
+//         if($count==0){
             
             
-            echo "
+//             echo "
             
-                <div class='box'>
+//                 <div class='box'>
                 
-                    <h1> No Product Found In This Category </h1>
+//                     <h1> No Product Found In This Category </h1>
                 
-                </div>
+//                 </div>
             
-            ";
+//             ";
             
-        }else{
+//         }else{
             
-            echo "
+//             echo "
             
-                <div class='box'>
+//                 <div class='box'>
                 
-                    <h1> $cat_title </h1>
+//                     <h1> $cat_title </h1>
                     
-                    <p> $cat_desc </p>
+//                     <p> $cat_desc </p>
                 
-                </div>
+//                 </div>
             
-            ";
+//             ";
             
-        }
+//         }
         
-        while($row_products=mysqli_fetch_array($run_products)){
+//         while($row_products=mysqli_fetch_array($run_products)){
             
-            $pro_id = $row_products['product_id'];
+//             $pro_id = $row_products['product_id'];
             
-            $pro_title = $row_products['product_title'];
+//             $pro_title = $row_products['product_title'];
             
-            $pro_price = $row_products['product_price'];
+//             $pro_price = $row_products['product_price'];
             
-            $pro_desc = $row_products['product_desc'];
+//             $pro_desc = $row_products['product_desc'];
             
-            $pro_img1 = $row_products['product_img1'];
+//             $pro_img1 = $row_products['product_img1'];
             
-            echo "
+//             echo "
             
-                <div class='col-md-4 col-sm-6 center-responsive'>
+//                 <div class='col-md-4 col-sm-6 center-responsive'>
                                     
-                    <div class='product'>
+//                     <div class='product'>
                                         
-                        <a href='details.php?pro_id=$pro_id'>
+//                         <a href='details.php?pro_id=$pro_id'>
                                             
-                            <img class='img-responsive' src='admin_area/product_images/$pro_img1'>
+//                             <img class='img-responsive' src='admin_area/product_images/$pro_img1'>
                                             
-                        </a>
+//                         </a>
                                             
-                        <div class='text'>
+//                         <div class='text'>
                                             
-                            <h3>
+//                             <h3>
                                                 
-                                <a href='details.php?pro_id=$pro_id'> $pro_title </a>
+//                                 <a href='details.php?pro_id=$pro_id'> $pro_title </a>
                                                 
-                            </h3>
+//                             </h3>
                                             
-                        <p class='price'>
+//                         <p class='price'>
 
-                            $$pro_price
+//                             $$pro_price
 
-                        </p>
+//                         </p>
 
-                            <p class='buttons'>
+//                             <p class='buttons'>
 
-                                <a class='btn btn-default' href='details.php?pro_id=$pro_id'>
+//                                 <a class='btn btn-default' href='details.php?pro_id=$pro_id'>
 
-                                View Details
+//                                 View Details
 
-                                </a>
+//                                 </a>
 
-                                <a class='btn btn-primary' href='details.php?pro_id=$pro_id'>
+//                                 <a class='btn btn-primary' href='details.php?pro_id=$pro_id'>
 
-                                <i class='fa fa-shopping-cart'></i> Add To Cart
+//                                 <i class='fa fa-shopping-cart'></i> Add To Cart
 
-                                </a>
+//                                 </a>
 
-                            </p>
+//                             </p>
                                             
-                        </div>
+//                         </div>
                                         
-                    </div>
+//                     </div>
                                     
-                </div>
+//                 </div>
             
-            ";
+//             ";
             
-        }
+//         }
         
-    }
+//     }
     
-}
+// }
 
 /// finish getcatpro functions ///
 
@@ -476,41 +476,41 @@ function items($useremail){
 
 /// begin total_price functions ///
 
-function total_price(){
+// function total_price(){
     
-    global $db;
+//     global $db;
     
-    $ip_add = getRealIpUser();
+//     $ip_add = getRealIpUser();
     
-    $total = 0;
+//     $total = 0;
     
-    $select_cart = "select * from cart where ip_add='$ip_add'";
+//     $select_cart = "select * from cart where ip_add='$ip_add'";
     
-    $run_cart = mysqli_query($db,$select_cart);
+//     $run_cart = mysqli_query($db,$select_cart);
     
-    while($record=mysqli_fetch_array($run_cart)){
+//     while($record=mysqli_fetch_array($run_cart)){
         
-        $pro_id = $record['p_id'];
+//         $pro_id = $record['p_id'];
         
-        $pro_qty = $record['qty'];
+//         $pro_qty = $record['qty'];
         
-        $get_price = "select * from products where product_id='$pro_id'";
+//         $get_price = "select * from products where product_id='$pro_id'";
         
-        $run_price = mysqli_query($db,$get_price);
+//         $run_price = mysqli_query($db,$get_price);
         
-        while($row_price=mysqli_fetch_array($run_price)){
+//         while($row_price=mysqli_fetch_array($run_price)){
             
-            $sub_total = $row_price['product_price']*$pro_qty;
+//             $sub_total = $row_price['product_price']*$pro_qty;
             
-            $total += $sub_total;
+//             $total += $sub_total;
             
-        }
+//         }
         
-    }
+//     }
     
-    echo "$" . $total;
+//     echo "$" . $total;
     
-}
+// }
 
 /// finish total_price functions ///
 
