@@ -41,7 +41,7 @@ include("includes/header.php");
                     } else {
                         $email = 'a';
                     }
-                    $select_cart = "SELECT * from cart_detail cdt JOIN users urs ON urs.id = cdt.id_customer WHERE email = '$email'";
+                    $select_cart = "SELECT *,s.name as size_name from cart_detail cdt JOIN size_detail sdt ON cdt.id_size_detail =sdt.id JOIN size s ON s.id = sdt.id_size JOIN users urs ON urs.id = cdt.id_customer WHERE email = '$email'";
 
                     $run_cart = mysqli_query($con, $select_cart);
 
@@ -88,6 +88,8 @@ include("includes/header.php");
 
                                     $pro_qty = $row_cart['quantity'];
 
+                                    $name = $row_cart['size_name'];
+
                                     $anCart = array(
                                         "id" => $pro_id,
                                         "idsize" => $pro_size,
@@ -127,7 +129,7 @@ include("includes/header.php");
 
                                             <td>
 
-                                                <input type="text" name="quantity" data-user_id="<?php echo $_SESSION['customer_email'] ?>" data-size_id="<?php echo $pro_size ?>" value="<?php echo $_SESSION['pro_qty']; ?>" class="quantity form-control">
+                                                <input type="text" name="quantity" data-user_id="<?php echo $_SESSION['customer_email'] ?>" data-size_id="<?php echo $pro_size ?>" value="<?php echo $_SESSION['pro_qty']; ?>" class="quantity form-control"     width="80px" >
 
                                             </td>
 
@@ -139,7 +141,7 @@ include("includes/header.php");
 
                                             <td>
 
-                                                <?php echo $pro_size; ?>
+                                                <?php echo $name; ?>
 
                                             </td>
 
@@ -177,17 +179,7 @@ include("includes/header.php");
 
                         </table><!-- table Finish -->
 
-                        <div class="form-inline pull-right">
-                            <!-- form-inline Begin -->
-                            <div class="form-group">
-                                <!-- form-group Begin -->
-
-                                <label> Coupon Code: </label>
-                                <input type="text" name="code" class="form-control">
-                                <input type="submit" class="btn btn-primary" value="Use Coupon" name="apply_coupon">
-
-                            </div><!-- form-group Finish -->
-                        </div><!-- form-inline Finish -->
+                        
 
                     </div><!-- table-responsive Finish -->
 
@@ -209,7 +201,7 @@ include("includes/header.php");
                         <div class="pull-right">
                             <!-- pull-right Begin -->
 
-                            <button type="submit" name="update" value="Update Cart" class="btn btn-default">
+                            <button type="submit" name="update" value="<?php echo $email?>" class="btn btn-default">
                                 <!-- btn btn-default Begin -->
 
                                 <i class="fa fa-refresh"></i> Cập Nhật Giỏ Hàng
@@ -244,21 +236,23 @@ include("includes/header.php");
             {
 
                 global $con;
-                echo "<script> console.log('aaaa')</script>";
-                // if (isset($_POST['update'])) {
+                if (isset($_POST['update'])) {
+                    $email = $_POST['update'];
+                    foreach ($_POST['remove'] as $remove_id) {
 
-                //     foreach ($_POST['remove'] as $remove_id) {
+                        $delete_product = "delete from cart_detail where id_product='$remove_id' and id_customer=(SELECT id from users WHERE email = '$email')";
 
-                //         $delete_product = "delete from cart where p_id='$remove_id'";
+                        $run_delete = mysqli_query($con, $delete_product);
 
-                //         $run_delete = mysqli_query($con, $delete_product);
+                        $run_delete = mysqli_query($con, $delete_product);
 
-                //         if ($run_delete) {
+                        if (!$run_delete) {
 
-                //             echo "<script>window.open('cart.php','_self')</script>";
-                //         }
-                //     }
-                // }
+                            echo "<script>alert('Có lỗi xảy ra')</script>";
+                        }
+                    }
+                    echo "<script>window.open('cart.php','_self')</script>";
+                }
             }
 
             echo @$up_cart = update_cart();
@@ -577,7 +571,7 @@ echo '
 <script>
     $(document).ready(function() {
         $.ajax({
-            url: "http://localhost:3000/api/city",
+            url: "http://192.168.0.135:3000/api/city",
             method: "GET",
             headers: {},
             contentType: 'application/json; charset=utf-8',
@@ -597,7 +591,7 @@ echo '
         $('#city_select').on('change', function() {
             const cityid = this.value;
             $.ajax({
-                url: "http://localhost:3000/api/district/" + cityid,
+                url: "http://192.168.0.135:3000/api/district/" + cityid,
                 method: "GET",
                 headers: {},
                 contentType: 'application/json; charset=utf-8',
@@ -623,7 +617,7 @@ echo '
             $select.empty();
             $select.append("<option> Đang Tải Dữ Liệu </option>");
             $.ajax({
-                url: "http://localhost:3000/api/ward/" + districtID,
+                url: "http://192.168.0.135:3000/api/ward/" + districtID,
                 method: "GET",
                 headers: {},
                 contentType: 'application/json; charset=utf-8',
@@ -644,7 +638,7 @@ echo '
             const districtID = $('#district_select').val();
             $('#shipFee').html("<div class='loader'></div>");
             $.ajax({
-                url: "http://localhost:3000/api/shipFee/" + districtID + "/" + 1000,
+                url: "http://192.168.0.135:3000/api/shipFee/" + districtID + "/" + 1000,
                 method: "GET",
                 headers: {},
                 contentType: 'application/json; charset=utf-8',

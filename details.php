@@ -98,11 +98,11 @@ if (isset($_GET['pro_id'])) {
                 <ul class="menu">
                     <!-- cmenu Begin -->
 
-                    <li>
+                    <!-- <li>
                         <a href="customer_register.php">Đăng ký</a>
-                    </li>
+                    </li> -->
                     <li>
-                        <a href="checkout.php">My Account</a>
+                        <a href="customer/my_account.php?my_orders">Tài khoản của tôi</a>
                     </li>
                     <li>
                         <a href="cart.php">Giỏ hàng</a>
@@ -113,9 +113,9 @@ if (isset($_GET['pro_id'])) {
                             <?php
 
                             if (!isset($_SESSION['customer_email'])) {
-                                echo "<a href='checkout.php'> Login </a>";
+                                echo "<a href='checkout.php'> Đăng nhập </a>";
                             } else {
-                                echo " <a href='logout.php'> Log Out </a> ";
+                                echo " <a href='logout.php'> Đăng xuất </a> ";
                             }
 
                             ?>
@@ -183,7 +183,7 @@ if (isset($_GET['pro_id'])) {
                         <li class="<?php if ($active == 'Shop') {
                                         echo "active";
                                     } ?>">
-                            <a href="shop.php">Cửa hàng</a>
+                            <a href="shop.php?p_cat=1&page=1">Cửa hàng</a>
                         </li>
 
                         <li class="<?php if ($active == 'Contact') {
@@ -201,7 +201,7 @@ if (isset($_GET['pro_id'])) {
 
                     <i class="fa fa-shopping-cart"></i>
 
-                    <span><?php items($_SESSION['customer_email']); ?> Items In Your Cart</span>
+                    <span><?php if(isset($_SESSION['customer_email'])){items($_SESSION['customer_email']);}?> Sản phẩm trong giỏ hàng</span>
 
                 </a><!-- btn navbar-btn btn-primary Finish -->
 
@@ -339,7 +339,7 @@ if (isset($_GET['pro_id'])) {
                             <h1 class="text-center"> <?php echo $pro_title; ?> </h1>
                             <?php add_cart(); ?>
                             <form action="details.php?add_cart=<?php echo $product_id; ?>" class="form-horizontal" method="post">
-                                <input id="email" value=<?php echo  $_SESSION['customer_email'] ?> name='email' readonly hidden/>
+                                <input id="email" value=<?php  if(isset($_SESSION['customer_email'])){echo $_SESSION['customer_email'];}  ?> name='email' readonly hidden/>
                                 <!--form-horizontal Begin-->
                                 <div class="form-group">
                                     <!-- form-group Begin-->
@@ -422,27 +422,31 @@ if (isset($_GET['pro_id'])) {
 
                 <div class="box" id="details">
                     <!-- box Begin -->
-                    <h4>
+                    <center>
+                    <h2 style="color:#4FBFA8;">
+                        <strong>
                         <font size="6">Chi tiết sản phẩm</font>
-                    </h4>
+                        </strong>
+                    </h2>
                     <p>
                         <?php echo $pro_desc; ?>
                     </p>
                     <hr>
-
+                        </center>
                 </div><!-- box Finish -->
 
                 <div id="row same-heigh-row">
                     <!-- #row same-heigh-row Begin -->
-                    <div class="box"><!-- box Begin -->
+                   <div class="box"><!-- box Begin -->
            
            <div class="container"><!-- container Begin -->
                
                <div class="col-md-12"><!-- col-md-12 Begin -->
-                   
-                   <h2>
-                       <strong> Sản phẩm mới nhất </strong>
+                    <center>
+                   <h2 style="color:#4FBFA8;">
+                       <strong> Sản phẩm bạn có thể thích </strong>
                    </h2>
+                        </center>
                    
                </div><!-- col-md-12 Finish -->
                

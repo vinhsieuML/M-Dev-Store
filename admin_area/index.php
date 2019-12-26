@@ -24,13 +24,10 @@ if (!isset($_SESSION['admin_email'])) {
 
         $admin_image = $row_admin['image'];
 
-        // $admin_country = $row_admin['admin_country'];
+        $admin_about = $row_admin['about'];
 
-        // $admin_about = $row_admin['admin_about'];
+        $admin_contact = $row_admin['phone'];
 
-        // $admin_contact = $row_admin['admin_contact'];
-
-        // $admin_job = $row_admin['admin_job'];
 
         $get_products = "select * from product";
 

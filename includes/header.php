@@ -15,9 +15,9 @@ include("functions/functions.php");
     <title>SH Basketball</title>
     <link rel="stylesheet" href="styles/bootstrap-337.min.css">
     <link rel="stylesheet" href="font-awsome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body background="./backg.jpg"> 
    
    <div id="top"><!-- Top Begin -->
        
@@ -126,7 +126,7 @@ include("functions/functions.php");
                            <a href="index.php">Trang chủ</a>
                        </li>
                        <li class="<?php if($active=='Shop') echo"active"; ?>">
-                           <a href="shop.php">Cửa hàng</a>
+                           <a href="shop.php?p_cat=1&page=1">Cửa hàng</a>
                        </li>
                        
                        <li class="<?php if($active=='Contact') echo"active"; ?>">

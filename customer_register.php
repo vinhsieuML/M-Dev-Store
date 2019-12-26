@@ -148,7 +148,7 @@ include("includes/footer.php");
 <script>
     $(document).ready(function() {
         $.ajax({
-            url: "http://localhost:3000/api/city",
+            url: "http://192.168.0.135:3000/api/city",
             method: "GET",
             headers: {},
             contentType: 'application/json; charset=utf-8',
@@ -166,7 +166,7 @@ include("includes/footer.php");
         $('#city_select').on('change', function() {
             const cityid = this.value;
             $.ajax({
-                url: "http://localhost:3000/api/district/" + cityid,
+                url: "http://192.168.0.135:3000/api/district/" + cityid,
                 method: "GET",
                 headers: {},
                 contentType: 'application/json; charset=utf-8',
@@ -188,9 +188,9 @@ include("includes/footer.php");
             const districtID = this.value;
             var $select = $('#ward_select');
             $select.empty();
-            $select.append("<div class='loader'></div>");
+            $select.append("<option> Đang Tải Dữ Liệu </option>");
             $.ajax({
-                url: "http://localhost:3000/api/ward/" + districtID,
+                url: "http://192.168.0.135:3000/api/ward/" + districtID,
                 method: "GET",
                 headers: {},
                 contentType: 'application/json; charset=utf-8',

@@ -112,7 +112,7 @@ if (!isset($admin_email)) {
 
                         <span class="pull-left">
                             <!-- pull-left begin -->
-                            View Details
+                            Xem chi tiết
                         </span><!-- pull-left finish -->
 
                         <span class="pull-right">
@@ -148,7 +148,7 @@ if (!isset($admin_email)) {
                             <!-- col-xs-9 text-right begin -->
                             <div class="huge"> <?php echo $count_p_categories; ?> </div>
 
-                            <div> Product Categories </div>
+                            <div> Danh mục sản phẩm </div>
 
                         </div><!-- col-xs-9 text-right finish -->
 
@@ -162,7 +162,7 @@ if (!isset($admin_email)) {
 
                         <span class="pull-left">
                             <!-- pull-left begin -->
-                            View Details
+                            Xem chi tiết
                         </span><!-- pull-left finish -->
 
                         <span class="pull-right">
@@ -198,7 +198,7 @@ if (!isset($admin_email)) {
                             <!-- col-xs-9 text-right begin -->
                             <div class="huge"> <?php echo $count_pending_orders; ?> </div>
 
-                            <div> Orders </div>
+                            <div> Đơn hàng </div>
 
                         </div><!-- col-xs-9 text-right finish -->
 
@@ -212,7 +212,7 @@ if (!isset($admin_email)) {
 
                         <span class="pull-left">
                             <!-- pull-left begin -->
-                            View Details
+                            Xem chi tiết
                         </span><!-- pull-left finish -->
 
                         <span class="pull-right">
@@ -374,7 +374,7 @@ if (!isset($admin_email)) {
                     <div class="mb-md thumb-info">
                         <!-- mb-md thumb-info begin -->
 
-                        <img src="admin_images/<?php echo $admin_image; ?>" alt="<?php echo $admin_image; ?>" class="rounded img-responsive">
+                        <img src="admin_images/<?php echo $admin_image; ?>" alt="<?php echo $admin_image; ?>" class="rounded img-responsive" style=" height: auto; width: 50%;">
 
                         <div class="thumb-info-title">
                             <!-- thumb-info-title begin -->
@@ -390,7 +390,6 @@ if (!isset($admin_email)) {
                         <div class="widget-content-expanded">
                             <!-- widget-content-expanded begin -->
                             <i class="fa fa-user"></i> <span> Email: </span> <?php echo $admin_email; ?> <br />
-                            <i class="fa fa-flag"></i> <span> Country: </span> <?php echo $admin_country; ?> <br />
                             <i class="fa fa-envelope"></i> <span> Contact: </span> <?php echo $admin_contact; ?> <br />
                         </div><!-- widget-content-expanded finish -->
 

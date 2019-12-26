@@ -79,7 +79,7 @@
                 <li><!-- li begin -->
                     <a href="logout.php"><!-- a href begin -->
                         
-                        <i class="fa fa-fw fa-power-off"></i> Log Out
+                        <i class="fa fa-fw fa-power-off"></i> Đăng Xuất
                         
                     </a><!-- a href finish -->
                 </li><!-- li finish -->
@@ -187,10 +187,10 @@
                 
                 <ul id="slides" class="collapse"><!-- collapse begin -->
                     <li><!-- li begin -->
-                        <a href="index.php?insert_slide"> Insert Slide </a>
+                        <a href="index.php?insert_slide"> Thêm Slide </a>
                     </li><!-- li finish -->
                     <li><!-- li begin -->
-                        <a href="index.php?view_slides"> View Slides </a>
+                        <a href="index.php?view_slides"> Xem Slides </a>
                     </li><!-- li finish -->
                 </ul><!-- collapse finish -->
                 
@@ -206,90 +206,48 @@
                 
                 <ul id="boxes" class="collapse"><!-- collapse begin -->
                     <li><!-- li begin -->
-                        <a href="index.php?insert_box"> Insert Box </a>
+                        <a href="index.php?insert_box"> Thêm Box </a>
                     </li><!-- li finish -->
                     <li><!-- li begin -->
-                        <a href="index.php?view_boxes"> View Boxes </a>
+                        <a href="index.php?view_boxes"> Xem Boxes </a>
                     </li><!-- li finish -->
                 </ul><!-- collapse finish -->
                 
             </li><!-- li finish -->
             
-            <li><!-- li begin -->
-                <a href="#" data-toggle="collapse" data-target="#coupon"><!-- a href begin -->
-                        
-                        <i class="fa fa-fw fa-book"></i> Mã giảm giá
-                        <i class="fa fa-fw fa-caret-down"></i>
-                        
-                </a><!-- a href finish -->
-                
-                <ul id="coupon" class="collapse"><!-- collapse begin -->
-                    <li><!-- li begin -->
-                        <a href="index.php?insert_coupon"> Thêm Mã Giảm Giá </a>
-                    </li><!-- li finish -->
-                    <li><!-- li begin -->
-                        <a href="index.php?view_coupons"> Xem danh sách mã giảm giá </a>
-                    </li><!-- li finish -->
-                </ul><!-- collapse finish -->
-                
-            </li><!-- li finish -->
             
-            <li><!-- li begin -->
-                <a href="#" data-toggle="collapse" data-target="#terms"><!-- a href begin -->
-                        
-                        <i class="fa fa-fw fa-table"></i> Terms
-                        <i class="fa fa-fw fa-caret-down"></i>
-                        
-                </a><!-- a href finish -->
-                
-                <ul id="terms" class="collapse"><!-- collapse begin -->
-                    <li><!-- li begin -->
-                        <a href="index.php?insert_terms"> Insert Term </a>
-                    </li><!-- li finish -->
-                    <li><!-- li begin -->
-                        <a href="index.php?view_terms"> View Terms </a>
-                    </li><!-- li finish -->
-                </ul><!-- collapse finish -->
-                
-            </li><!-- li finish -->
+            
+            
             
             <li><!-- li begin -->
                 <a href="index.php?view_customers"><!-- a href begin -->
-                    <i class="fa fa-fw fa-users"></i> View Customers
+                    <i class="fa fa-fw fa-users"></i> Xem Khách Hàng
                 </a><!-- a href finish -->
             </li><!-- li finish -->
             
             <li><!-- li begin -->
                 <a href="index.php?view_orders"><!-- a href begin -->
-                    <i class="fa fa-fw fa-book"></i> View Orders
+                    <i class="fa fa-fw fa-book"></i> Xem Đơn Hàng
                 </a><!-- a href finish -->
             </li><!-- li finish -->
             
            
             
-            <li><!-- li begin -->
-                <a href="index.php?edit_css"><!-- a href begin -->
-                    <i class="fa fa-fw fa-pencil"></i> CSS Editor
-                </a><!-- a href finish -->
-            </li><!-- li finish -->
             
             <li><!-- li begin -->
                 <a href="#" data-toggle="collapse" data-target="#users"><!-- a href begin -->
                         
-                        <i class="fa fa-fw fa-users"></i> Users
+                        <i class="fa fa-fw fa-users"></i> Admin
                         <i class="fa fa-fw fa-caret-down"></i>
                         
                 </a><!-- a href finish -->
                 
                 <ul id="users" class="collapse"><!-- collapse begin -->
                     <li><!-- li begin -->
-                        <a href="index.php?insert_user"> Insert User </a>
+                        <a href="index.php?insert_user"> Thêm Admin </a>
                     </li><!-- li finish -->
                     <li><!-- li begin -->
-                        <a href="index.php?view_users"> View Users </a>
-                    </li><!-- li finish -->
-                    <li><!-- li begin -->
-                        <a href="index.php?user_profile=<?php echo $admin_id; ?>"> Edit User Profile </a>
+                        <a href="index.php?view_users"> Xem Admin </a>
                     </li><!-- li finish -->
                 </ul><!-- collapse finish -->
                 
@@ -297,7 +255,7 @@
             
             <li><!-- li begin -->
                 <a href="logout.php"><!-- a href begin -->
-                    <i class="fa fa-fw fa-power-off"></i> Log Out
+                    <i class="fa fa-fw fa-power-off"></i> Đăng Xuất
                 </a><!-- a href finish -->
             </li><!-- li finish -->
             

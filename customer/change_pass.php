@@ -15,7 +15,7 @@
         
         <label> Mật Khẩu Mới: </label>
         
-        <input type="text" name="new_pass" class="form-control" required>
+        <input type="password" name="new_pass" class="form-control" required>
         
     </div><!-- form-group Finish -->
     
@@ -23,7 +23,7 @@
         
         <label> Nhập lại mật khẩu mới: </label>
         
-        <input type="text" name="new_pass_again" class="form-control" required>
+        <input type="password" name="new_pass_again" class="form-control" required>
         
     </div><!-- form-group Finish -->
     

@@ -77,10 +77,10 @@ if (!isset($_SESSION['customer_email'])) {
 
                                 if (!isset($_SESSION['customer_email'])) {
 
-                                    echo "<a href='checkout.php'> Login </a>";
+                                    echo "<a href='checkout.php'> Đăng nhập </a>";
                                 } else {
 
-                                    echo " <a href='logout.php'> Log Out </a> ";
+                                    echo " <a href='logout.php'> Đăng xuất </a> ";
                                 }
 
                                 ?>
@@ -144,7 +144,7 @@ if (!isset($_SESSION['customer_email'])) {
                                 <a href="../index.php">Trang chủ</a>
                             </li>
                             <li>
-                                <a href="../shop.php">Cửa hàng</a>
+                                <a href="../shop.php?p_cat=1&page=1">Cửa hàng</a>
                             </li>
                             <!-- <li class="active">
                            <a href="my_account.php">Tài khoản của tôi</a>
@@ -165,7 +165,7 @@ if (!isset($_SESSION['customer_email'])) {
 
                         <i class="fa fa-shopping-cart"></i>
 
-                        <span><?php items($_SESSION['customer_email']); ?> Items In Your Cart</span>
+                        <span><?php items($_SESSION['customer_email']); ?> Sản phẩm trong giỏ hàng </span>
 
                     </a><!-- btn navbar-btn btn-primary Finish -->
 

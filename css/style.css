@@ -1,12 +1,4 @@
-
-                                
-                                /*
-Template Name     : M-Dev Store
-Author Name       : MrGhie
-Author Email      : mugianto1nd@gmail.com
-Theme URI         : www.m-dev-store.com | localhost/m-dev-store
-Theme Ver         : 1.1
-*/
+                        
 
 /* General Styles */
 
@@ -313,7 +305,7 @@ body{
     width: 50px;
 }
 #content #cart .table tbody tr td input{
-    width: 40px;
+    width: 60px;
     text-align: right;
 }
 #content #cart .table tbody tr td{
@@ -685,4 +677,6 @@ body{
     margin-top: 25px;
     
 }
+
+
 /* styling the label finish */

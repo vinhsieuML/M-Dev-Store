@@ -18,15 +18,7 @@
                     <li class="space_line"><a href="contact.php">Liên hệ</a></li>                 
                 </ul>
 
-                <h4 class="headline">Thao tác</h4>
-                
-                <ul>
-                    <li class="space_line2"><a href="cart.php">Đăng nhập</a></li>
-                    <li class="space_line2"><a href="customer_register.php">Đăng ký</a></li>            
-                </ul>
-
-                <hr class="hidden-md hidden-lg hidden-sm">
-
+             
                 <!-- <hr>
 
                 <h4>User Section</h4>

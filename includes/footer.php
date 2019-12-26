@@ -13,19 +13,12 @@
               
                 <ul>
                     <li class="space_line"><a href="cart.php">Giỏ hàng</a></li>
-                    <li class="space_line"><a href="customer/my_account.php">Tài khoản</a></li>
-                    <li class="space_line"><a href="shop.php">Cửa hàng</a></li>  
+                    <li class="space_line"><a href="customer/my_account.php?my_orders">Tài khoản</a></li>
+                    <li class="space_line"><a href="shop.php?p_cat=1&page=1">Cửa hàng</a></li>  
                     <li class="space_line"><a href="contact.php">Liên hệ</a></li>                 
                 </ul>
 
-                <h4 class="headline">Thao tác</h4>
-                
-                <ul>
-                    <li class="space_line2"><a href="cart.php">Đăng nhập</a></li>
-                    <li class="space_line2"><a href="customer_register.php">Đăng ký</a></li>            
-                </ul>
-
-                <hr class="hidden-md hidden-lg hidden-sm">
+               
 
                 <!-- <hr>
 
@@ -58,7 +51,7 @@
                         
                             <li class='space_line'>
                             
-                                <a href='shop.php?p_cat=$p_cat_id'>
+                                <a href='shop.php?p_cat=$p_cat_id&page=1'>
                                 
                                     $p_cat_title
                                 

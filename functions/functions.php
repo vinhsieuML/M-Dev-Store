@@ -393,28 +393,7 @@ function getpcatpro()
         $run_products2 = mysqli_query($db, $get_products2);
 
         $count = mysqli_num_rows($run_products);
-        echo '<center>
-        <ul class="pagination">';
-        $total_pages = ceil(mysqli_num_rows($run_products2) / 6);
-        echo "
-            <li>
-                <a href='shop.php?p_cat=$p_cat_id&page=1'> Trang Đầu </a>
-            <li>
-        ";
-        for ($i = 1; $i <= $total_pages; $i++) {
-            echo "
-                    <li>
-                        <a href='shop.php?p_cat=$p_cat_id&page=" . $i . "'> " . $i . " </a>
-                    <li>
-                    ";
-        };
-        echo "
-            <li>
-                <a href='shop.php?p_cat=$p_cat_id&page=$total_pages'> " . 'Trang cuối' . " </a>
-            <li>
-            </ul> <!-- pagination Finish -->
-    </center>
-        ";
+
 
         if ($count == 0) {
             echo "
@@ -432,6 +411,28 @@ function getpcatpro()
                     <h1> $p_cat_title </h1>
                 </div>
             ";
+            echo '<center>
+        <ul class="pagination">';
+            $total_pages = ceil(mysqli_num_rows($run_products2) / 6);
+            echo "
+            <li>
+                <a href='shop.php?p_cat=$p_cat_id&page=1'> Trang Đầu </a>
+            <li>
+        ";
+            for ($i = 1; $i <= $total_pages; $i++) {
+                echo "
+                    <li>
+                        <a href='shop.php?p_cat=$p_cat_id&page=" . $i . "'> " . $i . " </a>
+                    <li>
+                    ";
+            };
+            echo "
+            <li>
+                <a href='shop.php?p_cat=$p_cat_id&page=$total_pages'> " . 'Trang cuối' . " </a>
+            <li>
+            </ul> <!-- pagination Finish -->
+    </center>
+        ";
         }
 
         while ($row_products = mysqli_fetch_array($run_products)) {
@@ -495,7 +496,7 @@ function search()
 
         $start_from = ($page - 1) * 6;
 
-        
+
 
 
         $get_products = "SELECT p.*, GROUP_CONCAT(i.link) AS link FROM product p INNER JOIN images i ON p.id = i.id_product where name like '%$Key%' group by p.id LIMIT $start_from,6";
@@ -508,28 +509,7 @@ function search()
 
         $count = mysqli_num_rows($run_products);
 
-        echo '<center>
-        <ul class="pagination">';
-        $total_pages = ceil(mysqli_num_rows($run_products2) / 6);
-        echo "
-            <li>
-                <a href='shop.php?user_query=$Key&search=Search&page=1'> Trang Đầu </a>
-            <li>
-        ";
-        for ($i = 1; $i <= $total_pages; $i++) {
-            echo "
-                    <li>
-                        <a href='shop.php?user_query=$Key&search=Search&page=" . $i . "'> " . $i . " </a>
-                    <li>
-                    ";
-        };
-        echo "
-            <li>
-                <a href='shop.php?user_query=$Key&search=Search&page=$total_pages'> " . 'Trang cuối' . " </a>
-            <li>
-            </ul> <!-- pagination Finish -->
-    </center>
-        ";
+
 
         if ($count == 0) {
             echo "
@@ -547,6 +527,28 @@ function search()
                     <h1> Tìm Kiếm </h1>
                 </div>
             ";
+            echo '<center>
+        <ul class="pagination">';
+            $total_pages = ceil(mysqli_num_rows($run_products2) / 6);
+            echo "
+            <li>
+                <a href='shop.php?user_query=$Key&search=Search&page=1'> Trang Đầu </a>
+            <li>
+        ";
+            for ($i = 1; $i <= $total_pages; $i++) {
+                echo "
+                    <li>
+                        <a href='shop.php?user_query=$Key&search=Search&page=" . $i . "'> " . $i . " </a>
+                    <li>
+                    ";
+            };
+            echo "
+            <li>
+                <a href='shop.php?user_query=$Key&search=Search&page=$total_pages'> " . 'Trang cuối' . " </a>
+            <li>
+            </ul> <!-- pagination Finish -->
+    </center>
+        ";
         }
 
         while ($row_products = mysqli_fetch_array($run_products)) {

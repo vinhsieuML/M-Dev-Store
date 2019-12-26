@@ -13,7 +13,7 @@
         <ol class="breadcrumb"><!-- breadcrumb begin -->
             <li class="active"><!-- active begin -->
                 
-                <i class="fa fa-dashboard"></i> Dashboard / View Users
+                <i class="fa fa-dashboard"></i> Dashboard / Thông Tin Admin
                 
             </li><!-- active finish -->
         </ol><!-- breadcrumb finish -->
@@ -26,7 +26,7 @@
             <div class="panel-heading"><!-- panel-heading begin -->
                <h3 class="panel-title"><!-- panel-title begin -->
                
-                   <i class="fa fa-tags"></i>  View Users
+                   <i class="fa fa-tags"></i>  Thông Tin Admin
                 
                </h3><!-- panel-title finish --> 
             </div><!-- panel-heading finish -->
@@ -38,14 +38,10 @@
                         <thead><!-- thead begin -->
                             <tr><!-- tr begin -->
                                 <th> No: </th>
-                                <th> User Name: </th>
-                                <th> User Image: </th>
-                                <th> User E-Mail: </th>
-                                <th> User Country: </th>
-                                <th> User Job: </th>
-                                <th> User Contact: </th>
-                                <th> Edit: </th>
-                                <th> Delete: </th>
+                                <th> Tên: </th>
+                                <th> Hình Ảnh: </th>
+                                <th> Tên Đăng Nhập: </th>
+                                <th> Số Điện Thoại: </th>
                             </tr><!-- tr finish -->
                         </thead><!-- thead finish -->
                         
@@ -55,56 +51,34 @@
           
                                 $i=0;
                             
-                                $get_users = "select * from admins";
+                                $get_users = "select * from admin";
                                 
                                 $run_users = mysqli_query($con,$get_users);
           
                                 while($row_users=mysqli_fetch_array($run_users)){
                                     
-                                    $user_id = $row_users['admin_id'];
+                                    $user_id = $row_users['id'];
                                     
-                                    $user_name = $row_users['admin_name'];
+                                    $user_name = $row_users['name'];
                                     
-                                    $user_img = $row_users['admin_image'];
+                                    $user_img = $row_users['image'];
                                     
-                                    $user_email = $row_users['admin_email'];
+                                    $user_username = $row_users['username'];
                                     
-                                    $user_country = $row_users['admin_country'];
-                                    
-                                    $user_job = $row_users['admin_job'];
-                                    
-                                    $user_contact = $row_users['admin_contact'];
+                                    $user_contact = $row_users['phone'];
                                     
                                     $i++;
                             
                             ?>
                             
                             <tr><!-- tr begin -->
+                            
                                 <td> <?php echo $i; ?> </td>
                                 <td> <?php echo $user_name; ?> </td>
                                 <td> <img src="../admin_area/admin_images/<?php echo $user_img; ?>" width="60" height="60"></td>
-                                <td> <?php echo $user_email; ?> </td>
-                                <td> <?php echo $user_country; ?></td>
-                                <td> <?php echo $user_job; ?> </td>
+                                <td> <?php echo $user_username; ?> </td>
                                 <td> <?php echo $user_contact ?> </td>
-                                <td>    
-                                     
-                                     <a href="index.php?user_profile=<?php echo $user_id; ?>">
-                                     
-                                        <i class="fa fa-pencil"></i> Edit
-                                    
-                                     </a> 
-                                     
-                                </td>
-                                <td> 
-                                     
-                                     <a href="index.php?delete_user=<?php echo $user_id; ?>">
-                                     
-                                        <i class="fa fa-trash-o"></i> Delete
-                                    
-                                     </a> 
-                                     
-                                </td>
+                                
                             </tr><!-- tr finish -->
                             
                             <?php } ?>

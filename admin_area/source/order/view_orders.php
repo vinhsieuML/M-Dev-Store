@@ -214,7 +214,7 @@ if (!isset($_SESSION['admin_email'])) {
                 var id_order = $(this).data("order_id");
                 $('#GHN'+id_order).html("<div class='loader'></div>");
                 $.ajax({
-                    "url": "http://localhost:3000/api/getGHN",
+                    "url": "http://192.168.0.135:3000/api/getGHN",
                     "method": "POST",
                     "timeout": 0,
                     "headers": {

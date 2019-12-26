@@ -47,7 +47,7 @@ if (isset($_POST['type'])) {
     }
     //Check Out
     if ($_POST['type'] == 1) {
-        $url = 'http://localhost:3000/api/cart';
+        $url = 'http://192.168.0.135:3000/api/cart';
 
         $fields = array(
             'token' => $token,
@@ -78,7 +78,7 @@ if (isset($_POST['type'])) {
         //close connection
     }
     else{
-        $url = 'http://localhost:3000/api/cartOnline';
+        $url = 'http://192.168.0.135:3000/api/cartOnline';
 
         $fields = array(
             'token' => $token,
