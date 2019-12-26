@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-sm-6 col-md-3">
 
-                <h4><img src="images/logo2.png" alt=""></h4>
+                <h4><img src="../images/logo2.png" alt=""></h4>
                 <!-- <p class="addressp">Với mong muốn lan tỏa tình yêu với trái bóng cam 
                     đến tất cả mọi người. SH Shop luôn cập nhật những sản phẩm mới nhất,
                      tốt nhất cùng với những lời tư vấn chân thành nhất.

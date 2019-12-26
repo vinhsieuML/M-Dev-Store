@@ -21,10 +21,11 @@ if (!isset($_SESSION['customer_email'])) {
         <title>SH Shop</title>
         <link rel="stylesheet" href="styles/bootstrap-337.min.css">
         <link rel="stylesheet" href="font-awsome/css/font-awesome.min.css">
-        <link rel="stylesheet" href="styles/style.css">
+        
 
         <script src="js/jquery-331.min.js"></script>
         <script src="js/bootstrap-337.min.js"></script>
+        <link rel="stylesheet" href="css/style.css">
 
     </head>
 
@@ -107,8 +108,8 @@ if (!isset($_SESSION['customer_email'])) {
                     <a href="../index.php" class="navbar-brand home">
                         <!-- navbar-brand home Begin -->
 
-                        <img src="images/ecom-store-logo.png" alt="M-dev-Store Logo" class="hidden-xs">
-                        <img src="images/ecom-store-logo-mobile.png" alt="M-dev-Store Logo Mobile" class="visible-xs">
+                        <img src="images/logo2.png" alt="" class="hidden-xs">
+                        <img src="images/logo-res.png" alt="" class="visible-xs">
 
                     </a><!-- navbar-brand home Finish -->
 

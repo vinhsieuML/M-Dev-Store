@@ -434,13 +434,21 @@ if (isset($_GET['pro_id'])) {
 
                 <div id="row same-heigh-row">
                     <!-- #row same-heigh-row Begin -->
-                    <div class="col-md-3 col-sm-6">
-                        <!-- col-md-3 col-sm-6 Begin -->
-                        <div class="box same-height headline">
-                            <!-- box same-height headline Begin -->
-                            <h3 class="text-center">Sản phẩm <br> bạn có <br> thể thích</h3>
-                        </div><!-- box same-height headline Finish -->
-                    </div><!-- col-md-3 col-sm-6 Finish -->
+                    <div class="box"><!-- box Begin -->
+           
+           <div class="container"><!-- container Begin -->
+               
+               <div class="col-md-12"><!-- col-md-12 Begin -->
+                   
+                   <h2>
+                       <strong> Sản phẩm mới nhất </strong>
+                   </h2>
+                   
+               </div><!-- col-md-12 Finish -->
+               
+           </div><!-- container Finish -->
+           
+       </div><!-- box Finish -->
 
                     <?php
 
