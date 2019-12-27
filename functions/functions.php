@@ -302,11 +302,7 @@ function gethang()
 
             echo "
             <div class='box'>
-
-            <h1> $cat_title </h1>
-
-            
-            
+            <center><strong> <h1 style='color:#4FBFA8'>  $cat_title </h1> </strong> </center>
             </div>
             ";
         }
@@ -398,7 +394,6 @@ function getpcatpro()
         if ($count == 0) {
             echo "
                 <div class='box'>
-
                     <h1> Không có sản phẩm nào </h1>
 
                 </div>
@@ -408,7 +403,7 @@ function getpcatpro()
 
             echo "
                 <div class='box'>
-                    <h1> $p_cat_title </h1>
+                    <center><strong> <h1 style='color:#4FBFA8'>  $p_cat_title </h1> </strong> </center>
                 </div>
             ";
             echo '<center>
@@ -524,7 +519,7 @@ function search()
 
             echo "
                 <div class='box'>
-                    <h1> Tìm Kiếm </h1>
+                <center><strong> <h1 style='color:#4FBFA8'>  Tìm kiếm </h1> </strong> </center>
                 </div>
             ";
             echo '<center>

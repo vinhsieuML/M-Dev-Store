@@ -108,7 +108,7 @@ if (!isset($_SESSION['admin_email'])) {
                                         <td> <?php $date = date_create($dataOrder);
                                                 echo date_format($date, 'd-m-Y');
                                                 ?></td>
-                                        <td> <?php echo $total; ?> </td>
+                                        <td> <?php echo number_format($total, 0, ',', '.'); ?> </td>
                                         <td id= "status<?php echo $order_id ?>"">
                                             <?php
 

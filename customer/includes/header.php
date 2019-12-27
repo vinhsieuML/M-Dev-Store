@@ -31,11 +31,11 @@ include("functions/functions.php");
                    
                    if(!isset($_SESSION['customer_email'])){
                        
-                       echo "Welcome: Guest";
+                       echo "Xin chào: Guest";
                        
                    }else{
                        
-                       echo "Welcome: " . $_SESSION['customer_email'] . "";
+                       echo "Xin chào: " . $_SESSION['customer_email'] . "";
                        
                    }
                    
